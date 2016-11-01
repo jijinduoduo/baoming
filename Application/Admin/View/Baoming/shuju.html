@@ -1,0 +1,551 @@
+<extend name="base" />
+		<!--body-->
+	<block name="body">
+		<div class="content-left">
+			<div class="content-left-1">
+				<ul class="content-left-1-1">
+					<li class="sy-1-1" imgurl="sy0.png" data-moren="sy.png" "><a href='{:U("Baoming/index")}'><p>首页</p></a></li>
+					<li class="sj-1-1" imgurl="sj0.png" data-moren="shuju.png" style="background-color: #3bb4f2;background-image:url('Application/Admin/View/Baoming/img/sj0.png') ; color: #fff;" ><p>数据</p></li>
+					<!--<li class="cw-1-1" imgurl="cw0.png" data-moren="caiwu.png"><p>财务</p></li>
+					<li class="sz-1-1" imgurl="sz0.png" data-moren="shezhi.png"><p>设置</p></li>-->
+				</ul>
+			</div>
+			
+		</div>
+		
+		<div class="content-rights">
+			<!--首页
+			<div class="right-sy hiddens">
+				<div class="panl panel-heading">
+					<div class="right-top">
+					<div class="text-left"><span> </span><strong>首页</strong></div>
+					<div class="text-right">
+						
+						<p class="p1" id="create"><span>创建新报名表</span></p>
+						
+					</div>
+					</div>
+				</div>
+				<div class="panel panel-body floatleft">
+					<ul>
+						<li class="col-lg-3 col-xs-3 text-center">2<br />黑名单</li>
+						<li class="col-lg-3 col-xs-3 text-center">20<br />今日报名</li>
+						<li class="col-lg-3 col-xs-3 text-center">52<br />今日收款</li>
+						<li class="col-lg-3 col-xs-3 text-center">25552<br />账户余额</li>
+					</ul>
+				</div>
+				<div>
+					<table class="table table-striped">
+ 					<tr class="row">
+ 						<td  class="col-lg-1 col-xs-2 text-center">序号</td><td class="col-lg-6 col-xs-3 text-center">项目名称</td><td class="col-lg-1 col-xs-2 text-center">报名</td><td class="col-lg-1 col-xs-2 text-center">查看</td><td class="col-lg-3 text-center col-xs-3">操作</td>
+ 					</tr>
+ 					<volist name="data" id="data">
+ 					<tr class="row">
+ 						<td  class="col-lg-1 col-xs-2 text-center">{$data.id}</td><td class="col-lg-6 col-xs-3"><a href="{:U('Baoming/admin','id='.$data['id'])}">{$data.title}</a></td><td class="col-lg-1  col-xs-2 text-center">{$data.total}</td><td class="col-lg-1 text-center col-xs-2">{$data.see}</td><td class="col-lg-3 text-center col-xs-3">
+ 							<p class="shanchu-left"></p>
+ 							<p class="left"><a href="{:U('Baoming/admin','id='.$data['id'])}"><img src="Application/Admin/View/Baoming/img/bianji.png"></a></p>
+ 							<p class="left"><a href="#" onclick="urls()"><img src="Application/Admin/View/Baoming/img/shanchu.png"></a></p>
+ 							<if condition="$data['status'] eq 1">
+								<p class="left"><a href="#"><img class="zt" value={$data.status} src="Application/Admin/View/Baoming/img/yunxing.png"></a></p>
+							<else />
+								<p class="left"><a href="#"><img class="zt" value={$data.status} src="Application/Admin/View/Baoming/img/zt.png"></a></p>
+							</if>
+						</td>
+ 					</tr>
+					</volist>
+					</table>
+					<div id="fanye">
+						{$page}
+					</div>
+				</div>
+				
+			</div>
+			首页end-->
+			<!--数据-->
+			<div class="right-sj hiddens">
+				<div class="right-sj-head">
+					<div class="col-lg-6 col-xs-3">
+						<div class="dropdown">
+						  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+						    全部项目
+						    <span class="caret"></span>
+						  </button>
+						  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+						  	 <li role="presentation"><a role="menuitem" href="{:U('Baoming/shuju')}" tabindex="-1" href="#">全部</a></li>
+						  <volist name="data1" id="data1">
+						    <li role="presentation"><a role="menuitem" tid={$data1.id} href="{:U('Baoming/shuju','tid='.$data1[id])}" tabindex="-1" href="#">{$data1.title}</a></li>
+						  </volist>
+						  </ul>
+						</div>
+					</div>
+					
+					<div class="col-lg-5 col-xs-6"  style="padding-left: 0;padding-right: 2px;">
+					<form action="{:U('Baoming/shuju')}" method="post">
+						<div class="input-group form-inline ">
+						
+					      <input type="text" class="form-control search2" placeholder="请输入搜索的姓名" name="search">
+					      <span class="input-group-btn">
+					        <button class="btn btn-info search1" >搜索</button>
+					      </span>
+						
+					      <!--<span class="input-group-btn">
+					       <a href="{:U('Baoming/ExcelOut','tid='.$tid)}"><button class="btn btn-info" type="button">下载</button></a>
+					      </span>-->
+					      	
+							
+					    </div>
+					</form>
+					</div>
+					<div class="col-lg-1 col-xs-3">
+						<div class="dropdown ">
+							  <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu34" data-toggle="dropdown">
+							    下载
+							    <span class="caret"></span>
+							  </button>
+							  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							  	 <li role="presentation"><a role="menuitem" href="{:U('Baoming/ExcelOut','tid='.$tid)}" tabindex="-1" >文档</a></li>
+							 	 <li role="presentation"><a role="menuitem" href="{:U('Baoming/get_img','tid='.$tid)}" tabindex="-1" href="#">图片</a></li>
+							    
+							
+							  </ul>
+							</div>
+					</div>
+					
+				</div>
+				<div class="shenhe" style="margin-top: 3rem;">
+					<div class="shenhehead">
+						<div class="shenheleft row " style="float: left;">
+							<ul>
+								<li class="col-xs-4 <?php if($_GET['status']==0){echo 'blue';} ?>"  ><a href="{:U('Baoming/shuju',array('tid'=>$tid,'status'=>0))}">待审核</a></li>
+								<li class="col-xs-4 <?php if($_GET['status']==1){echo 'blue';} ?>"><a href="{:U('Baoming/shuju',array('tid'=>$tid,'status'=>1))}">已审核</a></li>
+								<li class="col-xs-4 <?php if($_GET['status']==-1){echo 'blue';} ?>"><a href="{:U('Baoming/shuju',array('tid'=>$tid,'status'=>-1))}">已取消</a></li>
+							</ul>
+						</div>
+						<div class="shenheright " style="float: right;">
+							<ul>
+								<li data-toggle="modal" data-target="#Modal"><img src="Application/Admin/View/Baoming/img/shenhe.png"/>批量审核</li>
+								<li><img src="Application/Admin/View/Baoming/img/piliangshanchu.png" />批量删除</li>
+								<!--<li data-toggle="modal" data-target="#M"><img src="Application/Admin/View/Baoming/img/shoudongluru.png" />手动导入</li>-->
+							</ul>
+						</div>
+					</div>
+					<div class="shenhebody panl">
+						<table class="table table-striped">
+							<tr id="th"><th class="col-lg-1"><input type="checkbox" data="1" id="allxuan"></th><th  class="col-lg-1">ID</th><th class="col-lg-2">名称</th><th class="col-lg-3">信息</th><th class="col-lg-2">报名日期</th><th class="col-lg-2">操作</th></tr>
+						<volist name="data0" id="vo">	
+							<tr> 
+								<td class="col-lg-1"><input type="checkbox"></td>
+								<td class="col-lg-2">{$vo['id']}</td>
+								<td class="col-lg-3">
+									<if condition="($vo['path'] neq null) ">
+									<p><img src="{$vo['path']}" width="50"></p>
+									<else />
+									<p><img src="Uploads/baoming/100.jpg" width="50"></p>
+									</if>
+									<p><?php $vv = json_decode($vo['data']); $vvv = $vv->data; echo $vvv[1]; ?></p>
+								</td>
+								<td class="col-lg-2">
+									<p><?php $vv = json_decode($vo['data']);  $vvv = $vv->data; echo $vvv[2];  ?></p>
+									<p><?php $vv = json_decode($vo['data']);  $vvv = $vv->data; echo $vvv[1];  ?></p>
+									<p>{$vo['price']}</p>
+								</td>
+								<td class="col-lg-2">
+									<p>{:date('Y-m-d H:i:s',$vo['baotime'])}</p>
+									<p>{$vo['ispay']?'已付款':'待付款'}</p>
+								
+								</td>
+								<td class="col-lg-2">
+									<p><button href="#" class="class shenhebtn  btn-link " data-target="#Modal" data-toggle="modal">审核</button></p>
+									<p><a href="#" class="dels">删除</a></p>
+									<p><a href="{:U('Baoming/xq','id='.$vo['id'])}" class="">详情</a></p>
+								</td>
+							</tr>
+						</volist>
+						</table>
+						
+					</div>
+				</div>
+				<div class="fanyes" id="fanye">
+					<nav>
+					  <ul class="pagination">
+					   
+					   {$page}
+					  
+					  </ul>
+					</nav>
+				</div>
+				<!--模态框 -->
+						<div class="p22" data="0"></div>
+						<div class="modal fade in" id="Modal">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						        <h4 class="modal-title">审核</h4>
+						      </div>
+						      <div class="modal-body">
+						        <p><label>通过<input type="radio" name="radio" data="1" checked="checked"></label>  <label>不通过<input type="radio" name="radio" data="-1"></label></p>
+						        <p><textarea style="width: 100%;height: 5rem;" placeholder="审核意见"></textarea></p>
+						      </div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						        <button type="button" class="btn btn-primary">提交</button>
+						      </div>
+						    </div><!-- /.modal-content -->
+						  </div><!-- /.modal-dialog -->
+						</div>
+				
+				<!--模态框结束 -->
+			</div>
+			
+				<!--模态框 -->
+						
+						<div class="modal fade in" id="M">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+<!--						      	
+						      	<div class="modal-header form-inline" >
+						      		手动导入
+						      	</div>
+						      	<div class="modal-body1"><input type="file" value="上传"><span style="color: red;">*导入需下载模板</span></div>
+						     	<div class="modal-footer"> 
+						     		<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						     		<button type="button" class="btn btn-info" id="filesc">上传</button>
+						     		
+						     	</div>-->
+						    </div><!-- /.modal-content -->
+						  </div><!-- /.modal-dialog -->
+						</div>
+				
+				<!--模态框结束 -->
+			<!--数据结束-->
+			<!--财务
+			<div class="right-cw hiddens">
+				<div class="panl panel-heading">
+					<div class="right-top">
+					<div class="text-left"><span> </span><strong>资金流水</strong></div>
+					<div class="text-right">
+						
+						<button class="btn btn-primary btn-xs"> 提现申请 </button>
+						
+					</div>
+					</div>
+				</div>
+				<p style="padding-left: 15px;">
+					<select name="" id="">
+						<option value="">全部项目</option>
+					</select>
+				</p>
+				<div class="panl" style="padding-left: 15px;">
+					<table class="table table-striped">
+						<tr><td class="col-lg-1">序号</td><td class="col-lg-1">业务类型</td><td class="col-lg-1">金额</td><td class="col-lg-3">交易时间</td><td class="col-lg-1">当前结余</td><td class="col-lg-3">订单号</td><td class="col-lg-2">状态</td></tr>
+						<tr><td class="col-lg-1">001</td><td class="col-lg-1">fdsaffd</td><td class="col-lg-1">500$</td><td class="col-lg-3">2016年10月8日13:36:21</td><td class="col-lg-1">200</td><td class="col-lg-3">54646484545</td><td class="col-lg-2">e</td></tr>
+					</table>
+				</div>
+			</div>
+			财务结束-->
+			<!--设置
+			<div class="right-sz hiddens">
+				<div class="panl panel-heading">
+					<div class="right-top">
+					<div class="text-left"><span> </span><strong>系统设置</strong></div>
+					
+					</div>
+				</div>
+				<div style="margin-left: 15px;">
+					
+					<ul class="nav nav-tabs" role="tablist">
+					  <li role="presentation" class="active"><a href="#jibenxinxi" role="tab" data-toggle="tab">基本信息</a></li>
+					  <li role="presentation"><a href="#password" role="tab" data-toggle="tab">修改密码</a></li>
+					  <li role="presentation"><a href="#messages" role="tab" data-toggle="tab">支付集成</a></li>
+					
+					</ul>
+					
+				
+					<div class="tab-content">
+					  <div role="tabpanel" class="tab-pane active" id="jibenxinxi">
+					  	<form>
+					  		<p><label>登陆账户</label><input type="text" class="input-group-sm form-group-sm"></p>
+					  		<p><label>客服电话</label><input type="text" class="input-group-sm form-group-sm"></p>
+					  		<p><label>登陆账户</label><input type="text" class="input-group-sm form-group-sm"></p>
+					  	</form>
+					  </div>
+					  <div role="tabpanel" class="tab-pane" id="password">...</div>
+					  <div role="tabpanel" class="tab-pane" id="messages">...</div>
+					 
+					</div>
+				</div>
+			</div>
+			设置结束-->
+		</div>
+
+		<!--body end -->
+		
+		<!--footer -->
+		<!--footer end -->
+		<script>
+			$(function(){
+				//main()
+				shujus();
+				xuanzhong();
+				$(".search1").click(function(){
+					var val=$(".search2").val();
+					$.ajax({
+						type:"post",
+						url:"{:U('Baoming/shuju')}",
+						async:true,
+						dataType:'json',
+						data:{"search":val},
+						success:function(mes){
+							
+						}
+					});
+				})
+				$("#create").click(function(){
+					var s=prompt("请输入名称");
+					//console.log(s);
+					if(s){
+						$.ajax({
+						type:"post",
+						url:'{:U("Baoming/add_title")}',
+						async:true,
+						dataType:"json",
+						data:{title:s},
+						success:function(data){
+							window.location.href="http://b.bjxxw.com/index.php?s=/Admin/Baoming/admin/id/"+data+".html";
+							
+						}
+					});
+					}
+					
+					
+				})
+			})
+			function qiehuan(target,xstarget){
+				$(target).click(function(){
+					var s=$(this).index();
+					var img=$(this).attr("imgurl");
+					var timg=$(this).attr("data-moren");
+					var adress="..\/img\/";
+				console.log(adress+""+img)
+					$(this).css({"background-color":"#3bb4f2","color":"#fff"}).siblings().css({"background-color":"#fff","color":"#000"})
+				
+					$(xstarget).eq(s).show().siblings().hide();
+					
+				})
+				
+			}
+			qiehuan(".content-left-1 .content-left-1-1 li",".content-rights div.hiddens");
+			function online(){
+				$(".zt").click(function(){
+					var id=$(this).parent().parent().parent().parent().find('td').eq(0).text();
+					var status=$(this).attr("value")
+					console.log(id)
+					$.ajax({
+						type:"post",
+						url:"{:U('Baoming/change','id='.$data['id'])}",
+						async:true,
+						data:{"id":id,"status":status},
+						success:function(data){
+							window.location.reload()
+						}
+					});
+				})
+			}
+			online()
+			function urls(){
+				var s=window.confirm("是否删除");
+				if(s){
+					window.location.href="{:U('Baoming/delete','id='.$data['id'])}";
+				}
+				else{
+					return;
+				}
+			}
+			
+			
+			
+//			function main(tid,ispass){
+//				
+//				$.ajax({
+//					type:"post",
+//					url:'{:U("Baoming/shuju")}',
+//					dataType:'json',
+//					async:true,
+//					data:{"tid":"","ispass":"0"},
+//					success:function(data){
+//						console.log(data);
+//					
+//						fanye(data)	
+//					
+//					}
+//				});
+//				
+//				
+//			}
+//			function shuju(data){
+//				$.each(data, function(i,item) {
+//						if(item.ispay=='0'){
+//							item.ispay="待支付";
+//						}
+//						
+//						else if(item.ispay=='1')
+//						{
+//							item.ispay="已支付";
+//						}
+//					
+//					$("#th").after('<tr> <td class="col-lg-1"><input type="checkbox"></td> <td class="col-lg-2">'+item.id+'</td> <td class="col-lg-3"><p><img width="100%" src="'+item.path+'"></p><p>'+eval(item.data)[1]+'</p></td> <td class="col-lg-2"><p>'+eval(item.data)[2]+'</p><p></p></td> <td class="col-lg-2"><p>'+item.baotime+'</p><p>'+item.ispay+'</p></td> <td class="col-lg-2"><a href="">审核</a></td></tr>')
+//					});
+//			}
+//			var dangqianye=1;
+//			
+//			function fanye(data){
+//				var allye=Math.ceil(data.length/10);
+//				
+//			//	console.log(allye);
+//				for(var i=1;i<=allye;i++){
+//					var j=i-1;
+//					j+=10;
+//					data=data.slice(0,j);
+//					
+//					$(".fanyes ul .xia").before("<li><a href='#'>"+i+"</a></li>");
+//				}
+//				shuju(data);
+//			}
+			function shujus(){
+				$('#allxuan').click(function(){
+					
+					console.log($(this).attr('data'));
+					if($(this).attr('data')=='1')
+					{
+						
+						$(this).attr('data',"0");
+						$("input[type='checkbox']").prop("checked",true);
+					}
+					else{
+						
+						$("input[type='checkbox']").prop("checked",false);
+						$('#allxuan').attr('data','1');
+						
+					}
+				})
+			}
+			var data=[];
+			function xuanzhong(){
+				
+				$(".shenheright ul li:eq(1)").click(function(){
+				
+				var box=window.confirm("是否批量删除");
+				if(box){
+						qx();
+				}
+				
+					
+				});
+				$(".shenheright ul li:eq(0)").click(function(){
+					$(this).attr("data-va","-1");
+				})
+				$(".shenhebtn").click(function(){
+					var name=$(this).parent().parent().parent().find("td").eq(1).text();;
+					$(".shenheright ul li:eq(0)").attr("data-va",name);
+				})
+				
+				$(".modal-footer .btn-primary").click(function(){
+					var s=$(".shenheright ul li:eq(0)").attr("data-va");
+				if(s=="-1"){
+					data=[];
+					
+					$(":checked:not('#allxuan')").parent().parent().attr("data-val","1");
+					$("input").not(":checked").parent().parent().attr("data-val","0");
+					$.each($("tr[data-val='1']"), function(i,item) {
+						
+						data.push($(item).find("td:eq(1)").text())
+					});
+				}
+				else{
+					
+					data=[]
+					data=[$(".shenheright ul li:eq(0)").attr("data-va")];
+				}
+				shenhe2(data);
+				
+				})
+			}
+			function qx(){
+				data=[];
+				$(":checked:not('#allxuan')").parent().parent().attr("data-val","1");
+				$("input").not(":checked").parent().parent().attr("data-val","0");
+				$.each($("tr[data-val='1']"), function(i,item) {
+					
+					data.push($(item).find("td:eq(1)").text())
+				});
+				
+						//console.log(data)
+					$.ajax({
+						type:"post",
+						url:"{:U('Baoming/clean')}",
+						async:true,
+						dataType:'json',
+						data:{data},
+						success:function(msg){
+							console.log(msg);
+							window.location.reload();
+						},
+						error:function(XMLHttpRequest, textStatus, errorThrown){
+//							alert(XMLHttpRequest.status);
+//							alert(XMLHttpRequest.readyState);
+//							alert(textStatus);
+							alert("删除失败");
+						}
+					});
+			}
+			function shenhe2(data){
+				
+				var zhi=$(".modal-body p input:checked").attr('data');
+				var texts=$(".modal-body p textarea").val();
+						//console.log(zhi)
+						
+					$.ajax({
+						type:"post",
+						url:"{:U('Baoming/shenhe')}",
+						async:true,
+						dataType:'json',
+						data:{'id':data,'status':zhi,'text':texts},
+						success:function(msg){
+							console.log(msg);
+							//data=[];
+							window.location.reload();
+						},
+						error:function(){
+
+							alert("审核失败");
+						}
+					});
+			}
+			function sh(){
+				$(".dels").click(function(){
+					xuanzhongs(this);
+				})
+			}
+			sh();
+			function xuanzhongs(a){
+				data=[];
+				var val=$(a).parent().parent().parent().find("td").eq(1).text();
+				data.push(val)
+				console.log(val)
+				$.ajax({
+					type:"post",
+					url:"{:U('Baoming/clean')}",
+					async:true,
+					dataType:"json",
+					data:{data},
+					success:function(mes){
+						//console.log(mes);
+						window.location.reload();
+					}
+				});
+			}
+			
+		</script>
+	</block>
+

@@ -1,0 +1,130 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>{$title}(当前{$month})</h2>
+	</div>
+
+
+	<div class="data-table table-striped"><div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+<script type="text/javascript">
+$(function () {
+    $('#container').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: 1,//null,
+            plotShadow: false
+        },
+        title: {
+            text: '{$title}'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                       color: 'deeppink',
+									fontSize: '14px',
+									padding: '4px'
+                    }
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '占比',
+            data: [
+                ['退货{$back}元 ',   {$b}],
+                ['换货{$change}元 ',      {$c}],
+				 ['申请取消{$cancel}元 ',      {$d}],
+                {
+                    name: '销售额{$total}元 ',
+                    y: {$a},
+                    sliced: true,
+                    selected: true
+                },
+                
+               
+            ]
+        }]
+    });
+});
+    
+
+		</script>	
+<p style="height:30px;margin:10px;color:deeppink;font-size:16px">利润：{$total|default="0"}-{$back|default="0"}-{$change|default="0"}-{$cancel|default="0"}={$profits|default="0"}元</p>
+<table id="datatable">
+	<thead>
+		<tr>
+			<th></th>
+			
+			<th>总额(元)</th>
+             <th>数量</th>
+			  <th>种类数</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th>卖出</th>
+			
+			<td>{$total}</td>
+             <td>{$salenum}件</td>
+			 <td>{$salecount}种</td>
+		</tr>
+		<tr>
+			<th>退货</th>
+			<td>{$back}</td>
+			<td>{$backnum}件</td>
+			<td>{$backcount}种</td>
+		</tr>
+		<tr>
+			<th>换货</th>
+			<td>{$change}</td>
+			<td>{$changenum}件</td>
+			<td>{$changecount}种</td>
+		</tr>
+		<tr>
+			<th>申请取消</th>
+			<td>{$cancel}</td>
+			<td>{$cancelnum}件</td>
+			<td>{$cancelcount}种</td>
+
+		</tr>
+		
+	</tbody>
+</table
+  
+	</div>
+</block>
+
+<block name="script">
+ <script type="text/javascript">
+      
+            //导航高亮
+            highlight_subnav('{:U('week')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

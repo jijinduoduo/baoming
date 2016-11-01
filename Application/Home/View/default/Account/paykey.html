@@ -1,0 +1,81 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><!-- 个人中心 初始状态 start -->
+<div class="center_right account" id="MemberCenterCtrl" style="display: block;">
+<div class="account_right"  style="display: block;">
+	<!-- 安全中心 初始状态 start -->
+	<h4 class="">支付密码设置</h4>
+
+	<div class="verification">
+                
+
+<body>
+
+<form action="{:U('account/savepaykey')}" method="post" name="formUser" >
+	<table width="100%"  border="0" align="left" cellpadding="5" cellspacing="3">
+		<tr id="mobileform">
+			<td align="right"><span style="color:#FF0000"> *</span>支付密码<td>
+		<input id="mobile" name="paykey" type="text" value="{$code}" size="25" class="inputBg" />
+      </td>
+        </tr>
+		
+		<tr>
+			<td align="right"></td>
+			<td><input type="submit" value=" 设置 " onclick="" id="check" class="btn-check orange button"></td>
+		</tr>
+	</table><input type="hidden" name="uid" value="{$uid}">
+</form>  
+	<script>
+
+function checkcode(){ 
+
+var yourcode="{:get_username()}";
+var m=jQuery.trim($('#mobile').val());
+var code=jQuery.trim($('#smscode').val());
+$.ajax({
+url:'{:U("account/checksmscode")}', //发送数据的地址
+
+type: 'POST',
+
+data:{mobile:m,mobile_code:code;</php>},
+
+dataType: 'json',
+
+timeout: 1000,
+
+error: function(){
+	$("#send_num").html(data.smg);
+	},
+
+success: function(data){
+	document.getElementById("check').disabled = false;
+	alert(data.msg);
+	
+
+}
+
+});
+
+}</script>			
+				
+			<div class="ver_bottom_hint">
+                    <p class="title">支付密码设置失败</p>
+                    
+                    <p>·&nbsp;若多次操作未设置成功，请将问题反馈给客服：{:C("CONTACT")}</p>
+                </div>
+                </div>
+
+				 </div>
+	<!-- 安全中心结束状态 end -->
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+   
+       
+   
+   
+</block>

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>HEQEE - Fetion API - 飞信好友免费短信API接口</title>
+  <meta name="keywords" content="Google Voice API,Fetion API,Google Voice 短信发送接口PHP版,飞信好友免费短信API接口,heqee.com" />
+  <meta name="description" content="Google Voice API,Fetion API,Google Voice 短信发送接口PHP版,飞信好友免费短信API接口,heqee.com" />
+  <meta http-equiv="X-UA-Compatible" content="IE=7" >
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link href="./style/apps.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="./style/jquery.js"></script>
+</head>
+<body>
+  <div id="dialog">
+    <h1>HEQEE - Fetion API</h1>
+        <div id="msg" style="display: none"></div>
+    <form >
+      <div class="div_li">
+        <label for="username">登陆手机(*)：</label>
+        <input  class="medium" type="text"  id="username"  maxlength="11" value="" /><span>移动飞信手机号</span>
+      </div>
+      <div class="div_li">
+        <label for="password">登陆密码(*)：</label>
+        <input  class="medium" type="password" id="password" maxlength="30" value=""/><span>移动飞信登录密码</span>
+      </div>
+	  <div class="div_li">
+        <label for="password">接收手机(*)：</label>
+        <input  class="medium" type="text" id="sendto" value=""/><span>飞信好友手机号</span>
+      </div>
+	  <div class="div_li">
+        <label for="password">短信内容(*)：</label>
+        <textarea cols="14" rows="3" class="inputcss" id="message" name="message" onKeyDown="gbcount(this.form.message,this.form.remain);" onKeyUp="gbcount(this.form.message,this.form.remain);"></textarea>
+		<span>剩余字数：<input disabled  size="2" value="180" name="remain" class="inputtext"></span>
+      </div>
+      <div class="clean"></div>
+	  <div class="list">
+	  <a class="paypal" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=SCKUVE7RMYPWA&lc=C2&item_name=FetionApi&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank"><img alt="" border="0" src="./style/btn_donate_SM.gif" alt="PayPal — 最安全便捷的在线支付方式！"></a>
+	  <ul>
+		<li>飞信好友免费短信API接口PHP版 <a href="FetionApi.rar">下载源代码</a></li>
+		<li> 免费短信（需要互为<a href="http://www.fetion.com.cn/downloads/pc.aspx" target="_blank">移动飞信</a>好友）</li>
+		<li class="a">1，支持群发</li>
+		<li class="a">2，支持POST或GET方式提交数据</li>
+		<li >捐赠可获得开源代码和项目整合服务</li>
+	  </ul>
+	  </div>
+      <div id="login_submit">
+        <input class="submit" type="button" accesskey="s" value="发送消息" onclick="return chkForm();"/>
+		<input class="submit" type="button" accesskey="a" value="接口地址" onclick="return demoapi();"/>
+		<input class="submit" type="button" accesskey="a" value="调用代码" onclick="return democode();"/>
+		<input class="submit" type="button" accesskey="h" value="帮助" onclick="return help();"/>
+      </div>
+    </form>
+	<div class="menu">
+	  <ul>
+		<li><a href="http://www.heqee.com/apps/gv/">GV短信接口</a>
+		</li>
+		<li><a href="http://www.heqee.com/apps/fetion/">飞信短信接口</a>
+		</li>
+		<li><a href="http://www.heqee.com/apps/ip/">IP归属地查询接口</a>
+		</li>
+		<li>待续..
+		</li>
+	  </ul>
+	</div>
+	<div id="demo" style="display: none"></div>
+	<p class="version">Powered By <a href="http://www.heqee.com" target="_blank">HEQEE</a></p>
+  </div>
+  <script type="text/javascript">
+  //去空格
+	String.prototype.Trim = function() { 
+		var m = this.match(/^\s*(\S+(\s+\S+)*)\s*$/); 
+		return (m == null) ? "" : m[1]; 
+	}
+	//验证手机号
+	String.prototype.isMobile = function() { 
+	return (/^(?:13\d|15[89])-?\d{5}(\d{3}|\*{3})$/.test(this.Trim())); 
+	}
+	function chkForm() {
+	    var username = $("#username").val();
+		var sendto   = $("#sendto").val();
+		var success  = "消息发送成功";
+        if (!username.Trim().isMobile()||username=='') {  
+			$("#msg").addClass('error').fadeIn('slow').html("您输入的登陆手机号码错误");
+			$("#username").focus().select();
+            return false; 
+        } 
+		$.ajax({                           
+		type: "POST",
+		beforeSend:function(){$("#msg").addClass('success').fadeIn('slow').html("正在发送...");},
+		url: "fetion.php?&username="+$("#username").val()+"&password="+$("#password").val()+"&to="+$("#sendto").val()+"&message="+$("#message").text(),
+			success: function(msg){
+			if(msg!=''){
+				$("#msg").addClass('error').fadeIn('slow').html(msg);
+			}else{
+				$("#msg").addClass('success').fadeIn('slow').html(success);
+			}
+		  }
+	    });
+		return true;
+	}
+	function democode(){
+		$.ajax({                           
+		type: "POST",
+		url: "fetion.php?demo=code",
+			success: function(msg){
+			$("#demo").addClass('success').toggle().html(msg);
+		  }
+	    });
+	  return true;
+	}
+	function demoapi(){
+		$.ajax({                           
+		type: "POST",
+		url: "fetion.php?demo=api",
+			success: function(msg){
+			$("#demo").addClass('success').toggle().html(msg);
+		  }
+	    });
+	  return true;
+	}
+	function help(){
+		$.ajax({                           
+		type: "POST",
+		url: "fetion.php?demo=help",
+			success: function(msg){
+			$("#demo").addClass('success').toggle().html(msg);
+		  }
+	    });
+	  return true;
+	}
+	function gbcount(message,remain)
+	{
+	  var max;
+	  max = 180;
+	  if (message.value.length > max) {
+	  message.value = message.value.substring(0,max);
+	  remain.value = 0;
+	  $("#msg").addClass('error').fadeIn('slow').html("短信内容不能超过180个字");
+	  message.select();
+	  }
+	  else {
+	  remain.value = max - message.value.length;
+	  }
+	}
+ </script>
+
+
+
+
+</body>
+</html>
+

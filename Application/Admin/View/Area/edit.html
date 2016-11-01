@@ -1,0 +1,160 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}快递</h2>
+	</div>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">
+			<li data-tab="tab1" class="current"><a href="javascript:void(0);">基 础</a></li>
+			<li data-tab="tab2"><a href="javascript:void(0);">高 级</a></li>
+		</ul>
+		<div class="tab-content">
+			<form action="{:U()}" method="post" class="form-horizontal">
+				<!-- 基础 -->
+				<div id="tab1" class="tab-pane in tab1">
+		<div class="form-item">
+			<label class="item-label">pid<span class="check-tips">（pid）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" id='area' name="pid" value="{$info.pid}">
+			</div>
+		</div>	
+				
+		<div class="form-item">
+			<label class="item-label">上级地区名称<span class="check-tips">（）</span></label>
+			<div class="controls">
+			<select  id="idprovince" class="new-select" >
+							 <volist name="list" id="vo"> 
+  <option  value="{$vo.id}">{$vo.area}</option>  
+</volist>
+							</select> <select  id="idcity" class="new-select" ><option value=''>选择城市</option></select> <select class="new-select"  id="idarea" ><option value=''>选择县城</option></select>
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">地区名称<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large"  name="area"value="{$info.area}">
+			</div>
+		</div>
+
+ <script>
+	$('#idprovince').change(function(){
+					if(this.value==''){
+						//$('#ltwo').hide();
+						//$('#lthree').hide();
+						return;
+					}
+                  $('#area').val(this.value);
+					//alert($('#lone'.value);
+					$.post('{:U("change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+							//$('#lthree').hide();
+							$('#idcity').empty();//清空原有的数据
+							//$("<option value='-1'>选择县城</option>").appendTo("#lthree");
+							$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.area+"</option>").appendTo("#idcity");
+							
+							});
+						  
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+$('#idcity').change(function(){
+					if(this.value==''){
+						//$('#ltwo').hide();
+						//$('#lthree').hide();
+						return;
+					}
+					 $('#area').val(this.value);
+					$.post('{:U("change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+							//$('#lthree').hide();
+							$('#idarea').empty();//清空原有的数据
+						
+							$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.area+"</option>").appendTo("#idarea");
+								//$("#ltwo").append('<option value="'+n.region_id+'">'+n.region_name+'</option>');
+							});
+						
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+$('#idarea').change(function(){
+					if(this.value==''){
+						//$('#ltwo').hide();
+						//$('#lthree').hide();
+						return;
+					}
+					 $('#area').val(this.value);
+					
+				});
+
+				</script>	
+
+  
+				</div>
+
+				<!-- 高级 -->
+				<div id="tab2" class="tab-pane tab2">
+					
+
+				</div>
+
+				<!-- 高级 -->
+				<div id="tab2" class="tab-pane tab2">
+					<div class="form-item">
+						<label class="item-label">状态</label>
+						<div class="controls">
+							<label class="textarea input-large">
+								<textarea name="status">{$info.status|default='1'}</textarea>
+							</label>
+						</div>
+					</div>
+					
+					
+					
+					
+				</div>
+
+				<div class="form-item">
+					<input type="hidden" name="id" value="{$info.id|default=''}">
+					<input type="hidden" name="pid" value="{:isset($category['id'])?$category['id']:$info['pid']}">
+					<button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+					<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+				</div>
+			
+</form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		<present name="info.id">
+		Think.setValue("allow_publish", {$info.allow_publish|default=1});
+		Think.setValue("check", {$info.check|default=0});
+		Think.setValue("model[]", {$info.model|json_encode} || [1]);
+		Think.setValue("model_sub[]", {$info.model_sub|json_encode} || [1]);
+		Think.setValue("type[]", {$info.type|json_encode} || [2]);
+		Think.setValue("display", {$info.display|default=1});
+		Think.setValue("reply", {$info.reply|default=0});
+		Think.setValue("reply_model[]", {$info.reply_model|json_encode} || [1]);
+		</present>
+		$(function(){
+			showTab();
+			$("input[name=reply]").change(function(){
+				var $reply = $(".form-item.reply");
+				parseInt(this.value) ? $reply.show() : $reply.hide();
+			}).filter(":checked").change();
+		});
+		//导航高亮
+		highlight_subnav('{:U('Area/index')}');
+	</script>
+</block>

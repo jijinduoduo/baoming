@@ -1,0 +1,119 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 --></div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+<span  style="display: block;padding:15px;font-size:17px;text-align:center;color:red;margin:20px 0;">{$msg}{$list.id}: &nbsp;&nbsp;物品退货信息详情反馈</span>
+
+	
+<div class="back-detail" >     
+<empty name='list'>
+	<div class="personal_list_none_goods">
+				<p>没有该订单，<a href='{:U("index/index")}' class="red">查询错误</a></p>
+
+			</div>
+	<else />
+
+            
+      <div class="apply">  
+<h3 style="display: block;color:white;background:#f60">买家申请换货说明</h3>
+      
+<div class="apply-wrap">
+<div class="back-detail-asc">	<p>申请时间：{$list.create_time|date='Y-m-d H:i:s',###} </p><p>名称：{$list.goodid|get_good_name} </p>
+<p>金额：￥{$list.total} 数量：{$list.num}</p>
+ <p>标题{$list.title}</p>
+        
+ <p>原因：{$list.reason}</p>
+ </div>
+ <div class="back-good-img"><img src="{$list.goodid|get_cover_id|get_cover='path'}"  width="170" height="170"/>
+ </div>
+ </div>
+ 
+ </div>
+		 
+		
+			
+      <div class="apply-feedback">      
+    <h3 style="display: block;color:white;background: #f60">卖家反馈</h3>  
+          	<p>反馈时间：{$list.update_time|date='Y-m-d H:i:s',###}</p>  <p>状态：<span class="red"><php>
+			  $status=$list['status'];
+			  if($status==1){ echo "换货待审核";}; 
+			  if($status==2){ echo "同意换货";};
+              if($status==3){ echo "换货被拒绝";};
+			  if($status==4){ echo "换货中";};
+			  if($status==5){ echo "已换货";};</php></span></p> 
+
+    <if condition="$list.status eq '2'">
+	<p>换货发送地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$list.backname}  <i class="glyphicon glyphicon-map-marker"></i>{$list.address}  <i class="glyphicon glyphicon-phone"></i>{$list.contact}</span></p>
+	<p style="display: block;color:white;background: #f60">买家换货快递</p>
+	<form action="{:U("order/changekuaidi")}" method="post" class="form-horizontal">
+<input type="hidden" class="text input-large"  name="backid"  value="{$list.id}">
+<p>快递名称：<input type="text" class="text input-large"  name="tool"  ></p>
+<p>快递单号：<input type="text" class="text input-large"  name="toolid"  ></p>
+<p><input type="submit" class="btn_submit_pay" value="提交" /></p>
+
+</form>
+ <else /> 
+ </if>
+ <if condition="$list.status eq '3'">     
+ <p>拒绝原因：{$list.backlist}</p>
+ <else /> 
+ </if>  
+<if condition="$list.status eq '4'">
+	<p>换货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$list.backname}  <i class="glyphicon glyphicon-map-marker"></i>{$list.address}  <i class="glyphicon glyphicon-phone"></i>{$list.contact}</span></p>
+	<h3 style="display: block;color:white;background: #f60">买家换货使用快递</h3>
+	<p>快递名称：{$list.tool}</p>
+        
+ <p>快递单号：{$list.toolid}</p>
+
+
+<notempty name="list.changetool">
+
+
+	<h3 style="display: block;color:white;background: #f60">卖家发货使用快递</h3>
+	<p>快递名称：{$list.changetool}</p>
+        
+ <p>快递单号：{$list.changetoolid}</p>
+<p>卖家发货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$list.acceptname}  <i class="glyphicon glyphicon-map-marker"></i>{$list.acceptaddress}  <i class="glyphicon glyphicon-phone"></i>{$list.acceptphone}</span></p>
+</notempty>
+ <else /> 
+
+ </if>
+<if condition="$list.status eq '5'">
+	<p>退货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$list.backname}  <i class="glyphicon glyphicon-map-marker"></i>{$list.address}  <i class="glyphicon glyphicon-phone"></i>{$list.contact}</span></p>
+	<h3 style="display: block;color:white;background: #f60">买家换货使用快递</h3>
+	<p>快递名称：{$list.tool}</p>
+        
+ <p>快递单号：{$list.toolid}</p>
+<notempty name="list.changetool">
+
+
+	<h3 style="display: block;color:white;background: #f60">卖家发货使用快递</h3>
+	<p>快递名称：{$list.changetool}</p>
+        
+ <p>快递单号：{$list.changetoolid}</p>
+<p>卖家发货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$list.acceptname}  <i class="glyphicon glyphicon-map-marker"></i>{$list.acceptaddress}  <i class="glyphicon glyphicon-phone"></i>{$list.acceptphone}</span></p>
+</notempty>
+<h3 style="display: block;color:white;background: #f60">卖家发货使用快递</h3>
+<p>换货完成</p>
+ <else /> 
+ </if>
+
+
+
+	</empty>
+	
+	
+		
+
+
+</div>
+
+<!-- 个人中心 初始状态 end --></div><div id="memberInfo" style="display: none;"></div><div id="memberWealth" style="display: none;"></div><div id="myCollection" style="display: none;"></div><div id="myEarnings" style="display: none;"></div><div id="modifyPassword" style="display: none;"></div><div id="myCoupons" style="display: none;"></div><div class="cb"></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+      
+   
+</block>

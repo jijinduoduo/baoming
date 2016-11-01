@@ -1,0 +1,55 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+
+	<div class="red" style="clear:both; overflow:hidden; padding:10px;">个人资料</div>
+
+	<empty name='information'>
+	<div class="personal_info_none_goods">
+				<p>没有登录，<a href='{:U("user/login")}' class="red">请先登录</a></p>
+			
+				<div class="cb"></div>
+			</div>
+	<else />
+       
+    <form method="post" class="person-info" name="form" action="{:U('update')}">
+        
+		
+<ul style="margin-left:40px;">
+		  <volist name="information" id="po"> 
+		    <li><P><gt name='faceid' value='0'><img src="__IMG__/info.jpg" width="70" height="70"/><else />
+	<img src="{$faceid|get_cover='path'}" width="70" height="70" /></gt></p><p><a href="{:U('UcenterMember/edit?id='.$po['uid'])}" class="red">修改图像</p>
+		   </a></li>
+          <li><span>昵称:</span><input type="text" name="nickname" value="{$po.nickname}" /> </li>
+          <li><span>账号:</span>{:get_username()} </li>
+         <li><span>QQ:</span><input type="text" name="qq" value="{$po.qq}" /> </li>
+          <li><span>性别：</span><php>
+		  if($po["sex"]=="1"){echo "男";};
+		  if($po["sex"]=="2"){echo "女";};
+		   if($po["sex"]==0){echo "<select name='sex'><option  value='1'>男</option><option name='sex' value='2'>女</option></select>";};
+		  </php>
+		  
+		  </li>
+           <li><span>生日：</span><input type="text" name="birthday" value="{$po.birthday}" /> </li>
+            
+             <li><input type="hidden" name="uid" value="{$po.uid}" /> </li><BR>
+             <li><input type="submit" class="btn-xiugai orange"  value="修改" /> </li><BR>
+		</volist>
+</ul> 
+        </form>
+      
+	</empty>
+	
+	
+
+<!-- 个人中心 初始状态 end --></div></div>
+    <script type="text/javascript">_init_area();</script>
+      
+   
+</block>

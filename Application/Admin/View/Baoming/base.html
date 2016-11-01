@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title>报名系统</title>
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/bootstrap.css" />
+		<!--<link rel="stylesheet" href="Application/Admin/View/Baoming/css/multiple-select.css" />-->
+		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">-->
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/index.css" />
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/shouye.css" />
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/colpick.css" />
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/jquery-1.11.1.min.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/jquery.cookie.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/bootstrap.js" ></script>
+		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>-->
+		<!--<script type="text/javascript" src="Application/Admin/View/Baoming/js/multiple-select.js" ></script>-->
+		<script type="text/javascript" src="http://apps.bdimg.com/libs/angular.js/1.4.6/angular.min.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/colpick.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/index-ys.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/index.js" ></script>
+	</head>
+	<body ng-app="">
+		<!--header -->
+		<!--[if IE]><div style="background:#FDF2D3">您的浏览器版本过低，请使用高版本浏览器！</div><![endif]-->
+		<div id="head">
+			<div class="panel-heading header">
+				<h2 class="header-h2">天下通达（北京）网络技术有限公司—— 报名管理系统</h2>
+				<ul class="header-right">
+					<li class="header-right-1">登陆账户：<strong title="{:session('user_auth.username')}">{:session('user_auth.username')}</strong></li>
+					<li class="header-right-2"><a href="{:U('Public/logout')}" style="color:#fff;">退出系统</a></li>
+				</ul>
+			</div>
+		</div>
+		<!--header end -->
+		
+		<!--body-->
+		<block name="body">
+
+	</block>
+	</body>
+</html>

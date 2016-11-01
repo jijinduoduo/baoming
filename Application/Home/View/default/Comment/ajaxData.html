@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>test area</title>
+<script type="text/javascript" src="__JS__/jquery.min.js"></script>
+</head>
+
+<body>
+
+<table id="columns">
+<tr>
+<td id="main" style="-moz-border-radius-bottomleft:5px;">
+<div class="contenter">
+    <form method="post" action="__URL__/Setting/doset">
+    <table border="0" width="100%">
+	<tr height="50px">
+        <td align="right" style="font-size:14px"> QQ：&nbsp;&nbsp;&nbsp;</td>
+        <td>
+        <input type="text" id="userqq" name="userqq" value="369881779" class="input_text" style="width:130px" maxlength="12">
+        </td>
+    </tr>       
+    <tr height="50px">
+        <td align="right" style="font-size:14px"><font color="red" style="font-size:14px">*</font> 性别：&nbsp;&nbsp;&nbsp;</td>
+        <td>
+        <input type="radio" class="radio" name="gender" id="gender1" value="male"><label for="gender1">&nbsp;male</label>&nbsp;&nbsp;&nbsp;
+        <input type="radio" class="radio" name="gender" id="gender0" value="female"><label for="gender0">&nbsp;female</label>
+        </td>
+    </tr>
+    <tr height="50px">
+			<td align="right" style="font-size:14px">居住地：&nbsp;&nbsp;&nbsp;</td>
+			<td><select id="lone" name="lone" class="lone">
+							<option value="-1">选择省份</option>
+							<volist name="vol" id="vol">
+							<option value="{$vol['region_id']}">{$vol.region_name}</option>
+							</volist>
+							</select>
+							<select id="ltwo" name="ltwo" class="lie_bb"><option value="-1">选择城市</option></select>
+							<select id="lthree" name="lthree" class="lie_bb"><option value="-1">选择县城</option></select>
+						<script language="javascript">
+								$(document).ready(function(){
+									//$('#ltwo').hide();
+									//$('#lthree').hide();
+									//下面是一级下来的时候
+									$('#lone').change(function(){
+										if(this.value==-1){
+											//$('#ltwo').hide();
+											//$('#lthree').hide();
+											return;
+										}
+										//alert($('#lone'.value);
+										$.post('index.php?s=/Home/comment/ajaxData',{pid:this.value},
+										function(data,textStatus){
+											if(data){
+												//$('#lthree').hide();
+												$('#ltwo').empty();//清空原有的数据
+                                    
+												$.each(data, function(i,n){
+												
+													$("#ltwo").append('<option value="'+n.region_id+'">'+n.region_name+'</option>');
+												});
+												$('#ltwo').show();
+											}else{
+												alert('没有子级了!');
+											}
+										},'json');
+									});
+									//下面是二级下来的时候
+									$('#ltwo').change(function(){
+										if(this.value==-1){
+											//$('#lthree').hide();
+											return;
+										}
+										$.post('index.php?s=/Home/comment/ajaxData',{pid:this.value},function(data){
+											if(data){
+												$('#lthree').empty();//清空原有的数据
+												$("<option value='-1'>选择县城</option>").appendTo("#lthree");
+												$.each(data, function(i,n){
+													$("<option value='"+n.region_id+"'>"+n.region_name+"</option>").
+													appendTo("#lthree");
+												});
+												$('#lthree').show();
+											}else{
+												alert('没有子级了!');
+											}
+										},'json');
+									});
+								});
+								</script>
+			 </td>
+		</tr>
+			<tr height="50px">
+					<td align="right" style="font-size:14px">原始地：&nbsp;&nbsp;&nbsp;</td>
+			<td> 
+	<script language="javascript">
+	$(document).ready(function(){
+		<php>$ct_code=explode(' ',$my[city_code]);</php>
+		$('#hone').val("{$ct_code[3]}");
+		
+		//下面是一级取数以后
+		$('#hone').ready(function(){
+			if(this.value==-1){
+				return;
+			}
+			$.post('__URL__/Setting/ajaxData',{pid:"{$ct_code[3]}"},function(data){
+				if(data.status==1){
+					$('#htwo').empty();//清空原有的数据
+					$("<option value='-1'>选择城市</option>").appendTo("#htwo");
+					$.each(data.data, function(i,n){
+						$("<option value='"+n.region_id+"'>"+n.region_name+"</option>").appendTo("#htwo");
+					});
+					$('#htwo').val("<{$ct_code[4]}>");
+					
+				
+				}else{
+					//alert('没有子级了!');
+				}
+			},'json');
+		});
+
+		//下面是一级下来的时候
+		$('#hone').change(function(){
+			if(this.value==-1){
+				return;
+			}
+			$.post('__URL__/Setting/ajaxData',{pid:this.value},function(data){
+				if(data.status==1){
+					$('#htwo').empty();//清空原有的数据
+					$("<option value='-1'>选择城市</option>").appendTo("#htwo");
+					$.each(data.data, function(i,n){
+						$("<option value='"+n.region_id+"'>"+n.region_name+"</option>").appendTo("#htwo");
+					});
+					$('#htwo').show();
+					$('#hthree').val("-1");
+				}else{
+					alert('没有子级了!');
+				}
+			},'json');
+		});
+		//下面是二级取数以后的时候
+		$('#htwo').ready(function(){
+			if(this.value==-1){				
+				return;
+			}
+			$.post('__URL__/Setting/ajaxData',{pid:"<{$ct_code[4]}>"},function(data){
+				if(data.status==1){
+					$('#hthree').empty();//清空原有的数据
+					$("<option value='-1'>选择县城</option>").appendTo("#hthree");
+					$.each(data.data, function(i,n){
+						$("<option value='"+n.region_id+"'>"+n.region_name+"</option>").appendTo("#hthree");
+					});
+					$('#hthree').val("<{$ct_code[5]}>");				
+			
+				}else{
+					//alert('没有子级了!');
+				}
+			},'json');
+		});
+
+		//下面是二级下来的时候
+		$('#htwo').change(function(){
+			if(this.value==-1){				
+				return;
+			}
+			$.post('__URL__/Setting/ajaxData',{pid:this.value},function(data){
+				if(data.status==1){
+					$('#hthree').empty();//清空原有的数据
+					$("<option value='-1'>选择县城</option>").appendTo("#hthree");
+					$.each(data.data, function(i,n){
+						$("<option value='"+n.region_id+"'>"+n.region_name+"</option>").appendTo("#hthree");
+					});
+					$('#hthree').show();				
+			
+				}else{
+					alert('没有子级了!');
+				}
+			},'json');
+		});
+	});
+	</script>
+	<select id="hone" name="hone">
+	<option value="-1">选择省份</option>
+	<volist name="hvol" id="vol">
+	<option value="{$vol['region_id']}">{$vol['region_name']}</option>
+	</volist>
+	</select>
+
+	<select id="htwo" name="htwo"><option value="-1">选择城市</option></select>
+	<select id="hthree" name="hthree"><option value="-1">选择县城</option></select>
+			 </td>
+		</tr>
+
+	<tr height="100px">
+        <td align="right" valign="top" style="font-size:14px">服务需求：&nbsp;&nbsp;&nbsp;</td>
+        <td valign="top">
+        <textarea name="info" id="infomsg" class="input_text" style="width:350px;height:100px">$my[user_info]</textarea>
+        <div class="followtime">还能输入 <span id="nums">200</span> 个字符</div>
+        </td>
+    </tr>
+    <tr height="60px">
+        <td>&nbsp;</td>
+        <td><input type="submit" class="button1" value="保存" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="__URL__/<{$my[user_name]}>">取消</a></td>
+    </tr>
+    </table>
+		<script type="text/javascript">
+		<php>if($my[user_gender]==L('male')) {</php>
+			$('#gender1').attr("checked",true);
+		<php>}else{</php>
+			$('#gender0').attr("checked",true);
+		<php>}</php>
+		$("#infomsg").keyup(function(){
+			var len=$.trim($('#infomsg').val()).length;
+			len=200-len;
+			if (len<0) {
+				$('#infomsg').val($.trim($('#infomsg').val()).slice(0,200));
+				len=0;
+			}
+			$('#nums').html(len);
+		});
+		$('#nums').html(200-$.trim($('#infomsg').val()).length);
+		$("#userqq").keyup(function(){	
+	  if(isFinite($('#userqq').val())){
+			//$('#userqq').val($('#userqq').val());
+	   }else{
+			$('#userqq').val(0);
+	   }
+		
+      });
+	</script>
+    </form>
+</div>
+</td>
+<td id="sidebar"><include file="Space:homeside"/></td>
+</tr>
+</table>
+
+</body>
+</html>

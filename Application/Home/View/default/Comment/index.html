@@ -1,0 +1,163 @@
+<extend name="Base/s1"/>
+<block name="body">
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 --></div><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+<span  style="display: block;font-size:17px;text-align:center;color:red;margin:20px 0;">评价{$comment.goodid|get_good_name}</span>
+<link type="text/css" rel="stylesheet" href="__CSS__/application.css">
+<script type="text/javascript" src="__JS__/jquery.raty.min.js"></script>
+
+	<form action="{:U('comment/add')}" class="comment_area"  method="post" name="actform"  >
+<h5>商品评价</h5>
+<table   class="comment_comment"  width="100%">
+        <thead>
+            <tr>
+                <th width="45%">商品</th>
+				<th width="10%" >好评</th>
+				<th width="10%" >中评</th>
+                <th width="10%">差评</th>
+				 <th width="25%"></th>
+               
+				
+              </tr>
+
+   <tr>
+                <td width="45%" align="center"><p> <a href="{:U('Article/detail?id='.$comment['goodid'])}"> <img src="{$comment.goodid|get_cover_id|get_cover='path'}" width="50" height="50"/></a><a href="{:U('Article/detail?id='.$comment['goodid'])}">{$comment.goodid|get_good_name}</a></p></td>
+				<td width="10%" align="center"><input type="radio" onclick="set(this)" value="3"  checked="" name="score" class="score"><img src='__IMG__/ok.png'></td>
+				<td width="10%" align="center"><input type="radio" onclick="set(this)" value="2" name="score" class="score"><img src='__IMG__/common.png'></td>
+                <td width="10%" align="center"><input type="radio" onclick="set(this)" value="1" name="score" class="score"><img src='__IMG__/bad.png'></td>
+				 <td width="25%"></td>
+               
+              </tr>
+ <tr>
+                <td width="45%" align="center"></td>
+				<td width="10%" ></td>
+				
+               
+              </tr>
+  </table>
+   <script type="text/javascript">
+function set(obj){
+    $("#score").val(obj.value);
+}
+</script>  <h5>商品评分</h5>
+<div class="goods-wrap" style="float:left;width:700px;margin-left:40px;"> </div>	
+<div style="width:600px;float:left;padding:10px;">
+  <div class="star"><div class="title">商品描述评价</div>
+    <div id="goodid" class="target-demo"></div>
+    <div id="goodid-hint" class="hint"></div>
+  </div>
+  <div class="star "><div class="title">服务态度评价</div>
+    <div id="service" class="target-demo"></div>
+    <div id="service-hint" class="hint"></div>
+  </div>
+<div class="star "><div class="title">物流速度评价</div>
+    <div id="delivery" class="target-demo"></div>
+    <div id="delivery-hint" class="hint"></div>
+  </div>
+<div class="star ">
+<input type="hidden" id="score" name="score" value="{$comment.score}"> 
+<input type="hidden"  class="shopid" name="goodid" value="{$comment.goodid}"> 
+<input type="hidden"  class="good" name="goodscore" value=""> 
+<input type="hidden"  class="service" name="servicescore" value="">
+<input type="hidden"  class="delivery" name="deliveryscore" value=""> 
+<textarea rows="3" cols="50" name="content"></textarea>
+<div>
+    <div class="star ">  <input type="submit"  class="btn-central orange" name="submit" value="提交">   </div></div>
+<script type="text/javascript">
+    $(function() {
+      $.fn.raty.defaults.path = '__IMG__';
+      $('#goodid').raty({
+	  	number: 5,//多少个星星设置		
+		targetType: 'hint',//类型选择，number是数字值，hint，是设置的数组值
+        path      : '__IMG__',
+		hints     : ['差','一般','较好','好','非常好'],
+        cancelOff : 'cancel-off-big.png',
+        cancelOn  : 'cancel-on-big.png',
+        size      : 24,
+        starHalf  : 'star-half-big.png',
+        starOff   : 'star-off-big.png',
+        starOn    : 'star-on-big.png',
+        target    : '#goodid-hint',
+        cancel    : false,
+        targetKeep: true,
+		targetText: '请选择评分',
+
+        click: function(score, evt) {
+$('input.good').val(score);
+          
+        }
+      });    
+	  
+	   
+    });
+    $(function() {
+      $.fn.raty.defaults.path = '__IMG__';
+      $('#service').raty({
+	  	number: 5,//多少个星星设置		
+		targetType: 'hint',//类型选择，number是数字值，hint，是设置的数组值
+        path      : '__IMG__',
+		hints     : ['差','一般','较好','好','非常好'],
+        cancelOff : 'cancel-off-big.png',
+        cancelOn  : 'cancel-on-big.png',
+        size      : 24,
+        starHalf  : 'star-half-big.png',
+        starOff   : 'star-off-big.png',
+        starOn    : 'star-on-big.png',
+        target    : '#service-hint',
+        cancel    : false,
+        targetKeep: true,
+		targetText: '请选择评分',
+
+        click: function(score, evt) {
+        $('input.service').val(score);
+		
+        }
+      });    
+	 $(function() {
+      $.fn.raty.defaults.path = '__IMG__';
+      $('#delivery').raty({
+	  	number: 5,//多少个星星设置		
+		targetType: 'hint',//类型选择，number是数字值，hint，是设置的数组值
+        path      : '__IMG__',
+		hints     : ['差','一般','较好','好','非常好'],
+        cancelOff : 'cancel-off-big.png',
+        cancelOn  : 'cancel-on-big.png',
+        size      : 24,
+        starHalf  : 'star-half-big.png',
+        starOff   : 'star-off-big.png',
+        starOn    : 'star-on-big.png',
+        target    : '#delivery-hint',
+        cancel    : false,
+        targetKeep: true,
+		targetText: '请选择评分',
+
+        click: function(score, evt) {
+         $('input.delivery').val(score);
+		 
+        }
+      });      
+	   
+    });
+   });
+  </script>
+
+
+
+
+
+       </form>
+
+	
+	
+		
+
+
+</div>
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+   
+   
+</block>

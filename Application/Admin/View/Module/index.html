@@ -1,0 +1,67 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>模块列表</h2>
+
+	</div>
+    <div class="tools">
+        <button class="btn ajax-post" target-form="ids" url="{:U('Module/setStatus',array('status'=>1))}">启 用</button>
+        <button class="btn ajax-post" target-form="ids" url="{:U('Module/setStatus',array('status'=>0))}">禁 用</button>
+    </div>
+
+	<!-- 数据列表 -->
+	<div class="data-table">
+        <div class="data-table table-striped">
+<table class="">
+    <thead>
+        <tr>
+		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
+		<th class="">标识</th>
+		<th class="">名称</th>
+		<th class="">描述</th>
+		<th class="">安装时间</th>
+		<th class="">是否默认</th>
+		<th class="">状态</th>
+		<th class="">操作</th>
+		</tr>
+    </thead>
+    <tbody>
+	<notempty name="list">
+		<volist name="list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="ids[]" value="{$vo.id}" /></td>
+			<td>{$vo.name}</td>
+			<td>{$vo.title}</td>
+			<td><span>{$vo.description}</span></td>
+			<td><span><present name="vo['status']">{$vo.create_time|time_format}<else/>-</present></span></td>
+			<td><present name="vo['default']"><eq name="vo['default']" value="1">默认模块<else/><a href="{:U('module/setDefault?id='.$vo['id'])}" class="ajax-get">设置</a></eq><else/>-</present></td>
+			<td>{$vo['status_text']?$vo['status_text']:'未安装'}</td>
+			<td>
+			 <present name="vo['status']">
+                <a href="{:U('module/edit?id='.$vo['id'])}">配置</a>
+                <a href="{:U('setStatus?ids='.$vo['id'].'&status='.abs(1-$vo['status']))}" class="ajax-get">{$vo.status|show_status_op}</a>
+                <a href="{:U('module/uninstall?id='.$vo['id'])}" class="ajax-get confirm">卸载</a>
+             <else/>
+                <a href="{:U('module/install?name='.$vo['name'])}" class="ajax-get confirm">安装</a>
+			 </present>
+            </td>
+		</tr>
+		</volist>
+		<else/>
+		<td colspan="7" class="text-center"> aOh! 暂时还没有内容! </td>
+		</notempty>
+	</tbody>
+    </table>
+
+        </div>
+    </div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+    <script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+</block>

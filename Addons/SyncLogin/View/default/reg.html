@@ -1,0 +1,86 @@
+﻿<extend name="Base/common"/>
+
+<block name="body">
+    <meta charset="UTF-8">
+      
+    <div class="container" style="margin:50px auto 10px 200px;border-bottom: 2px solid #999;">
+        <a style="float:left;margin-right:10px;" href="#"><img src="{$user.head}" width="50" height="50" /></a>
+        <div style="float:left;margin-right:10px;overflow: hidden;zoom: 1;">
+            <div>
+                    <b>欢迎你，{$user.nick}，您的{$user.type}帐号授权成功</b>！<br>
+                    <span>接下来完成简单的设置，即可用{$user.type}帐号直接登录。</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container"style="margin:30px auto 0 145px;">
+        <div class="row">
+            <div class="col-sm-6">
+                <form class="login-form" action="{:U('home/addons/execute',array('_addons'=>'SyncLogin','_controller'=>'Register','_action'=>'doregister'))}" method="post">
+                      <input type="hidden" name="other_type" value="{$user.type}" >
+                      <input type="hidden" name="other_openid" value="{$token.openid}" >
+                      <input type="hidden" name="other_access_token" value="{$token.access_token}" >
+                      <input type="hidden" name="other_refresh_token" value="{$token.refresh_token}" >
+                      <div class="legend">初次登陆需注册新账号</div>
+                      <div class="form-group">
+                        <label class="control-label" for="inputUsername">用户名</label>
+                        <div class="controls">
+                          <input type="text" id="inputUsername" class="form-control" placeholder="请输入用户名" datatype="*1-16" value="{$user.nick}" name="uname">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label" for="inputEmail">邮箱</label>
+                        <div class="controls">
+                          <input type="text" id="inputEmail" class="form-control" placeholder="请输入邮箱" value="" name="email">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label" for="inputPassword">密码</label>
+                        <div class="controls">
+                          <input type="password" id="inputPassword"  class="form-control" placeholder="请输入密码" datatype="*6-20" name="password">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label" for="inputRePassword">确认密码</label>
+                        <div class="controls">
+                          <input type="password" id="inputRePassword"  class="form-control" placeholder="请输入确认密码" datatype="*6-20" name="repassword">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="controls">
+                          <button type="submit" class="btn btn-success">注 册</button>
+                          <button type="reset" class="btn btn-danger">重 置</button>
+                        </div>
+                      </div>
+                    </form>
+            </div>
+            <div class="col-sm-6">
+                <form class="login-form" action="{:U('home/addons/execute',array('_addons'=>'SyncLogin','_controller'=>'Register','_action'=>'dobind'))}" method="post">
+                      <input type="hidden" name="other_type" value="{$user.type}" >
+                      <input type="hidden" name="other_openid" value="{$token.openid}" >
+                      <input type="hidden" name="other_access_token" value="{$token.access_token}" >
+                      <input type="hidden" name="other_refresh_token" value="{$token.refresh_token}" >
+                      <div class="legend">绑定已有账号</div>
+                      <div class="form-group">
+                        <label class="control-label" for="inputEmail">邮箱</label>
+                        <div class="controls">
+                          <input type="text" id="inputEmail" class="form-control" placeholder="请输入邮箱" value="" name="email">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label" for="inputPassword">密码</label>
+                        <div class="controls">
+                          <input type="password" id="inputPassword"  class="form-control" placeholder="请输入密码" datatype="*6-20" name="password">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="controls">
+                          <button type="submit" class="btn btn-success">绑 定</button>
+                          <button type="reset" class="btn btn-danger">重 置</button>
+                        </div>
+                      </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+</block>

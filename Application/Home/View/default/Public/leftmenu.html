@@ -1,0 +1,27 @@
+<h3><a rel="nofollow" href='javascript:vod(0)' class="home-me">我的会员中心</a></h3>
+<h3><a rel="nofollow" class="home-me" >订单中心</a></h3>
+<dl>
+<dd><a rel="nofollow" href='{:U("center/index")}'>我的主页</a></dd>
+<dd><a rel="nofollow" href='{:U("center/allorder")}'>订单管理</a></dd>
+<dd><a rel="nofollow" href='{:U("Collect/index")}'>我的收藏</a></dd>
+<dd><a rel="nofollow" href='{:U("UserCoupon/index")}'>优惠券</a></dd>
+<dd><a rel="nofollow" href='{:U("comment/lists")}'>评价管理</a></dd>
+
+</dl>
+
+<h3><a rel="nofollow" class="home-me" >个人信息</a></h3>
+
+<dl class="last">
+<dd><a href='{:U("account/security")}'>安全中心</a></dd>
+<dd><a href='{:U("member/index")}'>个人档案</a></dd>
+<dd><a rel="nofollow" href='{:U("address/index")}'>地址管理</a></dd>
+
+<dd><a rel="nofollow" href='{:U("shopcart/index")}'>我的购物车</a></dd>
+<dd><a rel="nofollow" href='{:U("UserEnvelope/index")}'>站内信</a></dd>
+</dl> <script>/* 左边菜单高亮 */
+            url = window.location.pathname + window.location.search;
+            url = url.replace(/(\/(p)\/\d+)|(&p=\d+)|(\/(id)\/\d+)|(&id=\d+)|(\/(group)\/\d+)|(&group=\d+)/, "");
+			
+            $("a[href='" + url + "']").addClass("current") ;
+			</script>
+   

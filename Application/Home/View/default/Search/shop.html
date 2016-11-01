@@ -1,0 +1,38 @@
+<extend name="Base/s1"/>
+
+
+
+<block name="body">
+
+<div class="main"><div class="ad"><a rel="nofollow" href="#" class="ad_a"></a></div><div class="search_main_top">
+    <div class="main_nav"><a rel="nofollow" href="{:U('index/index')}">首页</a>&gt;<p> <a href="{:U('Search/index?words='.$keyword)}">“{$keyword}”</a>的搜索结果 </p>
+     </div><div class="ml_search_top">
+	 <empty name="childlist"><else/> <div class="ml_top"><h2 class="mlt_title">在以下分类中找</h2>
+	  <div class="mlt_link"><label><a href="javascript:vod(0);">所有</a>
+	  </label>
+	  <volist name="childlist" id="vo"> <span class="sep">|</span><label class="red"> <a href="{:U('Article/index?category='.$vo['name'])}">{$vo.title}</a></label></volist>
+	  </div><div class="cb"></div>
+	  </div>
+	  </empty>
+	  </div ></div>
+	  
+	  <div class="ml_content"><ul class="ml_content_main ml_content_main_ppt">
+      <empty name="list">aOh! 暂时还没有内容!
+	  <else/>
+         <volist name="list" id="vo">
+          <li>
+                    <a href="{:U('shop/center?id='.$vo['id'])}"> <img src="{$vo.logo|get_cover='path'}"/></a>
+             <p> <a href="{:U('shop/center?id='.$vo['id'])}"> {$vo.shopname}</a></p>
+                        
+              </li>      
+            </volist>
+			
+			</empty></ul></div>
+			
+			  <!-- 分页 -->
+        <div class="page">
+{$page}
+        </div>  
+			</div>
+    
+</block>

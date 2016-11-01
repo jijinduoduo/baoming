@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title>报名系统</title>
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/bootstrap.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/index.css" />
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/colpick.css" />
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/jquery-1.11.1.min.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/jquery.cookie.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/bootstrap.js" ></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+		
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/colpick.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/index-ys.js" ></script>
+		<style>#juzhong{margin:0 auto;} .col-lg-6{float:none;} .col-xs-12{float:none;}.chajian2{z-index:9}</style>
+	</head>
+	<body>	
+		
+		
+		<if condition = "($data[0]['body'] eq null) OR ($data[0]['body'] eq ' ')"> 
+				<div class="col-lg-6 col-xs-12" id="juzhong">
+					<div class="panel">
+						<div class="panel panel-title text-center" id="titles">{$data[0]['title']}</div>
+						<div class="panel panel-body body-content" id="bodys">
+							<div class=" panl text-right"><a href="{:U('Baoming/search')}">报名查询</a></div>
+							
+							<div data-val="text-only" class="wy"><input type="hidden" class="form-control"  data-val="text-only" name="data[]" value={$data[0]['id']} /></div>
+							
+							<div data-val="text-only" class="wy"><input type="text" class="form-control" placeholder="姓名" data-val="text-only" name="data[] " required="required"/></div>
+							<div data-val="tel-only" class="wy"><input type="tel" class="form-control" placeholder="手机号" data-val="tel-only" name="data[]" id="phone"  required="required"/></div>
+							<div data-val="null" class="clearfix wy" id="yanzhengma"><input type="text" class="form-control a70" placeholder="验证码" maxlength="8" data-val="null" name="yzm"  required="required"/><input type="button" value="获取验证码" class="btn btn-info a30" ></div>
+							<div data-val="null" class="wy" id="zhaopianyanzheng"><input type="file" name="photo" style="width: 100%;height: 100%;opacity: 0;position: absolute;top: 0;left: 0;"><img src="Application/Admin/View/Baoming/img/shuiyin.png" width="100%" height="100%"></div>
+							<p data-val="null" class="clearfix" id="houm"></p>
+							<div class="tjiao text-center"><input type="submit" value="提交" class="btn btn btn-primary"></div>
+							
+						</div>
+					</div>
+				</div>
+				<else />
+				<form action="{:U('Baoming/add_user')}" method="post" enctype="multipart/form-data">
+					<?php  
+			
+						echo json_decode($data[0]['body']);						
+					?>
+				</form>
+				</if>
+		
+		<!--<form action="" method="post">
+		<input type="text" name="phone" id="phone" value="">
+		<a href="javascript:void(0)" id="sendSms">发送验证码</a>
+		<button>提交</button>
+	</form>-->
+	</body>
+	<script>
+			// 发送短信的请求
+			var on=false;
+	$(function(){
+		
+		addevent();
+		function chajian(){
+						$(".chajian").click(function(){
+							$(".chajian2").toggle();
+							
+							//$(".chajian2").show();
+							$(".chajian2").css("width",$(".chajian")[0].clientWidth+'px');
+							
+						})
+						window.onresize=function(){
+							$(".chajian2").hide();
+							if($(".chajian2").length>=1){
+								$(".chajian2").css("width",$(".chajian")[0].clientWidth+'px');
+							}
+							
+						}
+						$('.chajian2').mouseover(function(){
+							$(".chajian2").show();
+						})
+						$('.chajian2').mouseout(function(){
+							$(".chajian2").hide();
+						})
+						var array=[];
+						$(".chajian2 option").click(function(){
+							var val=$(this).val();
+							var s=$.inArray(val,array); 
+							if(s==-1){
+								array.push(val)
+							}
+							else{
+								
+								var index=array.indexOf(val);
+								array.splice(index,1);
+							}
+								
+						
+							
+							$(this).parent().prev("input").val(array);
+//							$(this).parent().prev("input").val()
+//							$(this).val()
+						})
+					}
+					chajian();
+		
+	})
+	
+	function addevent(){
+		$("input[type='file']").change(function(){ //图片显示
+			
+	 		var reader = new FileReader();
+	          reader.onload = function (e) {
+	          $("#zhaopianyanzheng img").attr('src',e.target.result)
+	          }
+	           reader.readAsDataURL(this.files[0]);
+		})
+		//最后的提交
+		$("input[type='submit']").click(function(){
+			if($("#yanzhengma").css("display")=="block"){
+				if(checkPhone()==false||yanzhengma()==false){
+					return false;
+				}
+			}
+		})
+		//短信验证
+		$('#yanzheng').blur(function(){
+			yanzhengma()	
+		})
+		//验证手机号码
+		$("input[type='tel']").eq(0).blur(function(){
+			checkPhone();
+		})
+		//短信验证
+		$('input[value="获取验证码"]').click(function(){
+			checkduanxin($(this));
+		})
+		var data=$(".wy input[type='tel']:not('#phone')");
+		$.each(data, function(i,item) {
+			$(item).blur(function(){
+				checktel(item)
+			})
+		});
+		//刷新后继续读秒
+		var du=$.cookie("name");
+		if(du>0){
+				
+				if(du<=0){
+					//checkPhone();
+					$('.a70').next("input").val("获取验证码").attr("disabled","disabled");
+						
+				}
+				else{
+					var s=setInterval(function(){
+						
+						if(du>0){
+							du--;
+							$.cookie("name",du);
+						
+							$('.a70').next("input").val(du+"秒后可重新发送");
+							$('.a70').next("input").attr("disabled","disabled");
+						}
+						else{
+							clearInterval(s)
+							$('.a70').next("input").val("获取验证码");
+						}
+					},1000)
+					
+				}
+		}
+		else{
+			$('.a70').next("input").val("获取验证码").attr("disabled","disabled");
+		}
+	}
+	//验证手机号码
+	function checkPhone(){ 
+	    var phone = document.getElementById('phone').value;
+		    if(!(/^1[34578]\d{9}$/.test(phone))){
+		    	
+		        alert("手机号码有误，请重填");  
+		        return false; 
+		    } 
+		    else{
+		    	$('.a70').next("input").removeAttr("disabled");
+		    	return true;
+		    }
+	}
+	//手机号码2
+	function checktel(item){
+		
+		
+		if(!(/^1[34578]\d{9}$/.test($(item).val()))){
+		    	
+		        alert("手机号码有误，请重填");  
+		        return false; 
+		    } 
+		    else{
+		    	//$('.a70').next("input").removeAttr("disabled");
+		    	return true;
+		    }
+	}
+	//短信验证
+	function checkduanxin(e){
+			
+			// 将手机号码发送到服务器
+			var phone = $('#phone').val();
+			var j=30;
+			// 当点击a连接的时候，发送ajax请求到服务器（发送短信）
+			$.post('{:U("Baoming/msg")}', {phone:phone}, function(msg){
+				if (msg.status == 0) {
+					$(e).attr("disabled","disabled").val("发送成功");
+						//console.log(j);
+							setInterval(function(){
+								
+								j--;
+								if(j<=0){
+									$.cookie('name','',{ expires: -1 });
+									$(e).val("获取验证码");
+									return;
+								}
+								else{
+									$(e).attr("disabled","disabled")
+									$.cookie("name",j);
+									$(e).val(j+"秒后可重新发送");
+									if(j<=0){
+										$.cookie('name','',{ expires: -1 });
+										$(e).val("获取验证码");
+									}
+								}
+							
+							},1000)
+					
+				
+				} else {
+					alert('发送失败');
+				}
+			}) 
+	}
+	
+	
+//	
+
+		function yanzhengma(){
+			var yzm = $('input[name="yzm"]').val();
+			//alert(yzm);
+			
+			$.ajax({
+				type:"post",
+				url:'{:U("Baoming/checkyzm")}',
+				data:{'yzm':yzm},
+				async:false,
+				dataType:'json',
+				success:function(msg){
+					console.log(msg);
+					if (msg == 0) {
+						//alert('验证码正确');
+						on=true;
+						$("#yanzhengma").removeClass("has-error");
+						return true;
+						
+					} else {
+						alert('验证码错误');
+						on=false;
+						$("#yanzhengma").addClass("has-error");
+					
+						return false;
+					} 
+				}
+				
+			});
+			if(on==false){
+				return false;
+			}
+			
+		}
+		
+	</script>
+</html>

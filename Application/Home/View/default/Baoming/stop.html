@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		 <meta  charset="utf-8" name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<title></title>
+	</head>
+	<style>
+
+	#box{border: 1px solid #d4d4d4;width: 30%;margin: 0 auto;margin-top: 5%;padding: 2rem ;height: 6em;}
+	.b1{width: 28%; height: 100%;float: left;margin-left: 2%;}
+	.b2{width: 70%;float: left;}
+	img{width: 5em;height: 5em;display: block;}
+	a{text-decoration: none;color: #666;padding: 5px 10px;display: inline-block;border: 1px solid #666;font-size: 12px;}
+	strong{font-size: 1.3em;}
+		@media only screen and (max-width:600px ) {
+			#box{border: 1px solid #d4d4d4;width: 100%; padding: 2rem  0;}
+		}
+	</style>
+	<body>
+		
+			<div id="box">
+				<div class="b1"><img src="Application/Admin/View/Baoming/img/j.png"></div>
+				<div class="b2">
+					<strong>{$content}</strong><br />
+					<span>3s</span>
+					<span style="color: darkgray;font-size: 14px;">后自动转到上级页面</span>
+					<p><a href="javascript:window.self.close()" id="close">关闭页面</a>　<a href="javascript:void(0)" id="shang">返回上级页面</a> </p>
+				</div>
+			</div>
+		<script>
+		var close1 =document.getElementById("close");
+		var shang=document.getElementById("shang");
+		var i=3;
+		close1.onclick=function(){
+			window.open('','_self','');
+			window.close();
+		}
+		shang.onclick=function(){
+			history.go(-1)
+		}
+		var set=setInterval(function(){
+			i--;
+			if(i<=0){
+				
+				window.history.go(-1);
+			}
+			var s=document.getElementsByTagName("span")[0];
+			s.innerText=i+"s";
+			
+		},1000);
+		
+		</script>
+	</body>
+</html>

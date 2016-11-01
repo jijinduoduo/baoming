@@ -1,0 +1,117 @@
+<extend name="Public/base"/>
+#tab1 table{border-right:1px solid #F00;border-bottom:1px solid #F00}
+#tab1 table td{border-left:1px solid #F00;border-top:1px solid #F00}
+<block name="body">
+	<div class="main-title">
+		<h2>
+			{$info['id']?'编辑':'新增'}数据
+		
+		</h2>
+	</div>
+	<ul class="tab-nav nav">
+	<li data-tab="tab1" class="current"><a href="javascript:void(0);">报表详情</a></li>
+	</ul>
+<div class="tab-content">						
+
+	<div id="tab1" class="tab-pane in tab1">
+	<form action="{:U()}" method="post" class="form-horizontal">
+	
+		<div class="form-item">
+			<label class="item-label">销售额<span class="check-tips">（用于显示的文字）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large"  name="sales"value="{$info.sales}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">退回<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="back" value="{$info.back}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">换货<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="change" value="{$info.change}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">取消<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="cancel" value="{$info.cancel}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">利润<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="profits" value="{$info.profits}">
+			</div>
+		</div>		
+
+<div class="form-item">
+			<label >备注<span class="check-tips"></span></label>
+			<div class="controls">
+				<textarea name="info" class="textarea input-large" >{$info.info}</textarea>
+			</div>
+		</div>
+
+
+     
+		<div class="form-item">
+			<input type="hidden" name="id" value="{$info.id|default=''}">
+	
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form></div>
+	
+	<div id="tab2" class="tab-pane  tab2">
+	<table  id="table" class="gridtable" width="100%">
+        <thead>
+            <tr>
+			 <th >商品编号</th>
+                <th >商品名</th>
+				<th >净重</th>
+                <th >价格</th>
+                <th >数量</th>
+                
+            </tr>
+        </thead>  </tbody>  
+           <tr>
+		 <td align="center">{$info.goodid}</td>
+                <td><A href="{:U('Home:Article/detail?id='.$vo['goodid'])}" > <img src="{$info.goodid|get_cover_id|get_cover='path'}"  width="40" height="40"/>{$info.goodid|get_good_name}</A></td>
+               <td align="center"> <span class="weight">{$info.goodid|get_weight}</span>g</td>
+                <td align="center">{$info.goodid|get_good_price}</td>
+                 <td align="center">{$info.num}</td>
+                
+            </tr>
+                         </tbody></table>  <BR/>  
+		  <div style="color:red">
+		  <p style="text-align:right;color:red;width:100%">小计：{$info.total}元 </p> 
+		   <p style="text-align:right;color:red;width:100%">申请时间：{$info.time|date='Y-m-d H:i:s'}</p> 
+		    <p style="text-align:right;color:red;width:100%">收货人：{$info.total|get_realname} </p> 
+		  
+		    <p style="text-align:right;color:red;width:100%">收货地址：{$info.total|get_address} </p> 
+		   <p style="text-align:right;color:red;width:100%">联系电话：{$info.time|get_cellphone}</p> </div>
+
+		    <div class="form-item" style="border-top:1px solid #000">
+			{$info.goodid|get_good_content}
+			
+		</div>
+		  </div>
+	</div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+	if($('ul.tab-nav').length){
+		//当有tab时，返回按钮不显示
+		$('.btn-return').hide();
+	}
+	$(function(){
+		//支持tab
+		showTab();
+	})
+
+</script>
+</block>

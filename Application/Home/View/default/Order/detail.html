@@ -1,0 +1,69 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main">
+
+<div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+
+</div><div class="center_right">
+
+	<span class="red" style="display: block;padding:15px;font-size:17px;">订单详情查看(发货，收货，快递查询)</span>
+
+	<empty name='detaillist'>
+	<div class="personal_info_none_goods">
+				<p>没有该订单，<a href='{:U("index/index")}' class="red">查询错误</a></p>
+			
+				<div class="cb"></div>
+			</div>
+	<else />
+       
+    
+        
+      
+		<table style="display: block;padding:5px;" id="table" class="detailtable" width="100%">
+        <volist name="detaillist" id="po"> 
+         <tbody width="900px;">
+		   <tr width="100%">
+                <th width="35%">订单号：{$po.orderid}</th>
+                <th width="28%">下单时间：{$po.create_time|date='Y-m-d H:i',###}</th> 
+				<th>物流：{$po.express|default="暂无"}</th>
+				<th >运单号：{$po.express_code|default="暂无"}</th>
+            </tr>
+        
+      
+         <volist name="po['id']" id="vo"> 
+          <tr>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.goodid|get_good_name}</span></span> </A></td>
+                <td align="center">规格：{$vo.parameters|default="无"}</td>
+                <td align="center">单价：{$vo.price}  元</td>
+                <td >数量： {$vo.num} 件</td>
+                
+             
+            </tr> </volist>
+		 
+		 <tr><td colspan="4" align="right">金额：<span class="red">{$po.total_money|default="0"}</span>元（运费:<span class="red">{$po.ship_price|default="0"}</span>元）</td></tr>
+			
+         
+       </volist>	
+      <volist name="translist" id="vo">
+	  <tr><td colspan="5" align="left">收货地址：<span class="red">{$vo.realname} {$vo.cellphone}  {$vo.province} {$vo.city} {$vo.area}{$vo.address}</span></td></tr>
+	<!-- 自营还是入驻商家判断 -->	
+		  
+ <tr><td colspan="5" align="left">发货地址：<span class="red"> {$po.send_name} {$po.send_contact}{$po.send_address} </span>
+ </td></tr>
+	<!-- 自营还是入驻商家判断 end -->	
+	  </volist>  
+       </tbody>
+    </table> 
+	</empty>
+	 <span class="red" style="display: block;padding:15px;font-size:17px;">快递详情</span> <div id="retData" style="margin-left:20px">{$kuaidata|default="暂无"}</div>
+</div>
+
+<!-- 个人中心 初始状态 end --></div>
+   
+       
+   
+</block>

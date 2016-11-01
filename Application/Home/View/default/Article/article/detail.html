@@ -1,0 +1,25 @@
+<extend name="Base/common"/>
+
+
+
+<block name="body">
+    
+        <!-- Contents
+        -->
+      <div id="container_article" style='min-height:320px;'>
+			<h2>{$info.title}</h2>
+			<p class="ctime">
+				 发表于 {$info.create_time|date='Y-m-d H:i',###}</p>
+				 <!--<span class="pull-right">
+					<article:prev name="prev" info="info">
+                        <a href="{:U('?id='.$prev['id'])}">上一篇</a>
+                    </article:prev>
+                    <article:next name="next" info="info">
+                        <a href="{:U('?id='.$next['id'])}">下一篇</a>
+                    </article:next>
+				</span> -->
+			
+		 <div id="artticle_contents">{$info.content}</div>
+      
+    </div>
+</block>

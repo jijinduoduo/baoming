@@ -1,0 +1,228 @@
+<extend name="Base/common"/>
+<block name="body">
+<!--container begin-->
+<div class="flexcontainer">
+<!--menu begin-->
+<div class="nav-wrap">
+ <!--fenlei begin--> <div class="nava">
+    <div class="goods">
+      <div>
+        <h2><span class="grid"><img src="__IMG__/grid.png"></span> <span>商品分类</span><b></b></h2>
+      </div>
+       <div class="all-goods"  id="all-goods">
+<volist name="category" id="cate">
+<div class="item">
+          <div class="product"><h4><a href="{:U('home/article/index/pid/'.$cate['id'])}">{$cate.title}</a> </h4></div>
+            <if condition="$cate['child'] neq false">
+              <div class="product-wrap pos"> 
+            <!--子分类-->
+            <div class="cf">
+              <div class="fl wd252 pr20">
+                <volist name="cate['child']" id="cate_sub">
+                 <ul class="cf"> <li><span><a href="{:U('home/article/lists/pid/'.$cate_sub['id'])}">{$cate_sub.title}</a></span>
+                   <if condition="$cate_sub['child']">
+ <volist name="cate_sub['child']" id="cate_sub_two">
+<a href="{:U('home/article/lists/pid/'.$cate_sub_two['id'])}">{$cate_sub_two.title} </a>
+           
+                            </volist>
+                       
+                    </if> 
+              
+                </li> </ul>
+                </volist>
+               
+</div>
+            </div> </div>
+            </if>
+       
+        </div>
+</volist>
+        
+      </div></div>
+
+    <!--fenlei over-->
+    <ul class="menu">
+      <think:nav name="nav">
+                    	<eq name="nav.pid" value="0">
+                       <li>
+                            <a href="{$nav.url|get_nav_url}" target="<eq name='nav.target' value='1'>_blank<else/>_self</eq>">{$nav.title}</a>
+                      </li>
+                        </eq>
+                    </think:nav>
+    </ul>
+    
+  </div>   <script>
+    $(".menu-list li").eq(0).css('background','#474747');  
+     </script> <!--首页高亮-->  
+</div><!--menu over-->
+    
+<!--pic begin--><!--幻灯片首个li设置class为CurrentPic-->
+<script>$().ready(function () {
+	  $(".LunBoslide>li").eq(0).attr("class","CurrentPic");
+	  })</script>
+	  <div class="screen">
+<div class="LunBo">
+<ul class="LunBoslide"><volist name="slide" id="vo"> <li><a href="{$vo.url|get_nav_url}" > <img src="{$vo.icon|get_cover='path'}"/></a> </li></volist>
+</ul>
+<div class="LunBoNum">
+<span class="CurrentNum">1</span>
+<span>2</span>
+<span>3</span>
+<span>4</span>
+<span>5</span>
+</div>
+</div>
+
+<script type="text/javascript" language="javascript">
+var PicTotal = 5;
+var CurrentIndex;
+var ToDisplayPicNumber = 0;
+$("div.LunBo div.LunBoNum span").click(DisplayPic);
+function DisplayPic() {
+// 测试是父亲的第几个儿子
+CurrentIndex = $(this).index();
+// 删除所有同级兄弟的类属性
+$(this).parent().children().removeClass("CurrentNum")
+// 为当前元素添加类
+$(this).addClass("CurrentNum");
+// 隐藏全部图片
+var Pic = $(this).parent().parent().children("ul");
+$(Pic).children().hide();
+// 显示指定图片
+$(Pic).children("li").eq(CurrentIndex).show();
+}
+function PicNumClick() {
+$("div.LunBo div.LunBoNum span").eq(ToDisplayPicNumber).trigger("click");
+ToDisplayPicNumber = (ToDisplayPicNumber + 1) % PicTotal;
+setTimeout("PicNumClick()",3000);
+}
+setTimeout("PicNumClick()",3000);
+</script>
+
+ <!--pic over-->
+
+
+<div  class="rside">
+<span><!-- 首页广告位2 -->
+ <notempty name='adData'><volist name="adData" id="do">
+<if condition="$do.place eq 2 ">	 <a href="{$do.url|get_nav_url}" target="_blank" title="{$do.title}">
+     <img src="{$do.icon|get_cover='path'}" ></a>
+	</if> </volist>  </notempty>
+<!-- 首页广告位2 --></span>
+<div class="note"><ul><li class="selected">公告</li><li>活动</li></ul></div>
+<div id="msg">
+<div class="message"><ul><volist name="notice" id="vo"><li><a href="{:U('help/detail?id='.$vo['id'])}">
+                     {$vo.title}</a></li></volist> </ul></div>
+<div class="message"  style="display: none"><ul><volist name="activity"  id="vo" ><li><a href="{:U('help/detail?id='.$vo['id'])}">
+                     {$vo.title}</a></li></volist></ul></div>
+<div class="message"  style="display: none"></div>
+</div>
+
+
+</div>
+
+</div><!--screen over-->
+</div><!--flexcontainer over-->
+
+
+<!--循环开始-->
+
+<volist name="tree" id="vo"  key="k" >
+
+<div class="list" >
+
+
+<h3><span class="floor">{$k}F</span><span>{$vo.title}</span>
+    <!--子分类调用开始--><volist name="vo.child" id="to" offset='0' length='4'>
+	 <a  target="_blank" id='category_{$to.id}' title="{$to.title}"href="javascript:vod(0);"   onmouseover="getlist({$to.id},{$vo.id})">
+    {$to.title}</a>
+	 </volist> 
+   <!--子分类调用结束-->
+	 <a  class="active" id='category_{$vo.id}' title="{$vo.title}"href="javascript:vod(0);" onmouseover="getlist({$vo.id},{$vo.id})">
+   <switch name="k" ><case value="1" >最新</case><case value="2">热门</case><case value="3">大牌</case><case value="4">推荐</case><default />热门</switch></a>
+   
+   </h3>
+<div class="category">
+<div class="icon">
+<ul class="tag clearfix" data-tpc="3">
+ <volist name="vo.child" id="to">
+	 <a  target="_blank" title="{$to.title}"href="{:U('Article/index?pid='.$to['id'])}"   >
+    {$to.title}</a>
+ </volist> 
+
+
+</ul>
+<a href="{:U('Article/index?pid='.$vo['id'])}" target="_blank"><img src="{$vo.icon|get_cover='path'}"  />
+</a>
+</div>
+<!--栏目推荐位调用结束-->
+<!--栏目文章调用开始-->
+<ul class="article" id='list_{$vo.id}'>
+  
+             <volist name="vo.doc" id="article">                      
+<li>
+                    <div class="pic" >
+                        <a class="yershop_img" href="{:U('Article/detail?id='.$article['id'])}" target="_blank" title="{$article.title}">
+                            <img src="{$article.cover_id|get_cover='path'}" ></a>
+                       
+                    </div>
+                    <div class="name"><a href="{:U('Article/detail?id='.$article['id'])}"  target="_blank" title="{$article.title}">{$article.title}</a></div>
+                    <div class="price">
+                        <font>￥</font><span>{$article.price}</span>
+                        <span>{$v|get_good_yprice}</span>
+                    </div>
+  </li>   </volist>
+   
+        
+       
+                </ul>
+</div>			
+<!--栏目文章调用结束-->
+
+<!--品牌调用开始---->
+ <notempty name='vo.brand'>
+<div class="brands" >
+	<ul>
+	<volist name="vo.brand" id="bo">
+	 <li> <a href="{:U('Article/index',array('brandid'=>$bo['id'],pid=>$vo['id']))}" target="_blank" title="{$bo.title}">
+     <img src="{$bo.icon|get_cover='path'}" ></a></li>
+	 </volist>  
+</ul>
+</div>
+</notempty>
+<!--品牌调用结束---->
+<!--广告调用开始---->
+ <notempty name='vo.ad'>
+ <div class="ad-floor" >	
+	<volist name="vo.ad" id="ko">
+	 <a href="{$ko.url|get_nav_url}" target="_blank" title="{$ko.title}">
+     <img src="{$ko.icon|get_cover='path'}" alt='{$ko.title}'></a>
+	 </volist>  
+</div>
+</notempty>
+<!--广告调用结束---->
+
+</div>			</volist> 
+<!--循环结束-->
+ 
+<script type="text/javascript" language="javascript">
+function getlist(id,pid) {
+$("#category_"+id).addClass('active').siblings().removeClass('active'); 		
+$.post('{:U("Index/getGoodlist")}', {cateid:id},function(data){
+	  var html = '';
+	 
+$("ul#list_"+pid).empty(); 		  
+$.each(data, function(i,n){			
+var html='<li><div class="pic" > <a class="yershop_img" href="'+n.url+'" target="_blank" title="'+n.title+'"> <img src="'+n.pic+'" ></a>  </div> <div class="name"><a href="'+n.url+'"  target="_blank" title="'+n.title
++'">'+n.title+'</a></div> <div  class="price">  <font>￥</font><span>'+n.price+'</span></div></li> ';	
+						 $("ul#list_"+pid).append(html);
+						 });
+
+});
+}
+
+</script>
+
+
+            
+</block> 

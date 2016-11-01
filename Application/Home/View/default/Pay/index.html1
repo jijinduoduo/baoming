@@ -1,0 +1,75 @@
+<?php
+header("Content-type: text/html; charset=utf-8"); 
+$app_id = "c675f68b-ee7c-4716-911a-95e1098bfb9a";
+$app_secret = "b51cb9b0-797c-4cf7-86be-d839b2933b3b";
+$title = $title;
+$amount = $goodprice * 100;//支付总价(分) 这是分*100=元
+$out_trade_no = $codeid;//订单号，需要保证唯一性
+//1.生成sign
+$sign = md5($app_id . $title . $amount . $out_trade_no . $app_secret);
+?>
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <!--用于移动端H5页面适配，若PC端页面可不引用-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title></title>
+</head>
+<body>
+<div class="pay">
+	<div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label"></label>
+		<input type="text" name="title" class="form-control" id="title" value="{$title}" readonly>
+		<div class="col-sm-5">
+			支付订单号：<input type="text"  name="orderid" class="form-control" id="orderid" value="{$codeid}" readonly><!--  (<a Style="color:blue;font-size:14px;"href="{:U('order/detail?id='.$codeid)}" target=_blank>订单详情</a>)-->
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputPassword" class="col-sm-2 control-label"></label>
+		<div class="col-sm-5">
+			支付金额： <input type="text" name="money" class="form-control" id="goodprice" value="{$goodprice}" readonly>元
+		</div>
+	</div>
+          
+</div>    
+<button id="test">点击付款</button>
+
+
+<!--2.添加控制台->APP->设置->秒支付button项获得的script标签-->
+<script id='spay-script' src='https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=c675f68b-ee7c-4716-911a-95e1098bfb9a'></script>
+<script>
+    //3. 需要发起支付时(示例中绑定在一个按钮的click事件中),调用BC.click方法
+    document.getElementById("test").onclick = function() {
+        asyncPay();
+    };
+    function bcPay() {
+        BC.click({
+            "title": "<?php echo $title; ?>",
+            "amount": <?php echo $amount; ?>,
+            "out_trade_no": "<?php echo $out_trade_no;?>", //唯一订单号
+            "sign" : "<?php echo $sign;?>",
+            /**
+             * optional 为自定义参数对象，目前只支持基本类型的key ＝》 value, 不支持嵌套对象；
+             * 回调时如果有optional则会传递给webhook地址，webhook的使用请查阅文档
+             */
+            "optional": {"test": "willreturn"}
+        });
+
+    }
+    // 这里不直接调用BC.click的原因是防止用户点击过快，BC的JS还没加载完成就点击了支付按钮。
+    // 实际使用过程中，如果用户不可能在页面加载过程中立刻点击支付按钮，就没有必要利用asyncPay的方式，而是可以直接调用BC.click。
+    function asyncPay() {
+        if (typeof BC == "undefined") {
+            if (document.addEventListener) { // 大部分浏览器
+                document.addEventListener('beecloud:onready', bcPay, false);
+            } else if (document.attachEvent) { // 兼容IE 11之前的版本
+                document.attachEvent('beecloud:onready', bcPay);
+            }
+        } else {
+            bcPay();
+        }
+    }
+</script>
+</body>
+</html>

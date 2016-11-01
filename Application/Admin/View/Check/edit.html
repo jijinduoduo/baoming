@@ -1,0 +1,330 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}商家</h2>
+	</div>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">
+			<li data-tab="tab1" class="current"><a href="javascript:void(0);">基 础</a></li>
+			<li data-tab="tab2"><a href="javascript:void(0);">高 级</a></li>
+		</ul>
+		<div class="tab-content">
+			<form action="{:U()}" method="post" class="form-horizontal">
+				<!-- 基础 -->
+				<div id="tab1" class="tab-pane in tab1">
+					<div class="form-item">
+			<label class="item-label">店铺名<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="shopname" value="{$info.shopname|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">姓名<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="username" value="{$info.username|default=''}">
+			</div>
+		</div>
+        
+		 <div class="form-item">
+			<label class="item-label">身份证号<span class="check-tips">（用于调转的URL，支持带http://的URL或U函数参数格式）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="idcard" value="{$info.idcard|default=''}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">网银或第三方支付账户<span class="check-tips">
+			</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="bank" value="{$info.bank|default=''}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">绑定手机<span class="check-tips">
+			</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="mobile" value="{$info.mobile|default=''}">
+			</div>
+		</div>
+					<div class="form-item">
+						<label class="item-label">
+							是否通过<span class="check-tips">（商家是否通过审核）</span>
+						</label>
+						<div class="controls">
+					<if condition="$info.status eq '2'">
+<label class="inline radio"><input type="radio" name="status" value="0" >不通过</label>
+							<label class="inline radio"><input type="radio" name="status" value="1" checked>通过</label>	
+<else /> 
+</if>		
+					<if condition="$info.status eq '0'">
+<label class="inline radio"><input type="radio" name="status" value="0" checked>不通过</label>
+							<label class="inline radio"><input type="radio" name="status" value="1" >通过</label>	
+<else /> 
+</if>
+<if condition="$info.status eq '1'">
+<label class="inline radio"><input type="radio" name="status" value="0" >不通过</label>
+							<label class="inline radio"><input type="radio" name="status" value="1"checked>通过</label>
+<else /> 
+</if>		
+						</div>
+					</div>
+					
+				<div class="form-item">
+			<label class="item-label">提示信息<span class="check-tips">
+			</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="tips" value="{$info.tips|default='无'}">
+			</div>
+		</div>	
+				
+				</div>
+
+				
+
+				<!-- 高级 -->
+				<div id="tab2" class="tab-pane tab2">
+<div class="form-item">
+						<label class="item-label">
+							店铺地址<span class="check-tips"></span>
+						</label>
+						<div class="controls">
+							<input type="text" name="shopaddress" class="text input-large" value="{$info.shopaddress|default=''}">
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">
+							店铺最低消费金额<span class="check-tips"></span>
+						</label>
+						<div class="controls">
+							<input type="text" name="price_low" class="text input-large" value="{$info.price_low|default=''}">
+						</div>
+					</div>
+
+                  <div class="form-item">
+						<label class="item-label">运费</label>
+						<div class="controls">
+							<input type="text" name="yunfee" class="text input-large" value="{$info.yunfee|default=''}">
+						</div>
+					</div>
+					
+	<div class="controls">
+						<label class="item-label">店铺logo</label>
+						<input type="file" id="upload_picture">
+						<input type="hidden" name="logo" id="logo" value="{$info.logo|default=''}"/>
+						<div class="upload-img-box">
+						<notempty name="info['logo']">
+							<div class="upload-pre-item"><img src="{$info.logo|get_cover='path'}"/></div>
+						</notempty>
+						</div>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+				    /* 初始化上传插件 */
+					$("#upload_picture").uploadify({
+				        "height"          : 30,
+				        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+				        "fileObjName"     : "download",
+				        "buttonText"      : "上传图片",
+				        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+				        "width"           : 120,
+				        'removeTimeout'	  : 1,
+				        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+				        "onUploadSuccess" : uploadPicture,
+				        'onFallback' : function() {
+				            alert('未检测到兼容版本的Flash.');
+				        }
+				    });
+					function uploadPicture(file, data){
+				    	var data = $.parseJSON(data);
+				    	var src = '';
+				        if(data.status){
+				        	$("#logo").val(data.id);
+				        	src = data.url || '__ROOT__' + data.path;
+				        	$("#logo").parent().find('.upload-img-box').html(
+				        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+				        	);
+				        } else {
+				        	updateAlert(data.info);
+				        	setTimeout(function(){
+				                $('#top-alert').find('button').click();
+				                $(that).removeClass('disabled').prop('disabled',false);
+				            },1500);
+				        }
+				    }
+					</script>
+					 <div class="controls"><label class="item-label">身份证图片正面</label>
+									<input type="file" id="upload_picture_idcarda">
+									<input type="hidden" name="idcarda" id="cover_id_idcarda" value="{$info.idcarda|default=''}"/>
+									<div class="upload-img-box">
+									<notempty name="info['idcarda']">
+							<div class="upload-pre-item"><img src="{$info.idcarda|get_cover='path'}"/></div>
+						</notempty>
+									</div>
+								</div>
+								<script type="text/javascript">
+								//上传图片
+							    /* 初始化上传插件 */
+								$("#upload_picture_idcarda").uploadify({
+							        "height"          : 30,
+							        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+							        "fileObjName"     : "download",
+							        "buttonText"      : "上传图片",
+							        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+							        "width"           : 120,
+							        'removeTimeout'	  : 1,
+							        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+							        "onUploadSuccess" : uploadPictureidcarda,
+							        'onFallback' : function() {
+							            alert('未检测到兼容版本的Flash.');
+							        }
+							    });
+								function uploadPictureidcarda(file, data){
+							    	var data = $.parseJSON(data);
+							    	var src = '';
+							        if(data.status){
+							        	$("#cover_id_idcarda").val(data.id);
+							        	src = data.url || '__ROOT__' + data.path
+							        	$("#cover_id_idcarda").parent().find('.upload-img-box').html(
+							        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+							        	);
+							        } else {
+							        	updateAlert(data.info);
+							        	setTimeout(function(){
+							                $('#top-alert').find('button').click();
+							                $(that).removeClass('disabled').prop('disabled',false);
+							            },1500);
+							        }
+							    }
+								</script>
+                            
+					
+					
+			                 <div class="controls"><label class="item-label">身份证图片反面</label>
+									<input type="file" id="upload_picture_idcardb">
+									<input type="hidden" name="idcardb" id="cover_id_idcardb" value="{$info.idcardb|default=''}"/>
+									<div class="upload-img-box">
+									<notempty name="info['idcardb']">
+							<div class="upload-pre-item"><img src="{$info.idcardb|get_cover='path'}"/></div>
+						</notempty>
+									</div>
+								</div>
+								<script type="text/javascript">
+								//上传图片
+							    /* 初始化上传插件 */
+								$("#upload_picture_idcardb").uploadify({
+							        "height"          : 30,
+							        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+							        "fileObjName"     : "download",
+							        "buttonText"      : "上传图片",
+							        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+							        "width"           : 120,
+							        'removeTimeout'	  : 1,
+							        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+							        "onUploadSuccess" : uploadPictureidcardb,
+							        'onFallback' : function() {
+							            alert('未检测到兼容版本的Flash.');
+							        }
+							    });
+								function uploadPictureidcardb(file, data){
+							    	var data = $.parseJSON(data);
+							    	var src = '';
+							        if(data.status){
+							        	$("#cover_id_idcardb").val(data.id);
+							        	src = data.url || '__ROOT__' + data.path
+							        	$("#cover_id_idcardb").parent().find('.upload-img-box').html(
+							        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+							        	);
+							        } else {
+							        	updateAlert(data.info);
+							        	setTimeout(function(){
+							                $('#top-alert').find('button').click();
+							                $(that).removeClass('disabled').prop('disabled',false);
+							            },1500);
+							        }
+							    }
+								</script>	
+					
+
+			                
+					
+                <div class="controls">
+						<label class="item-label">营业执照扫描图片</label>
+						<input type="file" id="upload_picture_idcardc">
+						<input type="hidden" name="idcardc" id="idcardc" value="{$info.idcardc|default=''}"/>
+						<div class="upload-img-box">
+						<notempty name="info['idcardc']">
+							<div class="upload-pre-item"><img src="{$info.idcardc|get_cover='path'}"/></div>
+						</notempty>
+						</div>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+				    /* 初始化上传插件 */
+					$("#upload_picture_idcardc").uploadify({
+				        "height"          : 30,
+				        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+				        "fileObjName"     : "download",
+				        "buttonText"      : "上传图片",
+				        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+				        "width"           : 120,
+				        'removeTimeout'	  : 1,
+				        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+				        "onUploadSuccess" : uploadPictureidcardc,
+				        'onFallback' : function() {
+				            alert('未检测到兼容版本的Flash.');
+				        }
+				    });
+					function uploadPictureidcardc(file, data){
+				    	var data = $.parseJSON(data);
+				    	var src = '';
+				        if(data.status){
+				        	$("#idcardc").val(data.id);
+				        	src = data.url || '__ROOT__' + data.path;
+				        	$("#idcardc").parent().find('.upload-img-box').html(
+				        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+				        	);
+				        } else {
+				        	updateAlert(data.info);
+				        	setTimeout(function(){
+				                $('#top-alert').find('button').click();
+				                $(that).removeClass('disabled').prop('disabled',false);
+				            },1500);
+				        }
+				    }
+					</script>
+</div>
+				<div class="form-item">
+					<input type="hidden" name="id" value="{$info.id|default=''}">
+					<input type="hidden" name="pid" value="{:isset($category['id'])?$category['id']:$info['pid']}">
+					<button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+					<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		<present name="info.id">
+		Think.setValue("allow_publish", {$info.allow_publish|default=1});
+		Think.setValue("check", {$info.check|default=0});
+		Think.setValue("model[]", {$info.model|json_encode} || [1]);
+		Think.setValue("model_sub[]", {$info.model_sub|json_encode} || [1]);
+		Think.setValue("type[]", {$info.type|json_encode} || [2]);
+		Think.setValue("display", {$info.display|default=1});
+		Think.setValue("reply", {$info.reply|default=0});
+		Think.setValue("reply_model[]", {$info.reply_model|json_encode} || [1]);
+		</present>
+		$(function(){
+			showTab();
+			$("input[name=reply]").change(function(){
+				var $reply = $(".form-item.reply");
+				parseInt(this.value) ? $reply.show() : $reply.hide();
+			}).filter(":checked").change();
+		});
+		//导航高亮
+		highlight_subnav('{:U('Check/index')}');
+	</script>
+</block>

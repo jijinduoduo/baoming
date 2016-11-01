@@ -1,0 +1,93 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 --></div><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+
+	<div class="red" style="clear:both; overflow:hidden; padding:10px;">个人资料</div>
+
+	<empty name='info'>
+	<div class="personal_info_none_goods">
+				<p>没有登录，<a href='{:U()}' class="red">请先登录</a></p>
+			
+				<div class="cb"></div>
+			</div>
+	<else />
+       
+    <ul style="margin-left:40px;">
+        
+	<form method="post" class="person-info" name="form" action="{:U('update')}">	
+  	
+		<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="controls">
+						<label class="item-label" >上传图像</label>
+						<input type="file" id="upload_picture" class="uploadify-button">
+						<input type="hidden" name="face" id="face" value="{$info['face']|default=''}"/>
+						<div class="upload-img-box">
+						<notempty name="info['face']">
+							<div class="upload-pre-item"><img src="{$info.face|get_cover='path'}"/></div>
+						</notempty>
+						<empty name="info['face']"><img src="__IMG__/pic_head_34_s.gif" width="100" height="100"/></empty>
+						
+						</div>
+					</div>
+	
+	<script type="text/javascript">
+					//上传图片
+				    /* 初始化上传插件 */
+					$("#upload_picture").uploadify({
+				        "height"          : 30,
+				        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+				        "fileObjName"     : "download",
+				        "buttonText"      : "上传图片",
+				        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+				        "width"           : 120,
+				        'removeTimeout'	  : 1,
+				        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+				        "onUploadSuccess" : uploadPicture,
+				        'onFallback' : function() {
+				            alert('未检测到兼容版本的Flash.');
+				        }
+				    });
+					function uploadPicture(file, data){
+				    	var data = $.parseJSON(data);
+				    	var src = '';
+				        if(data.status){
+				        	$("#face").val(data.id);
+				        	src = data.url || '__ROOT__' + data.path;
+				        	$(".weixin-cover img").attr('src',src);
+							$("#face").parent().find('.upload-img-box').html(
+				        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+				        	);
+				        } else {
+				        	updateAlert(data.info);
+				        	setTimeout(function(){
+				                $('#top-alert').find('button').click();
+				                $(that).removeClass('disabled').prop('disabled',false);
+				            },1500);
+				        }
+				    }
+					</script>
+
+	   	
+	
+	 <div class="controls">
+		<input type="hidden" name="id"  value="{$info['id']|default=''}"/>
+		<input type="submit" class="btn-xiugai orange" value="保存">
+	</div>
+	
+	</form>
+
+	
+	</empty>
+	
+	
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+       
+   
+</block>

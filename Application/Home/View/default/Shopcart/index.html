@@ -1,0 +1,386 @@
+<extend name="Base/s3"/>
+
+<block name="body">
+<div class="cartname">全部商品&nbsp;&nbsp;<span id="sum" class="red">{$sum}</span></div>
+<if condition="is_login()">
+<empty name="sqlcart"><div class="shopcart_main_none"><div class="shopcart_main_none_img"></div><div class="shopcart_main_none_main"><p>你的购物车还是空的哦赶紧行动吧 !</p><a rel="nofollow" href="{:U("Index/index")}">马上购物</a></div></div></empty>
+
+<notempty name="sqlcart"><form action='{:U("order/add")}'method="post" name="myform" id="form">
+<table  id="table" class="gridtable" >
+        <thead>
+            <tr><th class="row-selected">
+					 <input class="checkbox check-all" checked="checked"type="checkbox">全选
+					</th>
+                <th >商品名</th>
+                <th >价格</th>
+                <th >数量</th>
+                <th >操作</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+    
+          <volist name="sqlcart" id="vo">  
+          <tr class="cart_bottom"><td><input class="ids row-selected" checked="checked" type="checkbox" name="id[]" value="{$vo.goodid}"></td>
+                <td> <span class="c5"><A href="{:U('Article/detail?id='.$vo['goodid'])}" class="dl"> <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/></a>
+		  <span class="dd"><a href="{:U('Article/detail?id='.$vo['goodid'])}"  class="dd"> {$vo.goodid|get_good_name}</a></span>
+		 <span class="dd">{$vo.parameters}</span>
+		  </span></td>
+               
+                <td align="center">¥{$vo.price}</td>
+                 <td  align="center"><div class="quantity-form"><a rel="jia"  class="jia" onclick="myfunction(event)">+</a><input type="text"  class="goodnum"  id="{$vo.sort}" name="num[]"value="{$vo.num}"/><a rel="jian" onclick="myfunction(event)"  class="jian" id="oneA">-</a>
+				  <input type="hidden" value="{$vo.price}" name="price[]"/>
+				  <input type="hidden" value="{$vo.sort}" name="sort[]"/>
+				 <input type="hidden" value="{$vo.parameters}" name="parameters[]"/>
+				 </div></td>
+                
+               <td><a  name="{$vo.sort}" rel="del" onclick="myfunction(event)">删除</a>&nbsp;<a href="javascript:vod(0);" onclick="favor({$vo.goodid})">移到收藏</a></td>
+            </tr>
+         </volist>
+        </table> <table class="cart_info"> 
+   <td colspan="4">  <input class="checkbox check-all"checked="checked" type="checkbox">全选  <a  name="{$vo.id}" rel="del" href='{:U("index/index")}'>继续购物</a>    </td><td align="right"></td> </tr>
+			  <tr><td colspan="5" align="right">种类：<span id="count">{$count}</span>种</td>
+			  <tr><td colspan="5" align="right">总计（不含运费）：¥<em class="price" id="total"> {$price}</em></td>
+			</tr>
+        </tbody>
+      <tr><td colspan="5" align="right">
+ 
+ <a class="btn_submit_pay"   href="javascript:void(0)" onclick="checklogin();return false" >去结算</a>
+ </td> </tr>
+    </table> 
+      
+ 
+  </form>
+    </notempty>
+	<else/>
+<empty name="usercart"><div class="shopcart_main_none"><div class="shopcart_main_none_img"></div><div class="shopcart_main_none_main"><p>你的购物车还是空的哦赶紧行动吧 !</p><a rel="nofollow" href="{:U("Index/index")}">马上购物</a></div><div class="cb"></div></div></empty>
+
+<notempty name="usercart">  
+<form action='{:U("Shopcart/order")}'method="post" name="myform" id="form"><table  id="table" class="gridtable" width="100%">
+        <thead>
+            <tr><th class="row-selected">
+					 <input class="checkbox check-all" type="checkbox" checked="">全选
+					</th>
+                <th >商品名</th>
+                <th >价格</th>
+                <th >数量</th>
+                <th >操作</th>
+            </tr>
+        </thead>
+      
+        <tbody>
+    
+          <foreach name="usercart" item="vo">  
+          <tr><td align="center"><input class="ids row-selected"  checked="" type="checkbox" name="id[]" value="{$vo.id}"></td>
+          <td> <span class="c5"><A href="{:U('Article/detail?id='.$vo['id'])}" class="dl"> <img src="{$vo.id|get_cover_id|get_cover='path'}"  width="70" height="70"/></a>
+		  <span class="dd"><a href="{:U('Article/detail?id='.$vo['id'])}"  class="dd"> {$vo.id|get_good_name}</a></span>
+		 <span class="dd">{$vo.parameters}</span>
+		  </span></td>
+               
+                <td align="center">{$vo.price}元</td>
+                <td  align="center"><div class="quantity-form">
+				<a rel="jia"  class="jia" onclick="myfunction(event)">+</a>
+				<input type="text"  class="goodnum"  id="{$vo.sort}" name="num[]" value="{$vo.num}"/>
+				<a rel="jian" onclick="myfunction(event)"  class="jian" id="oneA">-</a>
+				 <input type="hidden" value="{$vo.price}" name="price[]"/>
+				  <input type="hidden" value="{$vo.sort}" name="sort[]"/>
+				 <input type="hidden" value="{$vo.parameters}" name="parameters[]"/>
+				 </div></td>
+                
+                <td><a  name="{$vo.sort}" rel="del" onclick="myfunction(event)">删除</a>&nbsp;<a href="javascript:vod(0);" onclick="favor({$vo.id})">移到收藏</a></td>
+            </tr></foreach>
+			<tr>
+			  <td colspan="4">  <input class="checkbox check-all"  checked="" type="checkbox">全选 <a  name="{$vo.id}" rel="del" href="{:U("index/index")}">继续购物</a>    </td><td align="right"></td></tr>
+			  <tr><td colspan="5" align="right">种类：<span id="count">{$count}</span>种</td>
+			  <tr><td colspan="5" align="right">金额小计：<span id="total">{$price}</span>元</td>
+			</tr>
+         
+        
+        </tbody>
+      
+    </table> 
+  <div class="text" style="float:right">
+ 
+总计（不含运费）：<em class="price" id="total"> {$price}</em>元 <a class="btn_submit_pay"   href="javascript:void(0)" onclick="checklogin();return false" >去结算</a>
+  </div> <input type="hidden" value="{$uid}" id="uid"/> 
+
+ </form>
+  </notempty>
+	
+	</if>     
+   <!-- jQuery 遮罩层 begin -->
+<div id="fullbg"></div>
+<!-- end jQuery 遮罩层 -->
+<!-- 对话框 -->
+<div id="dialog">
+   <!-- Modal 对话框内容 -->
+<div id="myModal" class="modal">
+     
+  <div class="modal-header">
+<A class="close" onclick="closeBg();"><img src="__IMG__/close.png"></A>
+<h3 id="myModalLabel">用户登录</h3>
+</div><div class="m_img">
+        <a class="" href="/index.php?s=/Home/Addons/execute/_addons/SyncLogin/_controller/Base/_action/login/type/qq.html"><img src="__IMG__/qq.png">&nbsp;用QQ账号登录</a></br></br>
+        <a class="" href="/index.php?s=/Home/Addons/execute/_addons/SyncLogin/_controller/Base/_action/login/type/sina.html"><img src="__IMG__/weibo.png">&nbsp;用微博账号登录</a>
+        <!--<a class="btn btn-warning btn-block" href="">用豆瓣账号登录</a>
+        <a class="btn btn-primary btn-block" href="">用人人账号登录</a>-->
+    </div>
+    <form class="form-horizontal" id="loginform" name="user" method="post">
+    
+            <div class="form_login"> <input type="text"   id="inputusername" name="username" placeholder="用户名">
+
+ </div>
+    <div class="form_login">
+             <input  class="v_yerhop"type="text"  id="inputpassword" name="password"  placeholder="密码">
+			  	
+            </div>
+		 
+            <span class="tips"></span>
+			  	
+           	
+		
+						<div class="form_login">
+ <a  id="login_btn" value="">登录</a> </div>
+    <div class="control-group">
+    
+   
+   <p><span class="pull-right"><span>还没有账号? <a href="{:U("User/register")}" class="now">立即注册</a></span> </p>
+ 
+    </div>
+    </form>
+</div> <!-- Modal 对话框内容 -->
+</div><!-- 对话框 结束-->
+<!-- jQuery 遮罩层上方的对话框 -->
+    <script type="text/javascript">
+//显示灰色 jQuery 遮罩层
+function showBg() {
+    var bh = $("body").height();
+    var bw = $("body").width();
+    $("#fullbg").css({
+        height:bh,
+        width:bw,
+        display:"block"
+    });
+    $("#dialog").show();
+}
+//关闭灰色 jQuery 遮罩
+function closeBg() {
+    $("#fullbg,#dialog").hide();
+}
+</script><!--[if lte IE 6]>
+<script type="text/javascript">
+// 浮动对话框
+$(document).ready(function() {
+    var domThis = $('#dialog')[0];
+    var wh = $(window).height() / 2;
+    $("body").css({
+        "background-image": "url(about:blank)",
+        "background-attachment": "fixed"
+    });
+    domThis.style.setExpression('top', 'eval((document.documentElement).scrollTop + ' + wh + ') + "px"');
+});
+</script>
+<![endif]-->
+   
+  
+       <script type="text/javascript">
+//登录后刷新页面，载入数据
+$("#login_btn").click(function(){
+	   
+   var yourname=$('#inputusername').val();
+	var yourword=$('#inputpassword').val();
+		
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/loginfromdialog")}', //发送数据的地址
+data:{username:yourname,password:yourword},
+ dataType: "json",
+success:function(data)
+{ if(data.status=="1")
+{
+$(".tips").html(data.info);
+window.location.reload();
+$("#uid").val(data.uid);
+}
+else{$(".tips").html(data.info);
+
+}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+});});
+	   //全选的实现
+	$(".check-all").click(function(){
+		$(".ids").prop("checked", this.checked);
+	});
+	$(".ids").click(function(){
+		var option = $(".ids");
+		option.each(function(i){
+			if(!this.checked){
+				$(".check-all").prop("checked", false);
+				return false;
+			}else{
+				$(".check-all").prop("checked", true);
+			}
+		});
+	});
+	var uexist="{:get_username()}";
+	//全选的实现 定义加、减、删的发送路径
+	if(uexist){
+		var inc='{:U("Shopcart/incNumByuid")}';
+		var dec='{:U("Shopcart/decNumByuid")}';
+		var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+else{
+	    var inc='{:U("Shopcart/incNum")}';
+		var dec='{:U("Shopcart/decNum")}';
+		var del='{:U("Shopcart/delItem")}';
+		
+	
+	}
+
+	function checklogin() {
+	var uexist="{:get_username()}";
+
+		if(uexist){document.myform.submit();}
+		else{
+			showBg();
+	
+			}
+		
+		 }
+function favor(id) { 
+var uexist="{:get_username()}";
+if(uexist){
+var favorid=id;
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/favor")}', //发送数据的地址
+data:{id:favorid},
+ dataType: "json",
+success:function(data){
+	if(data.status=="1"){alert(data.msg);}
+	}
+	,
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+})	
+}
+
+else{
+showBg();
+}
+	
+	}
+	   
+	function myfunction(event) { 
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+
+
+	if(obj.rel=="jia"){
+	var num=$obj.next().val(); 
+
+var gid=$obj.next().attr("id");
+	
+ a=parseInt(num)+1;
+ $obj.next().val(a); 
+//增加数据
+		$.ajax({
+type:'post', //传送的方式,get/post
+url:inc, //发送数据的地址
+data:{sort:gid},
+ dataType: "json",
+success:function(data)
+{$("span#count").text(data.count);
+$("span#total").text(data.price);
+$("span#sum").text(data.sum);
+	$("em.price").text(data.price);
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})}
+
+if(obj.rel=="jian")
+{ var num=$obj.prev().val(); 
+
+var str=$obj.prev().attr("id")	
+    
+     
+    //如果文本框的值大于0才执行减去方法  
+     if(num >0){  
+      //并且当文本框的值为1的时候，减去后文本框直接清空值，不显示0  
+      if(num==1)  
+      { alert("最少为1");
+   return true;
+      }  
+      //否则就执行减减方法  
+      else  
+      { 
+      a=parseInt(num)-1;
+	  
+ $obj.prev().val(a);   
+    
+      } 
+	  
+    
+     } 
+	   
+ 
+
+//减少数据
+$.ajax({
+type:'post', //传送的方式,get/post
+url:dec, //发送数据的地址
+data:{sort:str},
+ dataType: "json",
+success:function(data)
+{$("span#count").text(data.count);
+$("span#total").text(data.price);
+$("span#sum").text(data.sum);
+	$("em.price").text(data.price).fadeIn();
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+var html="<div class='shopcart_main_none'><div class='shopcart_main_none_img'></div><div class='shopcart_main_none_main'><p>你的购物车还是空的哦赶紧行动吧!</p><a  href='{:U('Index/index')}'>马上购物</a></div>";
+if(obj.rel=="del")
+{ var string=obj.name;
+//删除数据
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{sort:string},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parents("tr").empty();
+	$("span#count").text(data.count);
+$("span#total").text(data.price);
+$("span#sum").text(data.sum);
+	$("em.price").text(data.price);
+	var a=data.sum;
+if(a=="0"){$(".text").remove();$("#form").html(html);}
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+
+
+	}
+	
+	
+    </script>
+    
+</block>

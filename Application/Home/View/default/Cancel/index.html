@@ -1,0 +1,50 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+<span  style="display: block;padding:15px;font-size:17px;text-align:center;color:red;margin:20px 0;">{$msg} &nbsp;&nbsp;{$id}</span>
+
+	<form action='{:U()}' method="post" name="actform" style="float:left;;width:80%" >
+	<input type="hidden" name="id" value="{$id}">
+       <div id="write">
+	   
+<ul> <li><div class="form-item">
+			<label class="item-label">提示:<span class="red">{$tip}</span> </label>
+		
+		</div></li>
+			<li><div class="form-item">
+			<label class="item-label">说明<span class="check-tips"></span> </label>
+			<div class="controls">
+			<input type="text" class="text input-large" id="yershop_center_input" name="title" >				
+			</div>
+		</div></li>
+			<li>
+			<div class="form-item">
+			<label class="item-label">描述<span class="check-tips"></span> </label>
+			<div class="controls">
+			<textarea rows="9" cols="60" name="reason"></textarea>				
+			</div>
+		</div></li>
+			 
+			 <li><span style="margin: 0 21px"></span><input type="submit" class="btn_submit_pay" value="提交" /></li>
+			
+
+</ul> </div>
+         
+       </form>
+<div style="display: block;float:right;">     
+
+</div>
+
+
+<!-- 个人中心 初始状态 end --></div><div id="memberInfo" style="display: none;"></div><div id="memberWealth" style="display: none;"></div><div id="myCollection" style="display: none;"></div><div id="myEarnings" style="display: none;"></div><div id="modifyPassword" style="display: none;"></div><div id="myCoupons" style="display: none;"></div><div class="cb"></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+        <hr/>
+        {:hook('documentDetailAfter',$info)}
+   
+</block>

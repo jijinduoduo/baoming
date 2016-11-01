@@ -1,0 +1,80 @@
+<!-- logo -->
+
+
+<div class="header">
+<a href="" class="logo" title="{:C('WEB_SITE_TITLE')}"><img src="__IMG__/logo.png" alt="{:C('WEB_SITE_TITLE')}"></a>
+
+<div class="header_center"  >
+<div class="search">
+<form action="{:U("Search/index")}" name="Searchform"  method="post" >
+<p><input type="hidden" name="type" id="type" value="1">
+<input type="text" name="words" placeholder="输入您想要的商品" class="search"><a rel="nofollow" href="javascript:vod(0)" class="search_btn"></a></p>
+</form>
+</div>
+<div class="tag">热门搜索：
+<foreach name="hotsearch" item="vo"><a href="{:U('Search/index?words='.$vo)}">{$vo}</a></foreach>
+</div>
+</div>
+
+<div class="top_right">
+<a rel="nofollow" href="{:U('shopcart/index')}" class="shopping_cart" id="shopping_cart" style="display:">购物车<span id="docerCartBtn" class="yellow"></span></a>
+<if condition="is_login()">
+<empty name="usercart">
+<div class="sc_goods"  id="goods" style="display:none;"><ul class="sc_goods_ul">
+<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p></ul>
+<div class="sc_goods_foot" style="display: none;">
+<a rel="nofollow" href="{:U('shopcart/index')}" class="my_shopping_cart_btn">查看我的购物车</a>
+</div>
+</div>
+<else/>
+<div class="sc_goods" id="goods" style="display:none;">
+<ul class="sc_goods_ul">
+<volist name="usercart" id="vo">
+<li> <dl>
+<dt class="mini-img"><a  href="{:U('Article/detail?id='.$vo['goodid'])}"><img src="{$vo.goodid|get_cover_id|get_cover='path'}" width='40' height='40'/> </a></dt>
+<dd><span class="mini_title"><a href="{:U('Article/detail?id='.$vo['goodid'])}">{$vo.goodid|get_good_name}</a> </span><span class="mini-cart-count red">¥{$vo.price}<em class="{$vo.sort}">*{$vo.num}</em></span></dd>
+<dd><span class="mini-cart-info">{$vo.parameters}</span><span class="mini-cart-del"><a name="{$vo.sort}" rel="del" href="javascript:vod(0);"   onclick="delcommon(event)">删除</a></span></dd>
+</dl>
+</li>
+</volist></ul>
+<div class="sc_goods_foot" style="display:block;">
+<a rel="nofollow" href="{:U('shopcart/index')}" class="my_shopping_cart_btn">查看我的购物车</a>
+</div>
+</div>
+</empty>
+
+
+ <else/>
+
+
+ 
+
+<empty name="usercart">
+
+<div id="goods" class="sc_goods" style="display:none;">
+<ul class="sc_goods_ul">
+<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>
+
+</ul>
+<div class="sc_goods_foot" style="display:none;">
+<a rel="nofollow" href="{:U('shopcart/index')}" class="my_shopping_cart_btn">查看我的购物车</a>
+</div></div>
+<else/>
+<div id="goods" class="sc_goods" style="display:none;">
+<ul class="sc_goods_ul">
+ <foreach name="usercart" item="vo">  
+<li> <dl>
+<dt class="mini-img"><a  href="{:U('Article/detail?id='.$vo['id'])}"><img src="{$vo.id|get_cover_id|get_cover='path'}" width='40' height='40'/> </a></dt>
+<dd><span class="mini_title"><a href="{:U('Article/detail?id='.$vo['id'])}">{$vo.id|get_good_name}</a> </span><span class="mini-cart-count red">¥{$vo.price}<em class="{$vo.sort}">*{$vo.num}</em></span></dd>
+<dd><span class="mini-cart-info">{$vo.parameters}</span><span class="mini-cart-del"><a name="{$vo.sort}" rel="del" href="javascript:vod(0);"   onclick="delcommon(event)">删除</a></span></dd>
+</dl>
+</li>
+</foreach>
+</ul>
+<div class="sc_goods_foot" style="display:block;">
+<a rel="nofollow" href="{:U('shopcart/index')}"  class="my_shopping_cart_btn">查看我的购物车</a>
+</div></div>
+</empty>
+
+</if>
+</div></div>

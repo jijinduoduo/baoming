@@ -1,0 +1,128 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="main-title">
+        <h2><present name="data">[ {$data.title} ] 子</present>月报表统计(当前{$month}) </h2>
+    </div>
+
+    <div class="cf">
+        <button class="btn ajax-post confirm" url="{:U('del')}" target-form="ids">删 除</button>
+       
+        <!-- 高级搜索 -->
+        <div class="search-form fr cf">
+            <div class="sleft">
+                <input type="text" name="info" class="search-input" value="{:I('title')}" placeholder="请输入要查询的月份">
+                <a class="sch-btn" href="javascript:;" id="search" url="__SELF__"><i class="btn-search"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-table table-striped">
+        <form class="ids">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="row-selected">
+                            <input class="checkbox check-all" type="checkbox">
+                        </th>
+                        <th>ID</th>
+                        <th>月份</th>
+                        <th>销售额</th>
+                        <th>退货</th>
+                        <th>换货</th><th>申请取消</th>
+                        <th>利润</th>
+                        <th>更新时间</th>
+                        
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+				<notempty name="list">
+                <volist name="list" id="report">
+                    <tr>
+                        <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$report.id}"></td>
+                        <td>{$report.id}</td>
+                        <td>
+                           <a title="详情" href="{:U('detail?month='.$report[create_time])}"> {$report.create_time|date='Ym',###}</a>
+                        </td>
+                       
+                        <td>{$report.sales|default="0"}</td>
+                        <td>{$report.back|default="0"}</td>
+                        <td>
+                            {$report.change|default="0"}
+                           
+                        </td><td>
+                            {$report.cancel|default="0"}
+                           
+                        </td>
+ <td>{$report.profits|default="0"}</td>
+
+                    <td>
+                           
+                            {$report.update_time|date='Y-m-d H:i:s',###}
+                           
+                        </td>
+                        <td>
+                            <a title="编辑" href="{:U('edit?id='.$report['id'])}">编辑</a>
+                            <a class="confirm ajax-get" title="删除" href="{:U('del?id='.$report['id'])}">删除</a>
+                        </td>
+                    </tr>
+                </volist>
+				<else/>
+				<td colspan="10" class="text-center"> aOh! 暂时还没有内容! </td>
+				</notempty>
+                </tbody>
+            </table>
+        </form>
+        <!-- 分页 -->
+        <div class="page">
+
+        </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        $(function() {
+            //搜索功能
+            $("#search").click(function() {
+                var url = $(this).attr('url');
+                var query = $('.search-form').find('input').serialize();
+                query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g, '');
+                query = query.replace(/^&/g, '');
+                if (url.indexOf('?') > 0) {
+                    url += '&' + query;
+                } else {
+                    url += '?' + query;
+                }
+                window.location.href = url;
+            });
+            //回车搜索
+            $(".search-input").keyup(function(e) {
+                if (e.keyCode === 13) {
+                    $("#search").click();
+                    return false;
+                }
+            });
+            //导航高亮
+            highlight_subnav('{:U('month')}');
+            //点击排序
+        	$('.list_sort').click(function(){
+        		var url = $(this).attr('url');
+        		var ids = $('.ids:checked');
+        		var param = '';
+        		if(ids.length > 0){
+        			var str = new Array();
+        			ids.each(function(){
+        				str.push($(this).val());
+        			});
+        			param = str.join(',');
+        		}
+
+        		if(url != undefined && url != ''){
+        			window.location.href = url + '/ids/' + param;
+        		}
+        	});
+        });
+    </script>
+</block>

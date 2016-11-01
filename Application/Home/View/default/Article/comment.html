@@ -1,0 +1,33 @@
+
+ <!-- ajax分页商品评论区模板 -->
+
+  <script type="text/javascript">
+   var gooid="<php>echo session('goodid') ;</php>";
+            function comment(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                 var id = id;
+                    $.get('{:U("article/comment")}', {p:id,goodid:gooid}, function(data){  //用get方法发送信息到UserAction中的user方法
+                     $("#commentbox").replaceWith("<ul class='item_wrap' id='commentbox'>"+data+"</ul>"); //user一定要和tpl中的一致
+                });
+             }
+            
+   </script>
+	    
+
+
+    <volist id='list' name='list'>   <!--内容输出-->
+      <li class="comment_items clearfix" >    
+<div class="items_left">            
+<div class="items_left_pic">               
+<a target="_blank" title="{$list.uid|get_regname}" href="http://comm.dangdang.com/member/myfirst.php?displayid=2111726167933"><img src="http://img33.dangdang.com/imghead/85/15/2111726167933-1_d.png"></a>                 <span class="user_level">V3</span>             </div>             <p class="items_left_name" title="米虫子">米虫子</p>              <p class="items_left_level">钻石会员</p>         </div>         <div class="items_right">             <div class="items_detail">                 <p class="describe_detail">                     </p><p class="describe_detail">{$list.title}</p><p></p>                              </div>             <div class="items_user">              
+<div class="starline">     
+<span class="time">
+{$list.create_time|date='Y-m-d H:i',###}</span>                     <span class="items_tips fr">                                                                  </span>                      </div>                                               </div>         </div>     </li>
+ 		 
+            </volist>
+            {$page} 
+			<!--分页输出-->
+
+
+
+
+ <!-- ajax分页商品评论区模板 -->

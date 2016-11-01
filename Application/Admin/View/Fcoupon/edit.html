@@ -1,0 +1,195 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{:isset($info['id'])?'编辑':'新增'}优惠券</h2>
+	</div>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">
+			<li data-tab="tab1" class="current"><a href="javascript:void(0);">基 础</a></li>
+			<li data-tab="tab2"><a href="javascript:void(0);">高 级</a></li>
+		</ul>
+		<div class="tab-content">
+			<form action="{:U()}" method="post" class="form-horizontal">
+				<!-- 基础 -->
+				<div id="tab1" class="tab-pane in tab1">
+					
+					<div class="form-item">
+						<label class="item-label">
+							优惠券名称<span class="check-tips">（名称不能为空）</span>
+						</label>
+						<div class="controls">
+							<input type="text" name="title" class="text input-large" value="{$info.title|default=''}">
+						</div>
+					</div>
+					
+						
+					<div class="form-item">
+						<label class="item-label">优惠券金额(元)</label>
+						<div class="controls">
+							<input type="text" name="price" class="text input-large" value="{$info.price|default=''}">
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">可使用最低消费金额</label>
+						<div class="controls">
+							<input type="text" name="lowpayment " class="text input-large" value="{$info.lowpayment|default=''}">
+						</div>
+					</div>
+				<div class="controls">
+						<label class="item-label">图片</label>
+						<input type="file" id="upload_picture">
+						<input type="hidden" name="icon" id="icon" value="{$info['icon']|default=''}"/>
+						<div class="upload-img-box">
+						<notempty name="info['icon']">
+							<div class="upload-pre-item"><img src="{$info.icon|get_cover='path'}"/></div>
+						</notempty>
+						</div>
+					</div>
+					<div class="form-item">
+						<label class="item-label">编码<span class="check-tips">（优惠券代码，支持自动生成）</span></label>
+						<div class="controls">
+							<input type="text" id="code" name="code" class="text input-large" value="{$info.code|default=''}"><a class="btn btn-sm btn-info" href="javascript:vod(0);" onclick="getcode();">获取</a>
+						</div>
+					</div>
+					
+					
+				
+					<div class="form-item">
+						<label class="item-label">状态<span class="check-tips">（1-可用，2-禁用）</span></label>
+						<div class="controls">
+							<label class="textarea input-large">
+								<input type="text" name="status" class="text input-large" value="{$info.status|default='1'}">
+							</label>
+						</div>
+					</div>
+					<script type="text/javascript">
+					//上传图片
+				    /* 初始化上传插件 */
+					$("#upload_picture").uploadify({
+				        "height"          : 30,
+				        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+				        "fileObjName"     : "download",
+				        "buttonText"      : "上传图片",
+				        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+				        "width"           : 120,
+				        'removeTimeout'	  : 1,
+				        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+				        "onUploadSuccess" : uploadPicture,
+				        'onFallback' : function() {
+				            alert('未检测到兼容版本的Flash.');
+				        }
+				    });
+					function uploadPicture(file, data){
+				    	var data = $.parseJSON(data);
+				    	var src = '';
+				        if(data.status){
+				        	$("#icon").val(data.id);
+				        	src = data.url || '__ROOT__' + data.path;
+				        	$("#icon").parent().find('.upload-img-box').html(
+				        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+				        	);
+				        } else {
+				        	updateAlert(data.info);
+				        	setTimeout(function(){
+				                $('#top-alert').find('button').click();
+				                $(that).removeClass('disabled').prop('disabled',false);
+				            },1500);
+				        }
+				    }
+					</script>
+				</div>
+
+				<!-- 高级 -->
+				<div id="tab2" class="tab-pane tab2">
+					<div class="form-item">
+						<label class="item-label">可见性<span class="check-tips">（是否对用户可见，针对前台）</span></label>
+						<div class="controls">
+							<select name="display">
+								<option value="1">所有人可见</option>
+								<option value="0">不可见</option>
+								<option value="2">管理员可见</option>
+							</select>
+						</div>
+					</div>
+					
+
+				</div>
+
+				<!-- 高级 -->
+				<div id="tab2" class="tab-pane tab2">
+					<div class="form-item">
+						<label class="item-label">标题</label>
+						<div class="controls">
+							<input type="text" name="link_id" class="text input-large" value="{$info.link_id|default=''}">
+						</div>
+					</div><div class="form-item">
+						<label class="item-label">描述</label>
+						<div class="controls">
+							<label class="textarea input-large">
+								<textarea name="description">{$info.description|default=''}</textarea>
+							</label>
+						</div>
+					</div>
+					
+					
+					
+					
+				</div>
+
+				<div class="form-item">
+					<input type="hidden" name="id" value="{$info.id|default=''}">
+					<input type="hidden" name="pid" value="{:isset($category['id'])?$category['id']:$info['pid']}">
+					<button type="submit" id="submit" class="btn submit-btn ajax-post" target-form="form-horizontal">确 定</button>
+					<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+				</div>
+			<script type="text/javascript">
+function getcode(){
+
+  $.ajax({
+type:'post',
+url:'{:U("Fcoupon/makecode")}', //发送数据的地址//
+data:{id:""},
+ dataType: "json",
+success:function(data)
+{if(data.status=="1"){
+	$("input#code").val(data.code);
+}
+else{alert(data.info);
+
+
+
+}
+} 
+});//ajax结束
+
+
+}</script></form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		<present name="info.id">
+		Think.setValue("allow_publish", {$info.allow_publish|default=1});
+		Think.setValue("check", {$info.check|default=0});
+		Think.setValue("model[]", {$info.model|json_encode} || [1]);
+		Think.setValue("model_sub[]", {$info.model_sub|json_encode} || [1]);
+		Think.setValue("type[]", {$info.type|json_encode} || [2]);
+		Think.setValue("display", {$info.display|default=1});
+		Think.setValue("reply", {$info.reply|default=0});
+		Think.setValue("reply_model[]", {$info.reply_model|json_encode} || [1]);
+		</present>
+		$(function(){
+			showTab();
+			$("input[name=reply]").change(function(){
+				var $reply = $(".form-item.reply");
+				parseInt(this.value) ? $reply.show() : $reply.hide();
+			}).filter(":checked").change();
+		});
+		//导航高亮
+		highlight_subnav('{:U('Fcoupon/index')}');
+	</script>
+</block>

@@ -1,0 +1,46 @@
+
+    <!-- 底部-->
+   <script type="text/javascript"  charset="utf-8" src="__STATIC__/js/menudown.js"></script> 
+
+</div></div>
+<div class="footer">
+<div class="footer_pic_new">
+		<div class="footer_pic_new_inner">
+		    <a name="foot_1" href="http://help.dangdang.com/details/page13" target="_blank" class="footer_pic01"><span>正规渠道正品保障</span></a>
+		    <a name="foot_2" class="footer_pic02" href="http://help.dangdang.com/details/page21" target="_blank"><span>放心购物货到付款</span></a>
+		    <a name="foot_3" class="footer_pic03" href="http://help.dangdang.com/details/page16" target="_blank"><span>150城市次日送达</span></a>
+		    <a name="foot_4" class="footer_pic04" href="http://help.dangdang.com/details/page29" target="_blank"><span>上门退货当场退款</span></a>
+		</div>
+	</div>
+    <div class="foot_center">  
+	
+  <volist name="footer" id="vo">
+<dl><dt>{$vo.title}</dt>
+ <volist name="vo['id']" id="son"> 
+<dd><a rel="nofollow"  href="{:U('help/lists?pid='.$son['id'])}">{$son.title}</a></dd>
+</volist>
+</dl>
+</volist> 
+     
+
+<dl>
+    <dt>在线客服</dt>
+    <dd>周一至周五</dd>
+    <dd>09:00-18:00</dd>
+	<dd><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={:C('QQ')}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:{:C('QQ')}:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a></dd>
+</dl>
+
+  
+
+     
+    </div>
+ 
+<div class="theme-footer"> 
+    
+
+  
+      
+       <p><span style=" text-align: center;"> Copyright@yershop商城系统 2014-2015 <strong><a href="http://www.yershop.com/" target="_blank" class="red">Yershop.com</a></strong> {:C('WEB_SITE_ICP')}</p>
+    
+	</div> </div>
+

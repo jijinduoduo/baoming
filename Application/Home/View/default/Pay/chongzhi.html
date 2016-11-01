@@ -1,0 +1,115 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_nav"><a rel="nofollow" href="{:U("index/index")}">首页</a>&gt;<p class="red fwb">支付中心</p></div><div class="main_center"><div class="center_left">
+
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+
+	<span class="red" style="display: block;margin:20px 0 20px 37px;font-weight:bold;padding:10px;font-size:17px;border-left: 5px solid #ff3c00;">可使用支付宝,财付通,银联支付</span>
+  <form action='{:U("Pay/chongzhi")}' method="post"  name="myform"  class="payform" target="_blank">
+	<div class="tab-content">
+
+<div class="pay">
+
+ <div class="form-group">
+    <label for="inputPassword" class="col-sm-2 control-label"></label>
+    <div class="col-sm-5">
+   支付金额： <input type="text" name="money" class="cart_long" id="goodprice" >元
+    </div>
+  </div>
+  <div class="form-group paytype"><label>支付方式：</label><br/>
+   <div class="paylogo">
+  <label><input type="radio" name="paytype" value="alipay" checked=""/> 支付宝<img src="__IMG__/alipay.gif"></label>
+                <label><input type="radio" name="paytype" value="tenpay" /> 财付通<img src="__IMG__/tenpay.png"></label>
+                <label><input type="radio" name="paytype" value="unionpay" /> 银联<img src="__IMG__/union.png"></label><br/><br/>
+				<label><input type="radio" name="paytype" value="palpay" /> 贝宝<img src="__IMG__/palpay.png"></label>
+                <label><input type="radio" name="paytype" value="yeepay" /> 易付宝<img src="__IMG__/yeepay.png"></label>
+                <label><input type="radio" name="paytype" value="kuaiqian" /> 快钱<img src="__IMG__/kuaiqian.png"></label>
+               
+    </div>             
+           
+</div>
+			</div> 
+	<div class="submit"><a class="btn_submit title="提交"  href="javascript:void(0);"onclick="submitpay();return false"/>充值</a></div>
+</form>
+
+
+	<div style="display: block;" class="tab_view">
+		
+
+
+</div>
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+   <!-- jQuery 遮罩层 begin -->
+<div id="fullbg"></div>
+<!-- end jQuery 遮罩层 -->
+<!-- 对话框 -->
+<div id="dialog">
+   <!-- Modal 对话框内容 -->
+<div id="myModal" class="modal">
+     
+  <div class="modal-header">
+<A class="close" onclick="closeBg();"><img src="__IMG__/close.png"></A>
+<h3 id="myModalLabel">支付页面</h3>
+</div>
+    <div class="payboxs"  >
+    
+            <div class="form_loading">
+			<img src="__IMG__/loading.gif">正在进行支付，请勿关闭！<span id="times"></span>
+ </div>
+
+			
+	<div class="form_pay">
+ <a  class="green"  id="btn_pay" >支付成功</a> <a  class="green"  id="btn_pay" value="">支付失败</a> 
+ </div>
+    
+    </div>
+</div> <!-- Modal 对话框内容 -->
+</div><!-- 对话框 结束-->
+<!-- jQuery 遮罩层上方的对话框 -->
+
+<script type="text/javascript">
+ function submitpay()
+{showBg();
+document.myform.submit();
+
+}
+
+//显示灰色 jQuery 遮罩层
+function showBg() { 
+	$("#dialog").fadeIn();
+    var bh = $("body").height();
+    var bw = $("body").width();
+    $("#fullbg").css({
+        height:bh,
+        width:bw,
+        display:"block"
+    });
+   
+}
+//关闭灰色 jQuery 遮罩
+function closeBg() {
+    $("#fullbg,#dialog").hide();
+}
+</script>
+<!--[if lte IE 6]>
+<script type="text/javascript">
+// 浮动对话框
+$(document).ready(function() {
+    var domThis = $('#dialog')[0];
+    var wh = $(window).height() / 2;
+    $("body").css({
+        "background-image": "url(about:blank)",
+        "background-attachment": "fixed"
+    });
+    domThis.style.setExpression('top', 'eval((document.documentElement).scrollTop + ' + wh + ') + "px"');
+});
+</script>
+<![endif]-->
+      
+</block>

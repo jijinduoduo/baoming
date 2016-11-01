@@ -1,0 +1,58 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+	
+	<h3 class="cr_h3 cr_h3_gray">历史评价统计</h3>
+
+	
+	<div class="personal_info">
+				<p><span class="rate-icon rate-ok"><img src="__IMG__/ok.png">好评</span>{$best}个<span class="rate-icon rate-ok"><img src="__IMG__/bad.png">差评</span>{$bad}个<span class="rate-icon rate-ok"><img src="__IMG__/common.png">一般</span>{$common}个</p>
+			</div>
+	<h4><span>评价列表</span></h4>
+       
+	    <table   class="col_name"  width="100%">
+        <thead>
+            <tr>
+                <th width="10%">评价</th>
+				<th width="35%" >评论</th>
+				<th width="30%" >商品信息</th>
+                <th width="25%">操作</th>
+				
+               
+				
+              </tr>
+ <volist name="list" id="co"> 
+  <tr class="comment_list"><td width="10%" align="center"><php>if($co['commentscore']==1){echo "<img src='__IMG__/bad.png'>"
+			  ;};
+			  if($co['commentscore']==2){echo "<img src='__IMG__/common.png'>"
+			  ;};
+			  if($co['commentscore']==3){echo "<img src='__IMG__/ok.png'>"
+			  ;};
+			  </php><td width="35%" align="center">{$co.content}</br>{$co.create_time|date='Y-m-d H:i:s',###}</td>
+			  <td width="30%" align="center"> <a href="{:U('Article/detail?id='.$co['goodid'])}" >{$co.goodid|get_good_name} </a>￥{$co.goodid|get_good_price} </td>
+			   <th width="25%"></th>
+			  </tr>
+    
+        </volist></table>
+		
+       
+	
+	
+	<!-- 分页 -->
+        <div class="page">
+{$page}
+        </div>
+
+
+<!-- 个人中心 初始状态 end --></div></div>
+    <script type="text/javascript">_init_area();</script>
+       
+   
+   
+</block>

@@ -1,0 +1,656 @@
+
+<extend name="base" />
+		<!--body-->
+	<block name="body" >
+		<div class="content-left" data-val="0">
+			<ul class="left-list">
+				<li class="left-list-1"><span class="glyphicon glyphicon-tags"></span>基础设置</li>
+				<li class="left-list-2 active-1"><span class="glyphicon glyphicon-tags"></span>报名页</li>
+				<li class="left-list-3"><span class="glyphicon glyphicon-tags"></span>成功页</li>
+			</ul>
+		</div>
+		<div class="content-right">
+			<!--报名页开始-->
+			<div class="baoming">
+				<div class="right-top">
+				<div class="text-left"><span> </span><strong>内容设计</strong></div>
+				<div class="text-right">
+					
+					<p class="p1" onclick="window.history.back('-1');"><span><img src="Application/Admin/View/Baoming/img/back.png"> </span><span>返回主页</span></p>
+					<p class="p1"><span><img src="Application/Admin/View/Baoming/img/diannao.png"></span><span>预览</span></p>
+				</div>
+			</div>
+			<div class="right-bottom row" >
+				<div id="datas">
+				<if condition = "($data[0]['body'] eq null) OR ($data[0]['body'] eq ' ')"> 
+				<div class="col-lg-6 col-xs-12" id="juzhong">
+					<div class="panel">
+						<div class="panel panel-title text-center" id="titles">{$data[0]['title']}</div>
+						<div class="panel panel-body body-content" id="bodys">
+							<div class=" panl text-right"><a href="http://b.bjxxw.com/index.php?s=/Home/Baoming/search/id/{$data[0]['id']}.html">报名查询</a></div>
+							
+							<div data-val="text-only"><input type="hidden" class="form-control"  data-val="text-only" name="data[]" value={$data[0]['id']} /></div>
+							
+							<div data-val="text-only" class="wy"><input type="text" class="form-control weiyi" placeholder="姓名" data-val="text-only" name="data[] " required="required"/></div>
+							<div data-val="tel-only" class="wy"><input type="tel" class="form-control weiyi" placeholder="手机号" data-val="tel-only" name="data[]" id="phone"  required="required"/></div>
+							<div data-val="null" class="clearfix wy" id="yanzhengma"><input type="text" class="form-control a70" placeholder="验证码" maxlength="8" data-val="null" name="yzm"  required="required"/><input type="button" value="获取验证码" class="btn btn-info a30" ></div>
+							<div data-val="null" class="wy" id="zhaopianyanzheng"><input type="file" name="photo" style="width: 100%;height: 100%;opacity: 0;position: absolute;top: 0;left: 0;"><img src="Application/Admin/View/Baoming/img/shuiyin.png" width="100%" height="100%"></div>
+							<p data-val="null" class="clearfix" id="houm"></p>
+							<div class="tjiao text-center"><input type="submit" value="提交" class="btn btn btn-primary"></div>
+							
+						</div>
+					</div>
+				</div>
+				<else />
+					<?php echo json_decode($data[0]['body']); ?>
+				</if>
+				</div>
+				<div class="yn col-lg-6 col-xs-12">
+					<ul id="myTab" class="nav nav-tabs row">
+						<li class="active col-lg-6 col-xs-6 text-center">
+							<a href="#home" data-toggle="tab">
+								样式
+							</a>
+						</li>
+						<li class="col-lg-6 col-xs-6 text-center"><a href="#ios" data-toggle="tab">内容</a></li>
+						
+					</ul>
+					<div id="myTabContent" class="">
+						<div class="tab-pane fade in active" id="home">
+							<div class="panel-heading quz">元素：</div>
+							<div style="width: 100%;">
+								<ul class="aa">
+									<li class="ul-1-1" data-val="text">输入</li>
+									<li class="ul-1-2" data-val="radio">单选</li>
+									<li class="ul-1-3" data-val="check">多选</li>
+									<li class="ul-1-4" data-val="number">数字</li>
+									<li class="ul-1-5" data-val="date">日期</li>
+									<li class="ul-1-6" data-val="tel">手机</li>
+									<li class="ul-1-7" data-val="mail">邮箱</li>
+									<li class="ul-1-8" data-val="shuoming">说明</li>
+									<!--<li class="ul-1-9" data-val="shoufei">收费项</li>-->
+									<li class="ul-1-10" data-val="guanli">管理项</li>
+									<div class="clearfix" ></div>
+								</ul>
+							</div>
+							<div class="gongneng-all">
+								<div class="panel-heading quz">功能：</div>
+									<div style="width: 100%;">
+										<ul class="gongnengkaiguan">
+											<li class="ul-2-1" data-val="duanxin" data="on">短信校验-开</li>
+											<li class="ul-2-2" data-val="photo" data="off">上传照片-关</li>
+											
+											<div class="clearfix"></div>
+										</ul>
+									</div>
+							</div>
+							<div class="fenge">
+								<div class="panel-heading quz">风格：</div>
+									<div style="width: 100%;">
+										<ul class="fenge-ul">
+											<li class="ul-3-1">默认</li>
+											<li class="ul-3-2" id="xuanse">
+											<input type="text" id="picker" class="form-control" style="width: 7rem;" placeholder="自定义色"></input>
+											</li>
+											
+											
+											<div class="clearfix"></div>
+										</ul>
+										<p class="text-right"><button class="btn btn-default" id="baocun">保存方案</button></p>
+									</div>
+							</div>
+						</div>
+						<div class="tab-pane fade" id="ios">
+							<div class="fenge ycs">
+								<div class="panel-heading quz">名称：</div>
+								<div><input type="text" class="form-control"></div>
+								<div class="panel-heading quz">分类：</div>
+								<div><input type="text" class="form-control"></div>
+								<div class="panel-heading quz">选项值：(多条请换行)</div>
+								<div><textarea rows="6"  style="width: 100%;"></textarea></div>
+								<div class="panel-heading quz">人数：</div>
+								<div><input type="text" class="form-control"></div>
+								<div class="text-right" style="margin-top: 1.0rem;">
+									<input type="button" value="删除"  class="btn btn-default"/>
+									<input type="button" value="修改"  class="btn btn-primary"/>
+								</div>
+							</div>
+							<!--输入-->
+							<div class="text-xiugai">
+								<div class="panel-heading quz">名称：</div>
+								<div><input type="text" class="form-control"></div>
+								<div class="text-right" style="margin-top: 0.5rem;"><button class="btn btn-primary" disabled="disabled">修改</button></div>
+							</div>
+							<!--输入-->
+							<div class="text-ksc">
+								<div class="panel-heading quz">名称：</div>
+								<div><input type="text" class="form-control"></div>
+								<div class="text-right" style="margin-top: 0.5rem;"><button class="btn btn-primary"  style="margin-right: 0.3rem;">修改</button><button class="btn btn-default">删除</button></div>
+							</div>
+							<!--单选-->
+							<div class="danxuan">
+								<div class="panel-heading quz">名称：</div>
+								<div><input type="text" class="form-control dxzhi"></div>
+								<div>选项值:多条以英文状态下的逗号隔开<input type="text" class="form-control dx"></div>
+								<div class="text-right" style="margin-top: 0.5rem;"><button class="btn btn-primary" style="margin-right: 0.3rem;">修改</button><button class="btn btn-default">删除</button></div>
+							</div>
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			</div>
+			<!--报名页结束-->
+			
+			<!--
+            	作者：2774206@qq.com
+            	时间：2016-09-23
+            	描述：成功页开始
+            -->
+			<div class="success_page" style="display: none;">
+				<div class="right-top">
+				<div class="text-left"><span> </span><strong>内容设计</strong></div>
+				<div class="text-right">
+					
+					<p class="p1" onclick="window.history.back('-1')"><span><img src="Application/Admin/View/Baoming/img/back.png"> </span><span>返回主页</span></p>
+					<p class="p1"><span><img src="Application/Admin/View/Baoming/img/diannao.png"></span><span id="yulan">预览</span></p>
+				</div>
+				<div class="clearfix"></div>
+				<div class="success-body row">
+				<if condition = "($data[0]['success'] eq null) OR ($data[0]['success'] eq ' ') "> 
+					<div class="col-lg-6 col-xs-12 success-body-left">
+						<div style="border: 1px solid #3bb4f2 ;width: 100%;height: 450px;border-radius: 5px;"  >
+							<p class="text-center" style="margin-top: 5em;"><img src="Application/Admin/View/Baoming/img/success.png"><strong ng-bind="a"></strong></p>
+							<p class="text-center" ng-bind="b" style="word-break: break-word;"></p>
+						</div>
+						
+					</div>
+				<else />
+					<div class="col-lg-6 col-xs-12 success-body-left">
+					<?php  echo json_decode($data[0]['success']); 	?>
+					</div>
+				</if>
+					<div class="col-lg-6 col-xs-12 success-body-left">
+						<div class="panel panel-title text-center">内容</div>
+						<div class="panel bd">
+							<div class="panel-heading quz">标题：</div>
+							<div><input type="text" class="form-control" ng-model="a" value="报名成功"></div>
+							<div class="panel-heading quz">内容：</div>
+							<div><textarea style="width: 100%" rows="6" ng-model="b"></textarea></div>
+					<!--	<div class="panel-heading quz">短信提醒：</div>
+							<div class="tixing1">
+								<ul style="list-style: none;">
+									<li><input type="checkbox" id="bm"><label for="bm">报名成功</label></li>
+									<li><input type="checkbox" id="zf"><label for="zf">支付成功</label></li>
+									<li><input type="checkbox" id="sh"><label for="sh">审核通过</label></li>
+								</ul>
+							</div> -->
+							<div class="text-right">
+								<button class="btn btn-primary successye">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+            
+		</div>
+		<!--
+            	作者：2774206@qq.com
+            	时间：2016-09-23
+            	描述：成功页结束
+        -->
+        <!--基础设置star-->
+           <div class="jichu-page" style="display: none;">
+           		
+	           		<div class="right-top">
+					<div class="text-left"><span> </span><strong>内容设计</strong></div>
+					<div class="text-right">
+						
+						<p class="p1" onclick="window.history.back('-1')"><span><img src="Application/Admin/View/Baoming/img/back.png"> </span><span>返回主页</span></p>
+						<p class="p1" onclick=""><span><img src="Application/Admin/View/Baoming/img/diannao.png"></span><span>预览</span></p>
+					</div>
+					</div>
+					<div class="clearfix"></div>
+				<div class="jichu-page-center">
+					<input type="hidden" class="sz-num0" value="{$data[0]['id']}">
+	           		<div class="panel-heading quz">项目名称：</div>
+	           		<div><input type="text" class="form-control sz-num1" value="{$data[0]['title']}"></div>
+	           		<div class="panel-heading quz">报名费用：</div>
+	           		<div><input type="number" class="form-control sz-num2" value="{$data[0]['price']}"><small>注：无需缴费，请填写0</small></div>
+	           		<div class="panel-heading quz ">限制人数：</div>
+	           		<div><input type="number" class="form-control sz-num3" value="{$data[0]['sum']}"><small>注：不限制人数，请填写0</small></div>
+	           		<div class="text-left" style="margin-top: 1rem;"><button class="btn btn-primary tj">提交</button></div>
+				</div>
+           </div>
+       
+        <!--基础设置end-->
+        <!--
+        	作者：2774206@qq.com
+        	时间：2016-09-24
+        	描述：电脑端隐藏
+        -->
+		<div class="yinchang-1"><p></p></div>
+		<!--body end -->
+		
+		<!--footer -->
+		<!--footer end -->
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/index.js" ></script>
+		<script>
+			
+			$(function(){
+				  inint();
+				
+				  add();
+				  xiugai();
+				//add($("#myTabContent .aa li"))
+			})
+			
+			function inint(){
+
+					//基础设置
+					var shezhi=[];
+					$(".tj").click(function(){
+						//shezhi=[$(".sz-num1").val(),$(".sz-num2").val(),$(".sz-num3").val()];
+						var id    = $(".sz-num0").val();
+						var title = $(".sz-num1").val();
+						var price = $(".sz-num2").val();
+						var sum   = $(".sz-num3").val();
+						$.post("{:U('Baoming/updata')}",{id:id,title:title,price:price,sum:sum},function(data){
+
+						//console.log(data);
+						},"JSON");
+					})
+					
+					$(".active-1").click(function(){
+						loads();
+					});
+					loads();
+					$(".baoming .p1:eq(1)").click(function(){
+						var id    = $(".sz-num0").val();
+							window.location.href='http://b.bjxxw.com/index.php?s=/Home/Baoming/index/id/'+id+'.html';
+					})
+					$(".jichu-page .p1:eq(1)").click(function(){
+						var id    = $(".sz-num0").val();
+							window.location.href='http://b.bjxxw.com/index.php?s=/Home/Baoming/index/id/'+id+'.html';
+					})
+				}
+			
+				function loads(){
+						var id    = $(".sz-num0").val();
+						$.post("{:U('Baoming/get_body')}",{id:id},function(data){
+						$("#titles").text(data[0]['title']);
+						
+						},"JSON");
+						
+				}
+				function add(){
+					function chajian(){
+						$(".chajian").click(function(){
+							$(".chajian2").toggle();
+						
+							//$(".chajian2").show();
+							$(".chajian2").css("width",$(".chajian")[0].clientWidth+'px');
+							
+						})
+						window.onresize=function(){
+							$(".chajian2").hide();
+								//alert($(".chajian")[0].clientWidth)
+							if($(".chajian2").length>=1){
+								$(".chajian2").css("width",$(".chajian")[0].clientWidth+'px');
+							}
+							
+						}
+						$('.chajian2').mouseover(function(){
+							$(".chajian2").show();
+						})
+						$('.chajian2').mouseout(function(){
+							$(".chajian2").hide();
+						})
+						var array=[];
+						$(".chajian2 option").click(function(){
+							var val=$(this).val();
+							var s=$.inArray(val,array); 
+							if(s==-1){
+								array.push(val)
+							}
+							else{
+								
+								var index=array.indexOf(val);
+								array.splice(index,1);
+							}
+								
+						
+							
+							$(this).parent().prev("input").val(array);
+//							$(this).parent().prev("input").val()
+//							$(this).val()
+						})
+					}
+					chajian();
+					var id = $(".sz-num0").val();
+					$("#baocun").click(function(){
+						box();
+						//window.location.reload()
+					
+					})
+					$(".successye").click(function(){
+						var data=$(".success-body-left:eq(0)").html();
+						$.ajax({
+							type:"post",
+							url:"{:U('Baoming/add_success')}",
+							data:{'data':data,'id':id},
+							async:false,
+							dataType:"json",
+							success:function(d){
+								console.log(d);
+							//window.location.reload();	
+							}
+						});
+					})
+					$("#yulan").click(function(){
+						window.location.href="http://b.bjxxw.com/index.php?s=/Home/Baoming/chenggong/id/"+id;
+					})
+//					
+//					$(".left-list li:eq(2)").click(function(){
+//						var data=$(".success-body-left").html();
+//						$.ajax({
+//							type:"post",
+//							url:"{:U('Baoming/get_body')}",
+//							data:{'data':data,'id':id},
+//							async:false,
+//							dataType:"json",
+//							success:function(d){
+//								console.log(d);
+//							//window.location.reload();	
+//							$(".success-body-left:eq(0)").html(eval(d[0].success))
+//							}
+//						});
+//					}) 
+				
+				}
+				function box(){
+					var id    = $(".sz-num0").val();
+					var data=$("#datas").html();
+					var ziduan=[];
+					$.each($(".weiyi"), function(i,item) {
+						
+						ziduan.push($(item).attr("placeholder"));
+					});
+					
+					console.log(ziduan);
+						$.ajax({
+							type:"post",
+							url:"{:U('Baoming/add_body')}",
+							data:{'data':data,'id':id,"ziduan":ziduan},
+							async:false,
+							dataType:"json",
+							success:function(d){
+								//console.log(d);
+							window.location.reload();	
+							}
+						});
+						
+				}
+				function active(){
+					$("#myTab li:eq(1)").addClass("active");
+					$("#myTab li:eq(0)").removeClass("active");
+					$("#home").removeClass("active in");
+					$("#ios").addClass("active in");
+				
+				}
+				function xiugai(){
+					$("#bodys div.wy").unbind().bind("click",function(){
+						var thise=$(this).attr("data-val");
+						if(thise=="text-only"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings(".wy").attr('data',"0");
+							$('.text-xiugai').show().siblings().hide();;
+								$('.text-xiugai button').click(function(){
+									$("#bodys div.wy[data='1']").find('input').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+							
+						}
+						if(thise=="tel-only"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings(".wy").attr('data',"0");
+							$('.text-xiugai').show().siblings().hide();
+								$('.text-xiugai button').click(function(){
+									$("#bodys .wy[data='1']").find('input').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+							
+						}
+						if(thise=="text"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings(".wy").attr('data',"0");
+							$('.text-ksc').show().siblings().hide();
+							
+								$('.text-ksc').find('input').val($("#bodys .wy[data='1']").find('input').attr("placeholder"))
+								$('.text-ksc button:eq(0)').click(function(){
+									
+									$("#bodys .wy[data='1']").find('input').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+								$('.text-ksc button:eq(1)').click(function(){
+								$("#bodys .wy[data='1']").remove();
+									box();
+								})
+							
+						}
+						if(thise=="tel"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings(".wy").attr('data',"0");
+							$('.text-ksc').show().siblings().hide();;
+							$('.text-ksc').find("input").val($("#bodys .wy[data='1']").find('input').attr("placeholder"))
+								$('.text-ksc button:eq(0)').click(function(){
+									$("#bodys .wy[data='1']").find('input').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+								$('.text-ksc button:eq(1)').click(function(){
+									$("#bodys .wy[data='1']").remove();
+									box();
+								})
+							
+						}
+						if(thise=="radio"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings("div.wy").attr('data',"0");
+							$('.danxuan').show().siblings().hide();;
+								$('.danxuan button:eq(0)').click(function(){
+									var arr=$(".dx").val();
+									var arr1=$(".dxzhi").val();
+									var arrays=arr.split(",");
+									$("#bodys .wy[data='1']").empty();
+									$("#bodys .wy[data='1']").append('<select name="'+arr1+'" class="selectpicker weiyi form-control"  data-live-search="false" value="'+arr1+'" placeholder="'+arr1+'"><option checked >'+arr1+'</option></select>')
+									for(var i=0;i<arrays.length;i++){
+										$("#bodys .wy[data='1'] select").append('<option value="'+arrays[i]+'">'+arrays[i]+'</option>');
+									}
+									console.log(arrays)
+									box();
+								})
+								$('.danxuan button:eq(1)').click(function(){
+									$("#bodys div.wy[data='1']").remove();
+									box();
+								})
+								
+							
+						}
+						if(thise=="check"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings("div.wy").attr('data',"0");
+							$('.danxuan').show().siblings().hide();
+							
+								$('.danxuan .text-right button:eq(0)').unbind().bind('click',function(){
+									
+									var arr=$(".dx").val();
+									var arr1=$(".dxzhi").val();
+									var arrays=arr.split(",");
+									$("#bodys div.wy[data='1']").empty();
+									var html='';
+									//$("#bodys div.wy[data='1'] select").attr("title",arr1);
+									for(var i=0;i<arrays.length;i++){
+										html+='<option>'+arrays[i]+'</option>';
+									}
+									//$("#bodys div.wy[data='1'] select").html(html);
+									$("#bodys div.wy[data='1']").html('<input type="text" name="'+arr1+'" placeholder="'+arr1+'" class="form-control chajian weiyi" readonly="readonly" required /><select  class="chajian2  form-control" multiple  title="'+arr1+'">'+html+'</select>');
+								
+									box();
+								})
+								$('.danxuan button:eq(1)').click(function(){
+									$("#bodys .wy[data='1']").remove();
+									box();
+								})
+								
+							
+						}
+						if(thise=="number"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings("div.wy").attr('data',"0");
+							$('.text-ksc').show().siblings().hide();;
+							$('.text-ksc').find("input").val($("#bodys .wy[data='1']").find('input').attr("placeholder"))
+								$('.text-ksc button:eq(0)').click(function(){
+									$("#bodys .wy[data='1']").find('input').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+								$('.text-ksc button:eq(1)').click(function(){
+									$("#bodys .wy[data='1']").remove();
+									box();
+								})
+							
+						}
+						if(thise=="date"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings("div.wy").attr('data',"0");
+							$('.text-ksc').show().siblings().hide();;
+								$('.text-ksc button:eq(0)').click(function(){
+									$("#bodys .wy[data='1']").find('span').text($(this).parent().parent().find("input").val());
+									box();
+								})
+								$('.text-ksc button:eq(1)').click(function(){
+									$("#bodys .wy[data='1']").remove();
+									box();
+								})
+							
+						}
+						if(thise=="mail"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings("div.wy").attr('data',"0");
+							$('.text-ksc').show().siblings().hide();;
+							$('.text-ksc').find("input").val($("#bodys .wy[data='1']").find('input').attr("placeholder"))
+								$('.text-ksc button:eq(0)').click(function(){
+									$("#bodys .wy[data='1']").find('input').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+								$('.text-ksc button:eq(1)').click(function(){
+									$("#bodys .wy[data='1']").remove();
+									box();
+								})
+							
+						}
+						if(thise=="shuoming"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings("div.wy").attr('data',"0");
+							$('.text-ksc').show().siblings().hide();;
+							$('.text-ksc').find("input").val($("#bodys .wy[data='1']").find('textarea').attr("placeholder"))
+								$('.text-ksc button:eq(0)').click(function(){
+									$("#bodys .wy[data='1']").find('textarea').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+								$('.text-ksc button:eq(1)').click(function(){
+									$("#bodys .wy[data='1']").remove();
+									box();
+								})
+							
+						}
+						if(thise=="shoufei"){
+							active();
+							$(this).attr("data","1");
+							$(this).siblings(".wy").attr('data',"0");
+							$('.ycs').show().siblings().hide();;
+								$('.text-ksc button:eq(0)').click(function(){
+									$$("#bodys .wy[data='1']").find('textarea').attr("placeholder",$(this).parent().parent().find("input").val());
+									box();
+								})
+								$('.text-ksc button:eq(1)').click(function(){
+									$("#bodys .wy[data='1']").remove();
+									box();
+								})
+							
+						}
+						
+					})
+					
+					
+//					var app=angular.module("ngApp",[],function(){
+//						console.log("ng-app:ngapp");
+//					})
+//						app.controller('ngCtrl',null,function($scope){
+//							$scope.b="报名成功！";
+//						})
+//				
+//				$("#bodys p").unbind().bind('click',function(){
+//					var data_val=$(this).attr("data-val");
+//					switch(data_val)
+//					{
+//					case "text-only":
+//					active();
+//					
+//					break;	
+//					
+//					case "tel-only":
+//					active();
+//					$(".text-xiugai").show();
+//					break;
+//						
+//					case "text":
+//					
+//					break;
+//					case "radio":
+//				
+//					break;
+//					case "check":
+//				
+//					break;
+//					case "number":
+//					
+//					break;
+//					case "date":
+//					
+//					break;
+//					case "tel":
+//					
+//					break;
+//					case "mail":
+//					
+//					break;
+//					case "shuoming":
+//					
+//					break;
+//					case "shoufei":
+//					
+//					break;
+//					case "guanli":
+//					
+//					break;
+//					}
+//					
+//				})
+				
+			}
+				
+		</script>
+	</body>
+</block>

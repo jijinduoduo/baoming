@@ -1,0 +1,70 @@
+body { font-family: SimSun, Arial, Helvetica, sans-serif; background-color: #fff; font-size: 14px; color: #404040; }
+
+#paypass_window a, .window_food a { color: #1a66b3; text-decoration: none; }
+#paypass_window a:hover,#paypass_window  .window_food a:hover { color: #1a66b3; text-decoration: underline; }
+#paypass_window { width: 315px; border: solid 2px #dfc9b2; background: #fff; }
+#paypass_window .wind_top { height: 22px; padding: 5px 5px 0 8px; background: #fdf2e3; border-bottom: 1px solid #f2e2d3; }
+#paypass_window .wind_top .title_left { padding-top: 2px; font-weight: bold; float: left; }
+#paypass_window .w_close { float: right; width: 9px; height: 9px; }
+#paypass_window .w_close a { display: block; width: 9px; height: 9px; line-height: 0; font-size: 0; overflow: hidden; float: right; background: url(../images/icon_cart.gif) no-repeat 0 -270px; text-indent: -9999px; }
+#paypass_window .wind_split { padding: 19px 19px 0; line-height: 18px; }
+#paypass_window .split_ok { width: 60px; margin: 10px auto 20px; display: block; cursor: pointer; }
+
+.clearfix:after { clear: both; content: " "; display: block; font-size: 0; height: 0; visibility: hidden; }
+.clearfix { zoom: 1; }
+#paypass_window{ width: 408px; }
+#paypass_window .payment_step { width: 378px; margin: 0 auto; height: 28px; padding-top: 8px; }
+#paypass_window .payment_step span { float: left; width: 126px; text-align: center; height: 25px; line-height: 25px; border-bottom: 3px solid #e0e0e0; color: #878787; }
+#paypass_window .payment_step span.step01,#paypass_window  .payment_step span.step02,#paypass_window  .payment_step span.step03 { border-bottom-style: solid; border-bottom-width: 3px; margin-right: 1px; width: 124px; color: #e9cb7f; padding-left: 1px; }
+#paypass_window .payment_step span.step01 { border-bottom-color: #fed97a; }
+#paypass_window .payment_step span.step02 { border-bottom-color: #ffe19a; }
+#paypass_window .payment_step span.step03 { border-bottom-color: #ffe3a2; }
+#paypass_window .payment_firststep { padding: 23px 0 0 0; margin-bottom: -16px; }
+#paypass_window .payment_firststep .title { width: 109px; float: left; text-align: right; }
+#paypass_window .payment_firststep b { font: bold 14px Arial; position: relative; top: -1px; top: -2px\9; }
+#paypass_window .payment_firststep .obtain_box { padding: 6px 0 0 110px; }
+#paypass_window .payment_firststep input { float: left; height: 24px; width: 80px; line-height: 18px; padding-bottom: 2px; overflow: hidden; }
+#paypass_window .payment_firststep .obtain_box span { float: left; padding: 5px 0 0 13px; white-space: nowrap; }
+#paypass_window .payment_input { padding: 25px 0 0 0; }
+#paypass_window .payment_input p { height: 26px; line-height: 26px; padding-bottom: 5px; width: 408px; overflow: hidden; position: relative; }
+#paypass_window .payment_input label { float: left; width: 109px; text-align: right; }
+#paypass_window .payment_input input { float: left; height: 24px; line-height: 24px; width: 184px; border: 1px solid #dadada; padding-left: 3px; margin-right: 9px; }
+#paypass_window .payment_input input.vcode { width: 92px; }
+#paypass_window .payment_input span { float: left; }
+#paypass_window .payment_input .wrong, .payment_firststep .wrong { color: #c30; }
+#paypass_window .payment_input .hint { color: #525252; }
+#paypass_window .payment_input .hint02 { color: #878787; margin-right: 10px; }
+#paypass_window .payment_input .hint .strength01,#paypass_window  .payment_input .hint .strength02,#paypass_window  .payment_input .hint .strength03 { width: 60px; margin: 7px 5px 0; padding: 1px; height: 6px; border-color: #dcdcdc #e8e8e8 #dcdcdc #e8e8e8; border-style: solid; border-width: 1px; overflow: hidden; }
+#paypass_window .payment_input .hint .strength01 i,#paypass_window  .payment_input .hint .strength02 i,#paypass_window  .payment_input .hint .strength03 i { height: 6px; background: #eee; float: left; overflow: hidden; }
+#paypass_window .payment_input .hint .strength01 b, #paypass_window .payment_input .hint .strength02 b,#paypass_window  .payment_input .hint .strength03 b { display: block; height: 3px; background: #f5f5f5; margin-bottom: 3px; overflow: hidden; }
+#paypass_window .payment_input .hint .strength01 i { width: 40px; }
+#paypass_window .payment_input .hint .strength02 i { width: 20px; }
+#paypass_window .payment_input .hint .strength03 i { width: 0; }
+#paypass_window .payment_input .hint .strength01 i.now { background: #e46a4b; width: 20px; }
+#paypass_window .payment_input .hint .strength01 i.now b { background: #f77351; }
+#paypass_window .payment_input .hint .strength02 i.now { background: #e79433; width: 40px; }
+#paypass_window .payment_input .hint .strength02 i.now b { background: #f89f37; }
+#paypass_window .payment_input .hint .strength03 i.now { background: #92aa41; width: 60px; }
+#paypass_window .payment_input .hint .strength03 i.now b { background: #9eb846; }
+#paypass_window .payment_input p.btn { padding-left: 109px; width: 299px; height: 29px; padding-bottom: 30px; }
+#paypass_window .payment_input p.btn button { width: 75px; height: 29px; overflow: hidden; background: url(../images/button_paymentcard.png) no-repeat 0 0; border: none; font-size: 12px; color: #fff; font-weight: bold; }
+#paypass_window .payment_success { padding: 38px 0 57px 109px; background: url(../images/bg_success2.gif) no-repeat 63px 28px; }
+#paypass_window .payment_success .title { font-size: 14px; padding-bottom: 13px; font-weight: bold; }
+#paypass_window .payment_success .hint { color: #878787; padding-bottom: 16px; }
+#paypass_window .payment_success button { padding: 0 3px; }
+#paypass_window .payment_tophint { width: 343px; height: 31px; line-height: 32px; line-height: 33px\9; overflow: hidden; background: #fff9d0 url(../images/pop_note.gif) no-repeat 15px 9px; padding: 0 0 0 35px; margin: 10px auto -4px; }
+#paypass_window .payment_service { width: 373px; padding-left: 5px; height: 32px; line-height: 32px; margin: 0 auto; color: #878787; border-top: 1px solid #eee; }
+
+#paypass_window .msg_level { color: #878787; display: block; overflow: hidden; width: 200px; vertical-align: middle; margin: 0 0 0 0px; float: left; }
+#paypass_window .msg_level span { background-color: #b9b9b9; color: #fff; display: inline-block; height: 13px; line-height: 14px; margin-left: 1px; text-align: center; width: 42px; _height: 12px; _padding-top: 1px; _overflow: hidden; float: none; *position: relative; *top: -2px; }
+#paypass_window .msg_level .s1 { background-color: #ffc6a0; }
+#paypass_window .msg_level .s2 { background-color: #ffa568; }
+#paypass_window .msg_level .s3 { background-color: #ff8e42; }
+#paypass_window .payment_input .tit { padding: 0 0 12px 109px; width: 290px; height: auto; }
+#paypass_window .payment_input .tit .msg_level { display: block; height: 13px; line-height: 13px; *line-height: 14px; }
+#paypass_window .payment_input .tit .hint02, .payment_input .tit .wrong { line-height: 13px; *line-height: 14px; }
+#paypass_window .payment_input .intensity { color: #525252; line-height: 18px; display: inline-block; font-size: 12px; margin-top: 4px; }
+#paypass_window .payment_input .tips_txt { color: #525252; padding-left: 23px; background: url(../images/pic_login_ok.gif) no-repeat 0 3px; _background-position: 0 2px; }
+#paypass_window .payment_input .tips_txt i { list-style: none; font-style: normal; display: inline; float: none; padding-right: 8px; color: #e46a4b; }
+#paypass_window .payment_input .tips_txt .tips_y { color: #e79433; }
+#paypass_window .payment_input .tips_txt .tips_g { color: #87a035; }

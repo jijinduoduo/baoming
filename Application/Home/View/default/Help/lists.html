@@ -1,0 +1,34 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<dl><dt><a rel="nofollow">文章分类</a></dt>
+<volist name="article" id="vo"> 
+<dd><a rel="nofollow"  href="{:U('help/lists?pid='.$vo['id'])}">{$vo.title}</a></dd>
+</volist>
+</dl>
+<volist name="footer" id="vo">
+<dl><dt><a href="{:U('help/lists?pid='.$vo['id'])}">{$vo.title}</a></dt>
+ <volist name="vo['id']" id="son"> 
+<dd><a rel="nofollow"  href="{:U('help/lists?pid='.$son['id'])}">{$son.title}</a></dd>
+</volist>
+</dl>
+</volist>
+
+</div><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+<dl class='artlist'>
+	<volist name="list" id="vo">
+
+<dd><a  href="{:U('help/detail?id='.$vo['id'])}">{$vo.title}</a>({$vo.create_time|date='Y-m-d H:i',###})</dd>
+</volist>
+</dl>			
+
+</div>
+
+<!-- 个人中心 初始状态 end --></div>
+  
+     
+      
+   
+</block>

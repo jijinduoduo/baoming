@@ -1,0 +1,95 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+
+	<div class="red" style="clear:both; overflow:hidden; padding:10px;">收货地址管理（选中表示为默认）</div>
+
+	
+       
+    <form method="post" class="person-add" name="form" action="{:U('')}">
+        
+		
+<div class="form-item">
+		选择地区:<select name="province" id="idprovince" class="new-select" >
+							 <volist name="list" id="vo"> 
+  <option  value="{$vo.id}">{$vo.area}</option>  
+</volist>
+							</select> <select name="city" id="idcity" class="new-select" ><option value=''>选择城市</option></select> <select class="new-select" name="area" id="idarea" ><option value=''>选择县城</option></select></div>
+<div class="form-item"> 
+						详细地址:<input type="text"  id="address"  name="address"></div>
+					<div class="form-item">	联系人：<input type="text" name='realname' id="realname" ></div>
+					<div class="form-item"> 手机号：<input type="text" id="phone" name='cellphone' ></div>
+			<div class="form-item"> 			
+						
+						<input type="submit" class=" btn-xiugai redd" id="btn-save" value="保存" /></div>
+          
+        </form>
+   <script>
+	$('#idprovince').change(function(){
+					if(this.value==''){
+						//$('#ltwo').hide();
+						//$('#lthree').hide();
+						return;
+					}
+					//alert($('#lone'.value);
+					$.post('{:U("change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+							//$('#lthree').hide();
+							$('#idcity').empty();//清空原有的数据
+							//$("<option value='-1'>选择县城</option>").appendTo("#lthree");
+							$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.area+"</option>").appendTo("#idcity");
+							
+							});
+						  
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+$('#idcity').change(function(){
+					if(this.value==''){
+						//$('#ltwo').hide();
+						//$('#lthree').hide();
+						return;
+					}
+					//alert($('#lone'.value);
+					$.post('{:U("change")}',{pid:this.value},
+					function(data,textStatus){
+						if(data){
+							//$('#lthree').hide();
+							$('#idarea').empty();//清空原有的数据
+						
+							$.each(data, function(i,n){
+								$("<option value='"+n.id+"'>"+n.area+"</option>").appendTo("#idarea");
+								//$("#ltwo").append('<option value="'+n.region_id+'">'+n.region_name+'</option>');
+							});
+						
+						}else{
+							alert('没有子级了!');
+						}
+					},'json');
+				});
+$('#idarea').change(function(){
+					if(this.value==''){
+						//$('#ltwo').hide();
+						//$('#lthree').hide();
+						return;
+					}
+					//alert($('#lone'.value);
+					
+				});
+
+				</script>	
+	
+
+<!-- 个人中心 初始状态 end --></div></div>
+      
+</block>

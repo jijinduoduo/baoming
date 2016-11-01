@@ -1,0 +1,68 @@
+<extend name="Base/s1"/>
+
+
+
+<block name="body">
+     
+   <section>
+	  <div class="tuanlist">
+       <empty name="childlist"> 
+	 <else/> <div class="category_nav">
+      <dl>
+      <dt>全部分类</dt>
+      
+      <dd><volist name="childlist" id="vo"><a href="{:U('Article/index/?pid='.$vo['id'])}">{$vo.title}({$vo.id|get_tuan_count})</a>
+       </volist> </dd></dl> 
+       </div>   
+    </empty>  <php>$category['id']=I('pid');</php> 
+        <ul class="ml_content_top"><li <eq name="order" value="1">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>1,'sort'=>$see))}" class="{$value}">热度<i></i></a></li><li <eq name="order" value="2">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>2,'sort'=>$see))}"  class="{$value}">最新<i></i></a></li><li <eq name="order" value="3">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>3,'sort'=>$see))}"  class="{$value}">价格<i></i></a></li><li <eq name="order" value="4">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>4,'sort'=>$see))}"  class="{$value}">销量<i></i></a></li></ul> 
+                <empty name="list">
+ <div class="media">暂无数据</div>
+</empty>
+    
+                <div class="yershop_tuan">
+
+
+                <ul> <volist name="list" id="vo">
+				
+				<li class="li" onmouseover="this.className='lihover'" onmouseout="this.className='li'"><span class="icon_discount"></span>
+               <a href="{:U('Article/detail?id='.$vo['id'])}"><img src="{$vo.cover_id|get_cover='path'}"> </a> 
+               <p class="title">{$vo.title}</p>
+			    <p><span class="tuan"><strong>￥{$vo.price}</strong>/<strong class="yuan">￥{$vo.id|get_marketprice}</strong></span><span class="qiang"><a>去抢购</a></span></p>
+				  <p class="time">剩余时间：<php>
+
+date_default_timezone_set("Asia/Shanghai");
+$time1 = $vo[deadline];
+$time2 =time();
+$second = $time1 - $time2;
+	$day = floor($second/(3600*24));
+	$second = $second%(3600*24);
+	$hour = floor($second/3600);
+	$second = $second%3600;
+	$minute = floor($second/60);
+	$second = $second%60;
+
+if($second>0){echo $day.'天'.$hour.'小时'.$minute.'分'.$second.'秒';
+}
+else{echo '0天0小时0分0秒';
+}
+</php> </p>
+				</li> </volist>
+                </ul>  
+                  
+                </div>
+              
+             
+       <!-- 分页 -->
+        <div class="page">
+{$page}
+        </div>   
+			</div>
+ 
+     <script>
+    $(".menu-list li").eq(1).css('background','#d25400');  
+     </script>   
+  
+    </section>
+    
+</block>

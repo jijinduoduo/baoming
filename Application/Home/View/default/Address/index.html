@@ -1,0 +1,134 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+
+	<div class="red" style="clear:both; overflow:hidden; padding:10px;">收货地址管理（选中表示为默认）</div>
+
+	
+       
+    <form method="post" class="person-add" name="form" action="{:U('update')}">
+        
+		
+<ul style="margin-left:40px;" class="list">
+		  <volist name="list" id="vo"> 
+		  
+         
+          <li><span><php>$s=$vo['status'];if($s==1){
+		  echo '<input type="radio" checked="checked" name="id" value="'.$vo['id'].'">';
+		  }
+		  if($s==0){
+		  echo '<input type="radio"  name="id" value="'.$vo['id'].'">';
+		  }
+		  </php>
+		  
+		  
+		  </span>{$vo.province} {$vo.city} {$vo.area}{$vo.address} {$vo.realname}  {$vo.cellphone}</li>
+        
+		</volist>
+<li class="add" style="display:none"><span></span>联系地址<input type="text"  id="address"  name="address">联系人：<input type="text" id="realname" >联系方式<input type="text" id="phone"  ><input type="button" class=" rosy" id="btn-save" value="保存" /></li>
+             <li><input type="button" class="btn-xiugai redd"  value="设置默认" onclick="shezhi();"/>&nbsp;<input type="button" class="btn-xiugai blue"  value="删除" onclick="shanchu();"/>&nbsp;<a href='{:U("Address/add")}' class="btn-xiugai orange"  />增加 </a> </li><BR></ul> 
+        </form>
+      
+	
+	
+	
+<script type="text/javascript">
+   
+$("#btn-add").click(function(){ $("li.add").toggle(); });
+
+//增加地址
+$("#btn-save").click(function(){
+ var p=$("#address").val();
+	var real=$("#realname").val();
+	var ph=$("#phone").val();
+	var url="{:U('save')}";
+if(p==''||real==''||ph==''){alert("内容不能为空");return false;}
+else{$.ajax({
+type:'post', //传送的方式,get/post
+url:url, //发送数据的地址
+data:{posi:p,pho:ph,rel:real},
+ dataType: "json",
+success:function(data)
+{var str='<li><span><input type="radio" name="id" value="'+data+'" id="default"/></span>'+
+p+"&nbsp;"+real+"&nbsp;"+ph+'</li>';
+$("li.add").before(str);$("li.add").fadeOut();
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+//ajax over
+}//else over	
+	});
+//设置默认
+function shezhi() { 
+	
+	  var val=$('input:radio[name="id"]:checked').val();
+	//判断新地址是否选中,获取地址id
+	  if(val==null){
+	
+		 alert("请选择一个地址!");return false;
+		}
+  else{
+    
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("shezhi")}', //发送数据的地址
+data:{id:val},
+ dataType: "json",
+success:function(data)
+{alert(data);
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})        
+		
+	//ajax over		
+		
+		 }
+	
+	//else over	
+	}
+//设置默认
+function shanchu() { 
+	
+	  var val=$('input:radio[name="id"]:checked').val();
+	//判断新地址是否选中,获取地址id
+	  if(val==null){
+	
+		 alert("请选择一个地址!");return false;
+		}
+  else{
+    
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("deleteAddress")}', //发送数据的地址
+data:{id:val},
+ dataType: "json",
+success:function(data)
+{alert(data.msg);window.location.reload();
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})        
+		
+	//ajax over		
+		
+		 }
+	
+	//else over	
+	}
+
+
+
+
+</script>
+<!-- 个人中心 初始状态 end --></div></div>
+    
+      
+</block>

@@ -1,0 +1,149 @@
+<extend name="Public/base"/>
+#tab1 table{border-right:1px solid #F00;border-bottom:1px solid #F00}
+#tab1 table td{border-left:1px solid #F00;border-top:1px solid #F00}
+<block name="body">
+	<div class="main-title">
+		<h2>
+			{$info['id']?'编辑':'新增'}订单
+		
+		</h2>
+	</div>
+	<ul class="tab-nav nav">
+	<li data-tab="tab1" class="current"><a href="javascript:void(0);">完成换货订单</a></li>
+	<li data-tab="tab2" ><a href="javascript:void(0);">商品换货动态</a>
+	
+	</li></ul>
+<div class="tab-content">						
+
+	<div id="tab1" class="tab-pane in tab1">
+	<form action="{:U()}" method="post" class="form-horizontal">
+
+
+<div class="form-item">
+			<label class="item-label">添加备注<span class="check-tips">（返回信息说明）</span></label>
+			<div class="controls">
+			<label class="textarea input-large">
+				<textarea  name="backinfo"></textarea>
+			</label>	
+			</div>
+		</div>
+
+      <div class="form-item">
+			<label class="item-label">状态<span class="check-tips">（系统生成，不可更改）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="status" value="5" >
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="id" value="{$info.id|default=''}">
+			<input type="hidden" name="shopid" value="{$info.shopid|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form></div>
+	
+	<div id="tab2" class="tab-pane  tab2">
+	<div class="back-detail" >     
+<empty name='info'>
+	<div class="personal_info_none_goods">
+				<p>没有该订单，<a href='{:U("index/index")}' class="red">查询错误</a></p>
+
+			</div>
+	<else />
+
+            
+      <div class="apply">  
+<h3 style="display: block;color:white;background:#f60">买家申请换货说明</h3>
+      
+<div class="apply-wrap">
+<div class="back-detail-asc">	<p>申请时间：{$info.time|date='Y-m-d H:i:s',###} </p><p>名称：{$info.goodid|get_good_name} </p>
+<p>金额：{$info.total} 数量：{$info.num}</p>
+ <p>标题{$info.title}</p>
+        
+ <p>原因：{$info.reason}</p>
+ </div>
+ <div class="back-good-img"><img src="{$info.goodid|get_cover_id|get_cover='path'}"  width="170" height="170"/> 
+ </div>
+ </div>
+ 
+ </div>
+		 
+		
+			
+      <div class="apply-feedback">      
+    <h3 style="display: block;color:white;background: #f60">卖家反馈</h3>  
+          	<p>反馈时间：{$info.update_time|date='Y-m-d H:i:s',###}</p>  <p>反馈：<span class="red"><php>
+			  $status=$info['status'];
+			  if($status==1){ echo "待审核";}; 
+			  if($status==2){ echo "同意换货";};
+              if($status==3){ echo "换货被拒绝";};
+			  if($status==4){ echo "正换货";};
+			  if($status==5){ echo "已换货";};</php></span></p> 
+
+    <if condition="$info.status eq '2'">
+	<p>换货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$info.backname}  <i class="glyphicon glyphicon-map-marker"></i>{$info.address}  <i class="glyphicon glyphicon-phone"></i>{$info.contact}</span></p>
+	<p style="display: block;color:white;background: #f60">买家换货快递</p>
+	<form action="{:U("order/backkuaidi")}" method="post" class="form-horizontal">
+<input type="hidden" class="text input-large"  name="backid"  value="{$info.id}">
+<p>快递名称：<input type="text" class="text input-large"  name="tool"  ></p>
+<p>快递单号：<input type="text" class="text input-large"  name="toolid"  ></p>
+<p><input type="submit" class="btn_submit_pay" value="提交" /></p>
+
+</form>
+ <else /> 
+ </if>
+ <if condition="$info.status eq '3'">     
+ <p>拒绝原因：{$info.backinfo}</p>
+ <else /> 
+ </if>  
+<if condition="$info.status eq '4'">
+	<p>换货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$info.backname}  <i class="glyphicon glyphicon-map-marker"></i>{$info.address}  <i class="glyphicon glyphicon-phone"></i>{$info.contact}</span></p>
+	<h3 style="display: block;color:white;background: #f60">买家换货快递</h3>
+	<p>快递名称：{$info.tool}</p>
+        
+ <p>快递单号：{$info.toolid}</p>
+<notempty name="$info.changetool">
+
+<p>卖家发货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$info.acceptname}  <i class="glyphicon glyphicon-map-marker"></i>{$info.acceptaddress}  <i class="glyphicon glyphicon-phone"></i>{$info.acceptphone}</span></p>
+	<h3 style="display: block;color:white;background: #f60">卖家发货使用快递</h3>
+	<p>快递名称：{$info.changetool}</p>
+        
+ <p>快递单号：{$info.changetool}</p>
+
+</notempty>
+ <else /> 
+ </if>
+<if condition="$info.status eq '5'">
+	<p>换货地址：<span class="red"><i class="glyphicon glyphicon-user"></i>{$info.backname}  <i class="glyphicon glyphicon-map-marker"></i>{$info.address}  <i class="glyphicon glyphicon-phone"></i>{$info.contact}</span></p>
+	<h3 style="display: block;color:white;background: #f60">买家换货快递</h3>
+	<p>快递名称：{$info.tool}</p>
+        
+ <p>快递单号：{$info.toolid}</p>
+
+ <else /> 
+ </if>
+	</empty>
+	
+	
+		
+</div>
+
+</div>
+		  </div>
+	</div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+	if($('ul.tab-nav').length){
+		//当有tab时，返回按钮不显示
+		$('.btn-return').hide();
+	}
+	$(function(){
+		//支持tab
+		showTab();
+	})
+
+</script>
+</block>

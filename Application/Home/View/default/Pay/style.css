@@ -1,0 +1,11 @@
+
+		*{font-family: "微软雅黑";transition: all 0.3s;-webkit-transition: all 0.3s ease-out; }
+			.button{border-radius: 5px;width: 140px;height: 35px;line-height: 35px;text-align: center;background: #00B16A;position: relative;display:block;}
+			a{text-decoration: none;color: #fff;overflow: hidden;}
+			a:hover{color: #fff;text-decoration: none; cursor: pointer;}
+			.button:before{-webkit-transition: all 0.3s;content: "";position: absolute;left: -40px;top: 0;background: #FFFFFF;width: 20px;height: 55px;opacity: 0.5;-webkit-transform: skewX(-30deg);}
+			.button:hover{background: #26C281;}
+			.button:hover:before{left: 170px;width:20px;}
+			.form-inline{margin-bottom: 30px;}
+		
+			#beecloud-pay .beecloud-wx{padding: 0px !important;}

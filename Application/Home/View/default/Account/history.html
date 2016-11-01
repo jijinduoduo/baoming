@@ -1,0 +1,41 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><!-- 个人中心 初始状态 start -->
+<div class="center_right account" id="MemberCenterCtrl" style="display: block;">
+<div class="account_right"  style="display: block;">
+	<!-- 安全中心 初始状态 start -->
+	<h4 class=""><a href="{:U("account/security")}">安全中心</a>>登录历史&nbsp;</h4>
+
+	<div class="account_history">
+            <h5>登录历史记录</h5>
+            <p class="history_num">最近登录记录<em>{$count}</em>条</p>
+            <ul class="history">
+                <li class="thead"><span>登录时间</span><span>登录ip</span><span>登录地区</span><span>登录方式</span><span style="border:none">操作</span></li>
+               
+			   <volist name="list" id="vo" empty="暂无数据">
+				<li><span>{$vo.login_time|date='Y-m-d H:i:s',###}</span><span>{$vo.login_ip}</span><span>{$vo.login_country}{$vo.login_province}{$vo.login_city}</span><span>{$vo.login_way}</span></li>
+				</volist>
+				
+				
+				         </ul>
+        <!-- 分页 -->
+        <div class="page">
+{$page}
+        </div> </div>
+				 </div>
+
+</div>
+				 </div> </div>
+	<!-- 安全中心结束状态 end -->
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+       
+   
+   
+</block>

@@ -1,0 +1,55 @@
+<extend name="Base/pageall"/>
+<block name="body">
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 --></div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+<span  style="display: block;padding:15px;font-size:17px;text-align:center;color:red;margin:20px 0;"><i class="
+glyphicon glyphicon-pencil"></i>{$msg} &nbsp;&nbsp;</span>
+
+	<form action='{:U()}' method="post" name="actform" style="width:89%" >
+
+       <div id="write">
+
+	   
+<ul> <li><div class="form-item">
+			<label class="item-label">商品名称:<span >{$list.goodid|get_good_name}</span> </label>
+		
+		</div></li>
+		<li><div class="form-item">
+			<label class="item-label"><span class="check-tips"></span> </label>
+			<div class="controls">
+			换货数量:<input type="text" class="text num input-large" name="num" value="{$list.num}">	<span>(最多可退{$list.num}件)	</span>		
+			</div>
+		</div></li>
+			<li><div class="form-item">
+			<label class="item-label">原因:<span class="check-tips"></span> </label>
+			<div class="controls">
+			<textarea rows=5" cols="20" name="reason"></textarea>				
+			</div>
+		</div></li>
+		
+			 
+			 <li><span style="margin: 0 21px"></span>	<input type="hidden" name="id" value="{$list.id}">
+	<input type="hidden" name="goodid" value="{$list.goodid}">
+	<input type="hidden" name="shopid" value="{$list.id}"><input type="submit" class="btn_submit_pay" value="提交" /></li>
+			
+
+</ul> </div>
+         
+       </form>
+
+	
+	
+		
+
+
+</div>
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+      
+      
+   
+</block>

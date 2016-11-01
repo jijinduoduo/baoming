@@ -1,0 +1,35 @@
+
+ <!-- ajax分页商品评论区模板 -->
+
+  <script type="text/javascript">
+   var gooid="<php>echo session('goodid').'42' ;</php>";
+            function question(id){    //user函数名 一定要和action中的第三个参数一致上面有
+                 var id = id;
+                    $.get('{:U("article/question")}', {p:id,goodid:gooid}, function(data){  //用get方法发送信息到UserAction中的user方法
+                     $("#boxquestion").replaceWith("<div class='item_wrap' id='boxquestion'>"+data+"</div>"); //user一定要和tpl中的一致
+                });
+             }
+            
+   </script>
+	    
+<div class='item_wrap' id='boxquestion'>
+
+    <volist name="list" id="m">
+        <div class="qa_cont clearfix">
+                    <div class="question"><span class="time">{$m.create_time|date='Y-m-d H:i',###}</span>
+					<span><img src="__IMG__/question.png">问：{$m.content}？</span></div>   
+		  <volist name="po['id']" id="re"> 
+  <div class="answer"><span class="time">{$re.content}</span><span><b><img src="__IMG__/anwser.png">商家：</b>{$re.content}</span></div> 
+		 
+		  </volist>
+		   </div>	 
+		  
+		   </volist>	
+{$page}
+      
+		</div>	<!--分页输出-->
+
+
+
+
+ <!-- ajax分页商品评论区模板 -->

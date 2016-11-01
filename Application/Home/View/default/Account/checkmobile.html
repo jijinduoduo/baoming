@@ -1,0 +1,129 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><!-- 个人中心 初始状态 start -->
+<div class="center_right account" id="MemberCenterCtrl" style="display: block;">
+<div class="account_right"  style="display: block;">
+	<!-- 安全中心 初始状态 start -->
+	<h4 class="">验证手机</h4>
+
+	<div class="verification">
+                
+   <script language="javascript">
+	function get_mobile_code(){
+   var m=jQuery.trim($('#mobile').val());
+       validatemobile(m);//检测手机号码格式
+        $.post('{:U("account/send_sms")}', {mobile:m,send_code:<php> echo $_SESSION['send_code'];</php>}, function(msg) {
+            alert(jQuery.trim(unescape(msg)));
+			if(msg=='提交成功'){
+				RemainTime();
+			}
+        });
+	};
+	var iTime = 59;
+	var Account;
+	function RemainTime(){
+		document.getElementById('zphone').disabled = true;
+		var iSecond,sSecond="",sTime="";
+		if (iTime >= 0){
+			iSecond = parseInt(iTime%60);
+			iMinute = parseInt(iTime/60)
+			if (iSecond >= 0){
+				if(iMinute>0){
+					sSecond = iMinute + "分" + iSecond + "秒";
+				}else{
+					sSecond = iSecond + "秒";
+				}
+			}
+			sTime=sSecond;
+			if(iTime==0){
+				clearTimeout(Account);
+				sTime='获取手机验证码';
+				iTime = 59;
+				document.getElementById('zphone').disabled = false;
+			}else{
+				Account = setTimeout("RemainTime()",1000);
+				iTime=iTime-1;
+			}
+		}else{
+			sTime='没有倒计时';
+		}
+		document.getElementById('zphone').value = sTime;
+	}
+	 function validatemobile(mobile)
+    {
+        if(mobile.length==0)
+        {
+           alert('请输入手机号码！');
+           document.formUser.mobile.focus();
+           return false;
+        }    
+        if(mobile.length!=11)
+        {
+            alert('请输入有效的手机号码！');
+            document.formUser.mobile.focus();
+            return false;
+        }
+        
+        var myreg = /^(((13[0-9]{1})|159|153)+\d{8})$/;
+        if(!myreg.test(mobile))
+        {
+            alert('请输入有效的手机号码！');
+            document.formUser.mobile.focus();
+            return false;
+        }
+    }
+
+</script>
+<body>
+
+<form  method="post" name="formUser" >
+	<table width="100%"  border="0" id="mobileform" align="left" >
+		<tr >
+			<td align="right">手机<td>
+		<input id="mobile" name="mobile" type="text" size="25" class="inputBg" /><span style="color:#FF0000"> *</span> 
+        <input id="zphone" type="button" value=" 获取手机验证码 " onClick="get_mobile_code();"></td>
+        </tr>
+		<tr >
+			<td align="right">验证码</td>
+			<td><input type="text" size="8" id="smscode"  name="mobile_code" class="inputBg" /></td>
+		</tr>
+		<tr>
+			<td align="right"></td>
+			<td><input type="button" value=" 验证手机 " onclick="checksms();" id="check" class="btn-check orange button"></td>
+		</tr>
+	</table>
+</form>  
+	<script>
+
+function checksms(){ 
+var m=jQuery.trim($('#mobile').val());
+var code=jQuery.trim($('#smscode').val());
+$.post('{:U("account/checksmscode")}', {mobile:m,mobile_code:code}, function(data) 
+{  alert(jQuery.trim(unescape(data.msg)));
+			
+	
+        });
+
+}</script>			
+				
+			<div class="ver_bottom_hint">
+                    <p class="title">无法收到短信验证码？</p>
+                    <p>·&nbsp;由于网络原因，可能会有延迟。如果您10分钟内还没有收到，请再次发送短信验证码，一个账号一天最多可以发送5条短信验证码</p>
+                    <p>·&nbsp;若多次操作未收到短信验证码，请将问题反馈给客服：{:C("CONTACT")}</p>
+                </div>
+                </div>
+
+				 </div>
+	<!-- 安全中心结束状态 end -->
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+       
+   
+   
+</block>

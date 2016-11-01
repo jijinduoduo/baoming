@@ -1,0 +1,120 @@
+BeeCloud PHP Changelog
+========================================================
+v2.3.7 发布日期: 2016年7月29日
++ 鉴权, , 具体请参考api.php中的类Auths
+  调用方式:\beecloud\rest\Auths::auth($data)
+  请参考demo,即demo/auth.php
++ 获取银行列表,即: \beecloud\rest\Subscriptions::blanks($data)
++ 获取手机验证码,即: \beecloud\rest\Subscriptions::sms($data)
++ 订阅计划plan,具体请参考api.php中的类Subscriptions
+  	$data请求所需的参数, $objectid计划的唯一标识
+  创建plan,即: \beecloud\rest\Subscriptions::plan($data)
+  订阅计划的查询(按照ID查询),即: \beecloud\rest\Subscriptions::query_plan($data, $objectid)
+  订阅计划的查询(按照条件查询),即: \beecloud\rest\Subscriptions::plan($data)
+  订阅计划的修改,即: \beecloud\rest\Subscriptions::update_plan($data, $objectid)
+  订阅计划的删除,即: \beecloud\rest\Subscriptions::del_plan($data, $objectid)
+  请参考demo,即demo/subscription.php
++ 订阅记录subscription, 具体请参考api.php中的类Subscriptions
+  	$data请求所需的参数, $objectid订阅的唯一标识
+  创建subscription,即: \beecloud\rest\Subscriptions::subscription($data)
+  订阅的查询(按照ID查询),即: \beecloud\rest\Subscriptions::query_subscription($data, $objectid)
+  订阅的查询(按照条件查询),即: \beecloud\rest\Subscriptions::query_subscription($data)
+  订阅的修改,即: \beecloud\rest\Subscriptions::update_subscription($data, $objectid)
+  订阅的删除,即: \beecloud\rest\Subscriptions::cancel_subscription($data, $objectid)
+  请参考demo,即demo/subscription.php
++ 添加新的渠道BC_NATIVE, BC_CARD_CHARGE, BC_WX_WAP, BC_ALI_QRCODE, BC_WX_JSAPI
++ 添加自行配置接收webhook的参数notify_url
++ 添加二要素鉴权
++ 添加新的渠道BC_ALI_SCAN, BC_WX_SCAN
+
+========================================================
+v2.3.6 发布日期: 2016年7月5日
++ BeeCloud平台参数配置,原在sdk/src/rest/config.php设置常量,现更改为
+  \beecloud\rest\api::registerApp('app id', 'app secret', 'master secret', 'test secret'),
+  或者BCRESTApi::registerApp('app id', 'app secret', 'master secret', 'test secret')
+  (重点)
++ 原beecloud.php类BCRESTUtil中的方法request和sdk/src/rest/network.php中代码
+  curl_setopt($ch, CURLOPT_FAILONERROR, true)注释掉,以便获取返回http code大于400的结果
+  (重点)
++ Test Model,只提供下单和支付订单查询的Sandbox模式,不写setMode函数或者false即live模式,true即test模式
+  原在sdk/src/rest/config.php设置TEST_MODE常量,现更改为
+  \beecloud\rest\api::setSandbox(true),
+  或者BCRESTApi::setSandbox(true)
++ 原sdk/src/rest/config.php,更改为在类中定义各常量,以适用于采用composer包管理的用户
++ 修改READMD.md文件
+
+========================================================
+v2.3.5 发布日期: 2016年6月24日
++ demo/wx/wx.jsapi.php中添加了对微信相关配置的描述
++ 支付渠道BC_EXPRESS添加银行卡号(card_no, 选填)字段的支持
++ READMD.md添加测试模式的描述
+
+========================================================
+v2.3.4 发布日期: 2016年6月6日
++ 所有的请求URL在config.php中统一定义,不再在单个类中分别定义
++ 原有sdk/src/rest/international.php合并到api.php中
++ 原有sdk/src/network.php移动至sdk/src/rest/network.php
++ 增加渠道UN_WAP支付(因银联做了适配,需在移动端打开)
++ 修改企业打款API
++ 原demo的lib/WxPayPubHelper中提供的WxPayPubHelper.php方法createOauthUrlForCode现增加urlencode($redirectUrl),
+  用户在使用获取code时不需要再次urlencode,请注意!!!
++ 提供下单和查询的Sandbox模式，即设置TEST_MODE＝true
+
+========================================================
+v2.3.3 发布日期: 2016年5月9日
++ 修改渠道BC_GATEWAY, 字段bank在config.php添加常量定义
++ 增加渠道BC_EXPRESS支付
++ 修改微信扫码支付订单状态的查询bug
+
+========================================================
+v2.3.2 发布日期: 2016年4月08日
++ PHP SDK版本升级至v2
++ 添加京东B2B／BC网关支付
++ 添加支付订单／退款订单总数查询
++ 根据ID进行支付／退款订单记录查询
++ 原有demo bug修复
++ 添加测试用例
++ 修改README.md
++ JD_B2B增加bank_code
+
+========================================================
+v2.3.1 发布日期: 2016年2月24日
++ 修改易宝bug
+
+========================================================
+v2.3.0 发布日期: 2015年10月22日
++ 添加单笔打款接口
+
+========================================================
+v2.2.2 发布日期: 2015年10月22日
++ 添加Paypal
+
+========================================================
+v2.2.1 发布日期: 2015年10月17日
++ bug: Exception in namespace
+
+========================================================
+v2.2.0 发布日期: 2015年9月17日
++ 添加百度、易宝、快钱方式
++ 支持composer
+
+========================================================
+v2.1.1 发布日期: 2015年8月18日
++ ali.agree.refund.php bug 导致不能跳转到支付宝页
+
+========================================================
+v2.1.0 发布日期: 2015年8月17日
++ 添加文档中参数说明
++ 新增支持支付宝批量打款API
+    
+========================================================
+v2.0.0 发布日期: 2015年7月28日
++ 基于REST API,包含支付，退款，订单查询，退款查询，退款状态更新功能
++ 支持以下渠道：
+    WX_NATIVE: 微信公众号二维码支付
+    WX_JSAPI: 微信公众号支付
+    ALI_WEB: 支付宝PC网页支付
+    ALI_QRCODE: 支付宝内嵌二维码支付
+    ALI_OFFLINE_QRCODE: 支付宝线下二维码支付
+    ALI_WAP: 支付宝移动网页支付
+    UN_WEB: 银联PC网页支付

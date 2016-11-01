@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title>报名系统</title>
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/bootstrap.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/index.css" />
+		<link rel="stylesheet" href="Application/Admin/View/Baoming/css/colpick.css" />
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/jquery-1.11.1.min.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/jquery.cookie.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/bootstrap.js" ></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+		
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/colpick.js" ></script>
+		<script type="text/javascript" src="Application/Admin/View/Baoming/js/index-ys.js" ></script>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<div id="{$id}" class="container" style="padding: 1rem 10%;">
+			
+			<div class="panl">
+				<div class="panl panel-heading nav nav-stacked" style="background: #ddd;"><h4>报名查询</h4></div>
+				<div class="panl panel-body" style="border: 1px solid #ddd;">
+					
+						<div>
+							<div style="margin: 0.5rem 0;" class="form-group  has-feedback"><input type="search"  id="name" class="form-control  " placeholder="查询的姓名" /><span></span></div>
+							<div style="margin: 0.5rem 0;"><input type="search"  id="tel" class="form-control " placeholder="查询的手机号码" /><span></span>	</div>
+							<div style="margin: 0.5rem 0;"><button class="btn btn-info" id="search"> 查询</button></div>
+						</div>
+						
+				
+					<div class="panl panel-footer" style="margin-top: 2rem;">
+					未查询到任何信息
+					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		<script>
+			$(function(){
+				var id=$(".container").attr("id");
+				$("button").click(function(){
+					if(name($('#name'))==false||tels($("#tel"))==false){
+						return false;
+					}
+					else{
+						
+						
+						$.ajax({
+							type:"post",
+							url:"{:U('Baoming/searched')}",
+							async:true,
+							dataType:'json',
+							data:{'name':$("#name").val(),'phone':$("#tel").val(),'id':id},
+							success:function(mes){
+								//alert(id)
+								$(".panel-footer").text(mes)
+								console.log(mes);
+							}
+						});
+					}
+				});
+				$("#name").blur(function(){
+					name($('#name'));
+				});
+				$("#tel").blur(function(){
+					tels($('#tel'));
+				});
+			})
+			function name(tag){
+				var name=$(tag).val();
+				if(name==""){
+					alert("姓名不能为空")
+					$(tag).next("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+					$(tag).parent().get(0).className="form-group has-error has-feedback";
+					return false;
+				}
+				else{
+					 var reg =/^[\u4e00-\u9fa5a-z]+$/gi;
+					 var m=reg.test(name);
+					if(!m){
+						alert("请输入正确的姓名");
+						$(tag).next("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+						$(tag).parent().get(0).className="form-group has-error has-feedback";
+						return false;
+					}
+					else{
+						$(tag).next("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+						$(tag).parent().get(0).className="form-group has-success has-feedback";
+						return true;
+					}
+					
+				}
+			}
+			
+			function tels(tag){
+				var tel=$(tag).val();
+				var reg=/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+				if(!reg.test(tel)){
+					alert("请输入有效的手机号码")
+					$(tag).next("span").attr("class","glyphicon glyphicon-remove form-control-feedback");
+					$(tag).parent().get(0).className="form-group has-error has-feedback";
+					return false;
+				}
+				else{
+					$(tag).next("span").attr("class","glyphicon glyphicon-ok form-control-feedback");
+					$(tag).parent().get(0).className="form-group has-success has-feedback";
+					return true;
+				}
+			}
+
+		</script>
+	</body>
+</html>

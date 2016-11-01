@@ -1,0 +1,22 @@
+﻿
+<php>if(!empty($config['type'])){</php>
+
+   <!--`     <a class="" href="<php>if(in_array('qq',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'qq'));}</php>">QQ</a>
+        <a class="" href="<php>if(in_array('sina',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'sina'));}</php>">微博</a>
+  <a class="" href="<php>if(in_array('tencent',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'tencent'));}</php>">QQ微博</a>
+        <a class="" href="<php>if(in_array('t163',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'t163'));}</php>">网易微博</a>
+        <a class="btn btn-warning btn-block" href="<php>if(in_array('Douban',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'douban'));}</php>">豆瓣</a>
+        <a class="btn btn-primary btn-block" href="<php>if(in_array('renren',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'renren'));}</php>">人人</a>
+ <a class="" href="<php>if(in_array('x360',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'x360'));}</php>">360</a>
+        <a class="btn btn-warning btn-block" href="<php>if(in_array('github',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'github'));}</php>">github</a>
+        <a class="btn btn-primary btn-block" href="<php>if(in_array('google',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'google'));}</php>">google</a>
+<a class="" href="<php>if(in_array('msn',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'msn'));}</php>">msn</a>
+        <a class="btn btn-warning btn-block" href="<php>if(in_array('diandian',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'diandian'));}</php>">点点</a>
+     <a class="btn btn-primary btn-block" href="<php>if(in_array('taobao',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'taobao'));}</php>">淘宝网</a>   
+ <a class="btn btn-warning btn-block" href="<php>if(in_array('baidu',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'baidu'));}</php>">百度</a>
+     <a class="btn btn-primary btn-block" href="<php>if(in_array('kaixin',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'kaixin'));}1</php>">开心</a> 
+	<a class="btn btn-primary btn-block" href="<php>if(in_array('sohu',$config['type'])){ echo addons_url('SyncLogin://Base/login',array('type'=>'sohu'));}</php>">搜狐微博</a>  --> 
+<php>}</php>
+<foreach name="config['type']" item="vo">   
+<a  id="{$vo}" href="<php>if(in_array($vo,$config['type'])){echo addons_url('SyncLogin://Base/login',array('type'=> 
+ $vo));}</php>" title="{$vo|get_sdk_title}"> <img src="__IMG__/sdk/{$vo}.png"></a></foreach>

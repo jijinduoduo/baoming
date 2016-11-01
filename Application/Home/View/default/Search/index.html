@@ -1,0 +1,58 @@
+<extend name="Base/s1"/>
+
+
+
+<block name="body">
+  
+        <!-- Contents  -->
+      
+	  <div class="ml_content">
+<div class="goodlist-main">
+	  <div class="lists-position">
+
+
+ <div class="salesrank">
+  <h5><span>销量排行</span></h5>
+  <ul><volist name="sales" id="vo"><li><a class="picture" href="{:U('Article/detail?id='.$vo['id'])}"><img src="{$vo.id|get_cover_id|get_cover='path'}"  ></a>
+  <a class="title" href="{:U('Article/detail?id='.$vo['id'])}"> {$vo.id|get_good_name}</a>
+  <span>￥{$vo.id|get_good_price} </span>
+  </li></volist></ul>
+  
+  </div>
+  <div class="salesrank">
+  <h5><span>最近浏览</span></h5>
+ <ul><volist name="recent" id="vo"><li><a class="picture" href="{:U('Article/detail?id='.$vo['page'])}"><img src="{$vo.page|get_cover_id|get_cover='path'}"  ></a>
+  <a class="title" href="{:U('Article/detail?id='.$vo['page'])}"> {$vo.id|get_good_name}</a>
+  <span>￥{$vo.page|get_good_price} </span>
+  </li></volist></ul>
+ </div>
+	  </div>
+	   <div class="lists-area">
+	   <p class="serach-title">"{$keyword}"的搜索结果</p>
+	  <ul class="ml_content_top"><li <eq name="order" value="1">class="active"<else/></eq>><a rel="nofollow"  href="{:U('search/index','words='.$keyword.'&order=1'.'&sort='.$see)}" class="{$value}">热度<i></i></a></li><li <eq name="order" value="2">class="active"<else/></eq>><a rel="nofollow" href="{:U('search/index','words='.$keyword.'&order=2'.'&sort='.$see)}"  class="{$value}">最新<i></i></a></li><li <eq name="order" value="3">class="active"<else/></eq>><a rel="nofollow" href="{:U('search/index','words='.$keyword.'&order=3'.'&sort='.$see)}"  class="{$value}">价格<i></i></a></li><li <eq name="order" value="4">class="active"<else/></eq>><a rel="nofollow" href="{:U('search/index','words='.$keyword.'&order=4'.'&sort='.$see)}"  class="{$value}">销量<i></i></a></li></ul> 
+	  
+	  <ul class="goodlist">
+      
+         <volist name="list" id="list" empty="暂时没有数据" >
+          <li class="face" onmouseover="this.className='facehover'" onmouseout="this.className='face'">
+                    <a href="{:U('Article/detail?id='.$list['id'])}" class="list-img"> <img src="{$list.cover_id|get_cover='path'}"/></a>
+             <p> <a href="{:U('Article/detail?id='.$list['id'])}" class="t2"> {$list.title}</a></p>     
+                       <p><span class="red" title="预览：{$list.id|get_good_price}">价格：￥{$list.price}</span></p> 
+              </li>      
+            </volist>
+			</ul>
+			<!-- 分页 -->
+			<div class="page">
+{$page}
+        </div> 
+		</div>
+	  </div>
+	  
+	 </div>
+
+           
+        
+        </section>
+  
+    
+</block>

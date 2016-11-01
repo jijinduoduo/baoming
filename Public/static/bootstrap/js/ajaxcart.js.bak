@@ -1,0 +1,44 @@
+
+var gid="ajax";
+ $.ajax({
+              type: "post",
+              url:'',
+            dataType: "json",
+             success: function(data){
+                         //清空resText里面的所有内容
+                         var arr=data;
+                      var a='{:get_username()}';
+					   for(i=0;i<arr.length;i++){
+html=a+'<a href="/mobile/article/'+arr[i].goodid+'">'+arr[i].num+'</a>';
+               $('div.top_main').append(html);                   
+	  
+					   }
+                          
+                   
+                      }
+         });
+
+ var scart = document.getElementById('shopping_cart');
+            var scgood = document.getElementById('sc_goods2');
+            var timer3 = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            scart.onmouseover = scgood.onmouseover = function ()
+            {
+                scgood.style.display = 'block';var array=$(".sc_goods_ul li");
+
+				if(array.length==0){alert(array.length);
+					var html='<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>';
+					$("#sc_goods2").html(html);
+	
+	}
+                clearTimeout(timer3);
+				
+            }
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            scart.onmouseout = scgood.onmouseout = function ()
+            {
+                //开定时器
+                timer3= setTimeout(function () { 
+                    scgood.style.display = 'none'; }, 150);
+            }
+  

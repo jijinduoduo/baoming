@@ -1,0 +1,260 @@
+<extend name="Public/base" />
+
+<!-- 子导航 -->
+<block name="sidebar">
+    <include file="sidemenu" />
+</block>
+
+<block name="body">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+		<script type="text/javascript" src="__STATIC__/UploadImages.js"></script>
+		<div class="main-title cf">
+		<h2>
+			新增{$info.model_id|get_document_model='title'} [
+			<volist name="rightNav" id="nav">
+			<a href="{:U('article/index','cate_id='.$nav['id'])}">{$nav.title}</a>
+			<if condition="count($rightNav) gt $i"><i class="ca"></i></if>
+			</volist>
+			<present name="article">：<a href="{:U('article/index','cate_id='.$info['category_id'].'&pid='.$article['id'])}">{$article.title}</a></present>
+			]
+		</h2>
+	</div>
+	<!-- 标签页导航 -->
+<div class="tab-wrap">
+	<ul class="tab-nav nav">
+		<li data-tab="tab1" class="current"><a href="javascript:void(0);">基础</a></li><li data-tab="tab2" ><a href="javascript:void(0);">扩展</a></li>	</ul>
+	<div class="tab-content">
+	<!-- 表单 -->
+	<form id="form" action="{:U('update')}" method="post" class="form-horizontal">
+		<!-- 基础文档模型 -->
+		<div id="tab1" class="tab-pane in tab1">
+            <div class="form-item cf">
+                    <label class="item-label">标题<span class="check-tips">（文档标题）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="title" value="">                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">文章内容<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <label class="textarea">
+                                <textarea name="content"></textarea>
+                                {:hook('adminArticleEdit', array('name'=>content,'value'=>content))}
+		                                </label>                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">标识<span class="check-tips">（同一根节点下标识不重复）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="name" value="">                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">描述<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <label class="textarea input-large">
+                                <textarea name="description"></textarea>
+                                </label>                    </div>
+                </div>
+		
+				</div><div id="tab2" class="tab-pane  tab2">
+            <div class="form-item cf">
+                    <label class="item-label">内容类型<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <select name="type">
+                                    <option value="1" >目录</option><option value="2" selected>主题</option><option value="3" >段落</option>                                </select>                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">可见性<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <label class="radio">
+                                    <input type="radio" value="0"  name="display">不可见                                	</label><label class="radio">
+                                    <input type="radio" value="1" checked name="display">所有人可见                                	</label>                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">优先级<span class="check-tips">（越高排序越靠前）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-mid" name="level" value="0">                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">推荐位<span class="check-tips">（多个推荐则将其推荐值相加）</span></label>
+                    <div class="controls">
+                        <label class="checkbox">
+                                    <input type="checkbox" value="1" name="position[]" >列表推荐                                	</label><label class="checkbox">
+                                    <input type="checkbox" value="2" name="position[]" >频道推荐                                	</label><label class="checkbox">
+                                    <input type="checkbox" value="4" name="position[]" >首页推荐                                	</label>                    </div>
+                </div>     
+                              
+								
+							<div class="form-item cf">
+                    <label class="item-label">封面<span class="check-tips">（0-无封面，大于0-封面图片ID，需要函数处理）</span></label>
+                    <div class="controls">	
+								<div class="controls">
+									<input type="file" id="upload_picture_cover_id">
+									<input type="hidden" name="cover_id" id="cover_id_cover_id" value="{$data[$field['name']]}"/>
+									<div class="upload-img-box">
+									<notempty name="data[$field['name']]">
+										<div class="upload-pre-item"><img src="{$data[$field['name']]|get_cover='path'}"/></div>
+									</notempty>
+									</div>
+								</div>
+								<script type="text/javascript">
+								//上传图片
+							    /* 初始化上传插件 */
+								$("#upload_picture_cover_id").uploadify({
+							        "height"          : 30,
+							        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+							        "fileObjName"     : "download",
+							        "buttonText"      : "上传图片",
+							        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+							        "width"           : 120,
+							        'removeTimeout'	  : 1,
+							        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+							        "onUploadSuccess" : uploadPicturecover_id,
+							        'onFallback' : function() {
+							            alert('未检测到兼容版本的Flash.');
+							        }
+							    });
+								function uploadPicturecover_id(file, data){
+							    	var data = $.parseJSON(data);
+							    	var src = '';
+							        if(data.status){
+							        	$("#cover_id_cover_id").val(data.id);
+							        	src = data.url || '__ROOT__' + data.path
+							        	$("#cover_id_cover_id").parent().find('.upload-img-box').html(
+							        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+							        	);
+							        } else {
+							        	updateAlert(data.info);
+							        	setTimeout(function(){
+							                $('#top-alert').find('button').click();
+							                $(that).removeClass('disabled').prop('disabled',false);
+							            },1500);
+							        }
+							    }
+								</script>
+                           
+						 </div>
+                </div>	<div class="form-item cf">
+                    <label class="item-label">浏览量<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-mid" name="view" value="0">                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">评论数<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-mid" name="comment" value="0">                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">收藏数<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-mid" name="bookmark" value="0">                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">创建时间<span class="check-tips"></span></label>
+                    <div class="controls">
+                        <input type="text" name="create_time" class="text time" value="" placeholder="请选择时间" />                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">截至时间<span class="check-tips">（0-永久有效）</span></label>
+                    <div class="controls">
+                        <input type="text" name="deadline" class="text time" value="" placeholder="请选择时间" />                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">外链<span class="check-tips">（0-非外链，大于0-外链ID,需要函数进行链接与编号的转换）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-mid" name="link_id" value="0">                    </div>
+                </div><div class="form-item cf">
+                    <label class="item-label">详情页显示模板<span class="check-tips">（参照display方法参数的定义）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="template" value="">                    </div>
+                </div>        </div>
+		
+		<div class="form-item cf">
+			<button class="btn submit-btn ajax-post hidden" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<a class="btn btn-return" href="{:U('article/index?cate_id='.$cate_id)}">返 回</a>
+			<if condition="C('OPEN_DRAFTBOX') and (ACTION_NAME eq 'add' or $info['status'] eq 3)">
+			<button class="btn save-btn" url="{:U('article/autoSave')}" target-form="form-horizontal" id="autoSave">
+				存草稿
+			</button>
+			</if>
+			<input type="hidden" name="id" value="{$info.id|default=''}"/>
+			<input type="hidden" name="pid" value="{$info.pid|default=''}"/>
+			<input type="hidden" name="model_id" value="{$info.model_id|default=''}"/>
+			<input type="hidden" name="category_id" value="{$info.category_id|default=''}">
+		</div>
+	</form>
+	</div>
+</div>
+</block>
+
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+
+$('#submit').click(function(){
+	$('#form').submit();
+});
+
+$(function(){
+    $('.date').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+    $('.time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:"zh-CN",
+        minView:2,
+        autoclose:true
+    });
+    showTab();
+
+	<if condition="C('OPEN_DRAFTBOX') and (ACTION_NAME eq 'add' or $info['status'] eq 3)">
+	//保存草稿
+	var interval;
+	$('#autoSave').click(function(){
+        var target_form = $(this).attr('target-form');
+        var target = $(this).attr('url')
+        var form = $('.'+target_form);
+        var query = form.serialize();
+        var that = this;
+
+        $(that).addClass('disabled').attr('autocomplete','off').prop('disabled',true);
+        $.post(target,query).success(function(data){
+            if (data.status==1) {
+                updateAlert(data.info ,'alert-success');
+                $('input[name=id]').val(data.data.id);
+            }else{
+                updateAlert(data.info);
+            }
+            setTimeout(function(){
+                $('#top-alert').find('button').click();
+                $(that).removeClass('disabled').prop('disabled',false);
+            },1500);
+        })
+
+        //重新开始定时器
+        clearInterval(interval);
+        autoSaveDraft();
+        return false;
+    });
+
+	//Ctrl+S保存草稿
+	$('body').keydown(function(e){
+		if(e.ctrlKey && e.which == 83){
+			$('#autoSave').click();
+			return false;
+		}
+	});
+
+	//每隔一段时间保存草稿
+	function autoSaveDraft(){
+		interval = setInterval(function(){
+			//只有基础信息填写了，才会触发
+			var title = $('input[name=title]').val();
+			var name = $('input[name=name]').val();
+			var des = $('textarea[name=description]').val();
+			if(title != '' || name != '' || des != ''){
+				$('#autoSave').click();
+			}
+		}, 1000*parseInt({:C('DRAFT_AOTOSAVE_INTERVAL')}));
+	}
+	autoSaveDraft();
+
+	</if>
+
+});
+</script>
+</block>

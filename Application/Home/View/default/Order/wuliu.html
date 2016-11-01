@@ -1,0 +1,29 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main">
+
+<div class="main_center"><div class="center_left"><!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><div class="center_right">
+
+	
+
+	
+	 <span class="red" style="display: block;padding:15px;font-size:17px;">快递详情</span> <div id="retData" style="margin-left:20px">{$kuaidata|default="暂无"}</div>
+</div>
+<script type="text/javascript">
+	require(['memberCenter'], function() {
+		var el = document.getElementById('MemberCenterCtrl');
+		avalon.scan(el);
+		avalon.nextTick(function() {
+			el.style.display = 'block';
+		});
+	});
+</script>
+<!-- 个人中心 初始状态 end --></div>
+    <script type="text/javascript">_init_area();</script>
+      }
+   
+</block>

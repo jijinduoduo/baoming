@@ -1,0 +1,31 @@
+<extend name="Base/s1"/>
+
+
+
+<block name="body">
+     
+   <section>
+	  <div class="Articlelist"><h3>{$title}</h3><empty name="list">
+ <div class="media">暂无数据</div>
+</empty>
+    
+                <div class="activity">
+                <ul> <volist name="list" id="vo"><li>
+                <a href="{:U('Article/detail?id='.$vo['goodid'])}"><img src="{$vo.goodid|get_cover_id|get_cover='path'}"> </a> 
+               <p>{$vo.goodid|get_good_name}</p>
+			    <p class="red">{$vo.goodid|get_good_price}元</p> </li> </volist>
+                </ul>  
+                  
+                </div>
+              
+             
+                <hr/>
+          
+			</div>
+ <!-- 分页 -->
+        <div class="page">
+{$page}
+        </div>
+    </section>
+    
+</block>

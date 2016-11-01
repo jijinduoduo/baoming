@@ -1,0 +1,95 @@
+<extend name="Base/s4" />
+
+
+<block name="body">
+
+<section><div class="mainwrap">
+    
+	<div class="think-form"> <div class="loginform">
+<div class="hd">
+                                   <strong>用户注册</strong><span>已有帐号？点击<a href='{:U("User/login")}'>登录</a></span>            </div>
+<a rel="nofollow" href="{:C('DOMAIN')}" class="img"> <img src="__IMG__/login-3.jpg" width='400' height='300'></a>
+	</div>
+	
+	<div class="login-other">  
+	<form class="form-horizontal" role="form" action="__SELF__" method="post">
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">用户名</label>
+            <div class="controls">
+              <em class="user glyphicon glyphicon-user"></em><input type="text" id="inputEmail" class="v_inp" class="span3" placeholder="请输入用户名"  ajaxurl="/member/checkUserNameUnique.html" errormsg="请填写1-16位用户名" nullmsg="请填写用户名" datatype="*1-16" value="" name="username">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">密码</label>
+            <div class="controls">
+             <input type="password" id="inputPassword" class="v_inp"  class="span3" placeholder="请输入密码"  errormsg="密码为6-20位" nullmsg="请填写密码" datatype="*6-20" name="password">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputPassword">确认密码</label>
+            <div class="controls">
+             <input type="password" id="inputPassword" class="v_inp" class="span3" placeholder="请再次输入密码" recheck="password" errormsg="您两次输入的密码不一致" nullmsg="请填确认密码" datatype="*" name="repassword">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="inputEmail">邮箱</label>
+            <div class="controls">
+           <input type="text" id="inputEmail" class="v_inp" class="span3" placeholder="请输入电子邮件"  ajaxurl="/member/checkUserEmailUnique.html" errormsg="请填写正确格式的邮箱" nullmsg="请填写邮箱" datatype="e" value="" name="email">
+            </div>
+			 <div class="controls Validform_checktip text-warning"></div>
+          </div>
+         
+          <div class="control-group">
+            <div class="controls">
+              <button type="submit"  class="v_dark_btn">注 册</button>
+            </div>
+          </div>
+        </form>
+		<p>合作网站账号登录：{:hook('SyncLogin')}
+		</p>
+		</div>
+    </div>
+	
+</section>
+ 
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+    	$(document)
+	    	.ajaxStart(function(){
+	    		$("button:submit").addClass("log-in").attr("disabled", true);
+	    	})
+	    	.ajaxStop(function(){
+	    		$("button:submit").removeClass("log-in").attr("disabled", false);
+	    	});
+
+
+    	$("form").submit(function(){
+    		var self = $(this);
+    		$.post(self.attr("action"), self.serialize(), success, "json");
+    		return false;
+
+    		function success(data){
+    			if(data.status){
+    				window.location.href = data.url;
+    			} else {
+    				self.find(".Validform_checktip").text(data.info);
+    				//刷新验证码
+    				$(".reloadverify").click();
+    			}
+    		}
+    	});
+
+		$(function(){
+			var verifyimg = $(".verifyimg").attr("src");
+            $(".reloadverify").click(function(){
+                if( verifyimg.indexOf('?')>0){
+                    $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+                }else{
+                    $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+                }
+            });
+		});
+	</script>
+</block>

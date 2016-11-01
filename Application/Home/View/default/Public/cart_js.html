@@ -1,0 +1,71 @@
+	<script>
+	//购物车显示与隐藏
+	 var Shopcart= document.getElementById('shopping_cart');
+     var Goodsmenu= document.getElementById('goods');
+            var timerr = null;//定义定时器变量
+            //鼠标移入div1或div2都把定时器关闭了，不让他消失
+            Shopcart.onmouseover =Goodsmenu.onmouseover = function ()
+            {
+                Goodsmenu.style.display = 'block';
+                clearTimeout(timerr);
+            }
+            //鼠标移出div1或div2都重新开定时器，让他延时消失
+            Shopcart.onmouseout =Goodsmenu.onmouseout = function ()
+            {
+                //开定时器
+                timerr= setTimeout(function () { 
+                    Goodsmenu.style.display = 'none'; }, 10);
+            }
+			
+//购物车动态删除
+	function delcommon(event)
+		{ //获取事件源
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+	var str=$obj.parent().prev().html();
+	if(obj.rel=="del")
+{ var str=obj.name;
+var uexist="{:get_username()}";
+	//全选的实现 定义删的发送路径
+	if(uexist){
+		var del='{:U("Shopcart/delItemByuid")}';	
+	}
+else{
+var del='{:U("Shopcart/delItem")}';
+	
+	}
+
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{sort:str},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parents("li").remove();
+	if(data.sum=="0"){  //判断购物车数量是否为0，为0则隐藏底部查看工具
+						$("div.sc_goods_foot").hide();
+					   	var html='<p class="sc_goods_none" >您的购物车还是空的，赶紧行动吧！</p>';
+					   $("ul.sc_goods_ul").html(html);
+				
+	
+	}
+	else{$("div.sc_goods_foot").show();}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+	
+	} 
+//购物车删除结束
+
+
+	
+</script>

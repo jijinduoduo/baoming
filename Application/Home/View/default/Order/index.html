@@ -1,0 +1,308 @@
+<extend name="Base/order"/>
+
+<block name="body">
+<div class="cartname">购物车</div> <if condition="is_login()">
+<empty name="sqlcart"><div class="shopcart_main_none"><div class="shopcart_main_none_img"></div><div class="shopcart_main_none_main"><p>你的购物车还是空的哦赶紧行动吧 6!</p><a rel="nofollow" href="{:U("Index/index")}">马上购物</a></div><div class="cb"></div></div></empty>
+
+<notempty name="sqlcart"><form action='{:U("Shopcart/order")}'method="post" name="myform" id="form">
+<table  id="table" class="gridtable" width="100%">
+        <thead>
+            <tr><th class="row-selected">
+					 <input class="checkbox check-all" checked="checked"type="checkbox">全选
+					</th>
+                <th >商品名</th>
+                <th >价格</th>
+                <th >数量</th>
+                <th >操作</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+    
+          <volist name="sqlcart" id="vo">  
+          <tr><td><input class="ids row-selected" checked="checked" type="checkbox" name="id[]" value="{$vo.goodid}"></td>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.goodid|get_good_name}</span></span> </A></td>
+               
+                <td align="center">{$vo.goodid|get_good_price}</td>
+                <td ><a rel="jia"  class="jia" onclick="myfunction(event)">+</a><input type="text"  class="num"  id="{$vo.goodid}" name="num[]" value="{$vo.num}"/><a rel="jian" onclick="myfunction(event)" class="jian" id="oneA">-</a></td>
+                
+                <td><a  name="{$vo.goodid}" rel="del" onclick="myfunction(event)">删除</a>&nbsp;<a href="#">移到收藏</a></td>
+            </tr>
+         </volist>
+        <tr>
+   <td colspan="4">  <input class="checkbox check-all"checked="checked" type="checkbox">全选 <a  name="{$vo.id}" rel="del" onclick=delete(event)">删除选中的商品</a> <a  name="{$vo.id}" rel="del" href='{:U("index/index")}'>继续购物</a>    </td><td align="right">件数<span id="sum"> {$sum}</span>件 </tr>
+			  <tr><td colspan="5" align="right">种类：<span id="count">{$count}</span>种</td>
+			  <tr><td colspan="5" align="right">金额小计：<span id="total">{$price}</span>元</td>
+			</tr>
+        </tbody>
+      
+    </table> 
+      
+  <div class="text" style="float:right">
+    总计（不含运费）：<em class="price" id="total"> {$price}</em>元     <a class="btn btn-danger"  href='#' onclick="makeorder()" >去结算</a>
+  </div>
+ 
+  </form>
+    </notempty><else/>
+<empty name="usercart"><div class="shopcart_main_none"><div class="shopcart_main_none_img"></div><div class="shopcart_main_none_main"><p>你的购物车还是空的哦赶紧行动吧 !</p><a rel="nofollow" href="{:U("Index/index")}">马上购物</a></div><div class="cb"></div></div></empty><notempty name="usercart">  <form action='{:U("Shopcart/order")}'method="post" name="myform" id="form"><table  id="table" class="gridtable" width="100%">
+        <thead>
+            <tr><th class="row-selected">
+					 <input class="checkbox check-all" type="checkbox" checked="">全选
+					</th>
+                <th >商品名</th>
+                <th >价格</th>
+                <th >数量</th>
+                <th >操作</th>
+            </tr>
+        </thead>
+      
+        <tbody>
+    
+          <foreach name="usercart" item="vo">  
+          <tr><td width="40"><input class="ids row-selected"  checked="" type="checkbox" name="id[]" value="{$vo.id}"></td>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['id'])}" > <img src="{$vo.id|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.id|get_good_name}</span></span> </A></td>
+               
+                <td align="center">{$vo.price}</td>
+                <td ><a rel="jia"  class="jia" onclick="myfunction(event)">+</a><input type="text"  class="num"  id="{$vo.id}" value="{$vo.num}"/><a rel="jian" onclick="myfunction(event)" name="num[]" class="jian" id="oneA">-</a></td>
+                
+                <td><a  name="{$vo.id}" rel="del" onclick="myfunction(event)">删除</a>&nbsp;<a href="javascript:vod(0);" onclick="favor({$vo.id})">移到收藏</a></td>
+            </tr></foreach>
+			<tr>
+			  <td colspan="4">  <input class="checkbox check-all"  checked="" type="checkbox">全选 <a  name="{$vo.id}" rel="del" onclick=delete(event)">删除选中的商品</a> <a  name="{$vo.id}" rel="del" href="{:U("index/index")}">继续购物</a>    </td><td align="right">件数<span id="sum"> {$sum}</span>件 </tr>
+			  <tr><td colspan="5" align="right">种类：<span id="count">{$count}</span>种</td>
+			  <tr><td colspan="5" align="right">金额小计：<span id="total">{$price}</span>元</td>
+			</tr>
+         
+        
+        </tbody>
+      
+    </table> 
+  <div class="text" style="float:right">
+ 
+总计（不含运费）：<em class="price" id="total"> {$price}</em>元 <a class="btn_submit_pay"   href="javascript:void(0)" onclick="checklogin()" >去结算</a>
+  </div> <input type="hidden" value="{$uid}" id="uid"/> 
+ </form>
+  </notempty>
+	
+	</if>     
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     
+ <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="glyphicon glyphicon-remove" id="ticon"></i></button>
+<h3 id="myModalLabel">用户登录</h3>
+</div><div class="m_img"><img src="__IMG__/2.png"></div>
+    <form class="form-horizontal" id="loginform" name="user" method="post">
+    
+            <div class="control-group">   <input type="text" id="inputusername"   name="username" placeholder="用户名">
+   
+
+  
+              <input type="text" id="inputpassword" name="password" placeholder="密码">
+			  
+				<input type="button"  id="login_btn_cart" class="btn" value="登录">
+            </div>
+ 
+    <div class="control-group">
+    
+   
+   <p><span class="pull-right"><span>还没有账号? <a href="{:U("User/register")}">立即注册</a></span> </p>
+ 
+    </div>
+    </form>
+</div>
+        <hr/>
+   
+  
+       <script type="text/javascript">
+//登录后刷新页面，载入数据
+$("#login_btn_cart").click(function(){
+	   
+   var yourname=$('#inputusername').val();
+	var yourword=$('#inputpassword').val();
+		
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/logincart")}', //发送数据的地址
+data:{username:yourname,password:yourword},
+ dataType: "json",
+success:function(data)
+{ if(data.status=="1"){alert(data.info);window.location.reload();$("#uid").val(data.uid);}
+else{alert(data.info);
+
+}
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+});});
+	   //全选的实现
+	$(".check-all").click(function(){
+		$(".ids").prop("checked", this.checked);
+	});
+	$(".ids").click(function(){
+		var option = $(".ids");
+		option.each(function(i){
+			if(!this.checked){
+				$(".check-all").prop("checked", false);
+				return false;
+			}else{
+				$(".check-all").prop("checked", true);
+			}
+		});
+	});
+	var array=$(" #div2 li");
+	//全选的实现 定义加、减、删的发送路径
+	if(array.length!==4){
+		var inc='{:U("Shopcart/incNum")}';
+		var dec='{:U("Shopcart/decNum")}';
+		var del='{:U("Shopcart/delItem")}';
+	
+	}
+else{
+		var inc='{:U("Shopcart/incNumByuid")}';
+		var dec='{:U("Shopcart/decNumByuid")}';
+		var del='{:U("Shopcart/delItemByuid")}';
+	
+	}
+
+	function checklogin() {
+		var uid=$("#uid").val();
+
+		if(uid!==""){document.myform.submit();}
+		else{
+			alert("请先登录");$('#myModal').modal('show');
+	
+			}
+		
+		 }
+function favor(id) { 
+var uid=$("#uid").val();
+if(uid!==""){
+var favorid=id;
+	$.ajax({
+type:'post', //传送的方式,get/post
+url:'{:U("User/favor")}', //发送数据的地址
+data:{id:favorid},
+ dataType: "json",
+success:function(data){
+	if(data.status=="1"){alert(data.msg);}
+	}
+	,
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+})	
+}
+
+else{alert("请先登录");
+$('#myModal').modal('show');
+}
+	
+	}
+	   
+	function myfunction(event) { 
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+
+
+	if(obj.rel=="jia"){
+	var num=$obj.next().val(); 
+
+var gid=$obj.next().attr("id");
+	
+ a=parseInt(num)+1;
+ $obj.next().val(a); 
+		$.ajax({
+type:'post', //传送的方式,get/post
+url:inc, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{$("span#count").text(data.count);
+$("span#total").text(data.price);
+$("span#sum").text(data.sum);
+	$("em.price").text(data.price);
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})}
+
+if(obj.rel=="jian")
+{ var num=$obj.prev().val(); 
+
+var gid=$obj.prev().attr("id")	
+    
+     
+    //如果文本框的值大于0才执行减去方法  
+     if(num >0){  
+      //并且当文本框的值为1的时候，减去后文本框直接清空值，不显示0  
+      if(num==1)  
+      { $("#oneA").addClass("important");
+   return true;
+      }  
+      //否则就执行减减方法  
+      else  
+      { document.getElementById("oneA").disabled=false; 
+      a=parseInt(num)-1;
+	  
+ $obj.prev().val(a);   
+    
+      } 
+	  
+    
+     } 
+	   
+ 
+
+
+$.ajax({
+type:'post', //传送的方式,get/post
+url:dec, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{$("span#count").text(data.count);
+$("span#total").text(data.price);
+$("span#sum").text(data.sum);
+	$("em.price").text(data.price).fadeIn();
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+if(obj.rel=="del")
+{ var gid=obj.name;
+
+$.ajax({
+type:'post', //传送的方式,get/post
+url:del, //发送数据的地址
+data:{id:gid},
+ dataType: "json",
+success:function(data)
+{var $obj = $(obj);
+	$obj.parents("tr").empty();
+	$("span#count").text(data.count);
+$("span#total").text(data.price);
+$("span#sum").text(data.sum);
+	$("em.price").text(data.price);
+
+},
+error:function (event, XMLHttpRequest, ajaxOptions, thrownError) {
+alert(XMLHttpRequest+thrownError); }
+		})
+}
+
+
+	}
+	
+	
+    </script>
+    
+</block>

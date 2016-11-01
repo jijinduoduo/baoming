@@ -1,0 +1,60 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>
+			{$info['id']?'编辑':'新增'}导航
+			<notempty name="pid">
+				[&nbsp;父导航：<a href="{:U('index','pid='.$pid)}">{$parent.title}</a>&nbsp;]
+			</notempty>
+		</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">
+		<input type="hidden" name="pid" value="{$pid}">
+		<div class="form-item">
+			<label class="item-label">店铺名<span class="check-tips">（用于显示的文字）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="shopname" value="{$info.shopname|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">姓名<span class="check-tips">（用于调转的URL，支持带http://的URL或U函数参数格式）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="username" value="{$info.username|default=''}">
+			</div>
+		</div>
+        
+		 <div class="form-item">
+			<label class="item-label">身份证号<span class="check-tips">（用于调转的URL，支持带http://的URL或U函数参数格式）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="idcard" value="{$info.idcard|default=''}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">网银或第三方支付账户<span class="check-tips">
+			</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="bank" value="{$info.bank|default=''}">
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">绑定手机<span class="check-tips">
+			</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="mobile" value="{$info.mobile|default=''}">
+			</div>
+		</div>
+
+		<div class="form-item">
+			<input type="hidden" name="id" value="{$info.id|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+</script>
+</block>

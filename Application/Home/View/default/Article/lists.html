@@ -1,0 +1,87 @@
+<extend name="Base/s1"/>
+
+
+
+<block name="body">
+     
+        <!-- Contents  -->
+      
+	  <div class="ml_content">
+<div class="goodlist-main">
+	  <div class="lists-position">
+	  <div class="category-title">
+	  <h4><span>{$category.title}({$num})</span></h4>
+	  <div class="category-child">
+	  <empty name="childlist"> 
+	 <else/>
+	  <volist name="childlist" id="vo"><span> <a href="{:U('Article/lists/?pid='.$vo['id'])}">{$vo.title}</a></span></volist>
+	  </empty>
+</div>
+</div>
+
+ <div class="salesrank">
+  <h5><span>销量排行</span></h5>
+  <ul><volist name="sales" id="vo"><li><a class="picture" href="{:U('Article/detail?id='.$vo['id'])}"><img src="{$vo.id|get_cover_id|get_cover='path'}"  ></a>
+  <a class="title" href="{:U('Article/detail?id='.$vo['id'])}"> {$vo.id|get_good_name}</a>
+  <span>￥{$vo.id|get_good_price} </span>
+  </li></volist></ul>
+  
+  </div>
+  <div class="salesrank">
+  <h5><span>最近浏览</span></h5>
+ <ul><volist name="recent" id="vo"><li><a class="picture" href="{:U('Article/detail?id='.$vo['page'])}"><img src="{$vo.page|get_cover_id|get_cover='path'}"  ></a>
+  <a class="title" href="{:U('Article/detail?id='.$vo['page'])}"> {$vo.page|get_good_name}</a>
+  <span>￥{$vo.page|get_good_price} </span>
+  </li></volist></ul>
+ </div>
+	  </div>
+	   <div class="lists-area">
+	   <ul class="brand-list">
+	     <li>品牌:</li>
+		  <li <eq name="brandid" value="">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],order=>1,'sort'=>$see,'start_price'=>$start_price,'end_price'=>$end_price))}">全部</a></li>
+		 <volist name="bdata" id="vo"  empty="暂时没有数据" >
+	   <li <eq name="brandid" value="$vo['id']">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$vo['id'],order=>1,'sort'=>$see,'start_price'=>$start_price,'end_price'=>$end_price))}" class="{$value}">{$vo.title}</a></li>
+	   </volist> </ul> 
+ <ul class="brand-list">
+	     <li>价格:</li>
+  <li <eq name="start_price" value="">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>$order,'sort'=>$see))}" class="{$value}">全部</a></li>
+
+		  <li <eq name="start_price" value="0">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>$order,'sort'=>$see,start_price=>0,'end_price'=>100))}" class="{$value}">0-100</a></li>
+<li <eq name="start_price" value="100">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>$order,'sort'=>$see,start_price=>100,'end_price'=>200))}"">100-200</a></li>
+<li <eq name="start_price" value="200">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>$order,'sort'=>$see,start_price=>200,'end_price'=>300))}"">200-300</a></li>
+<li <eq name="start_price" value="300">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>$order,'sort'=>$see,start_price=>300,'end_price'=>400))}" class="{$value}">300-400</a></li>
+<li <eq name="start_price" value="400">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>1,'sort'=>$see,start_price=>400,'end_price'=>500))}"class="{$value}">400-500</a></li>
+<li <eq name="start_price" value="500">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>$order,'sort'=>$see,start_price=>500))}"class="{$value}">500以上</a></li>
+		 </ul> 
+
+       <ul class="ml_content_top"><li <eq name="order" value="1">class="active"<else/></eq>><a rel="nofollow" href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>1,'sort'=>$see,'start_price'=>$start_price,'end_price'=>$end_price))}
+	   " class="{$value}">热度<i></i></a></li><li <eq name="order" value="2">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>2,'sort'=>$see,'start_price'=>$start_price,'end_price'=>$end_price))}
+	   " class="{$value}">最新<i></i></a></li><li <eq name="order" value="3">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>3,'sort'=>$see,'start_price'=>$start_price,'end_price'=>$end_price))}
+	   " class="{$value}">价格<i></i></a></li><li <eq name="order" value="4">class="active"<else/></eq>><a href="{:U('Article/index',array(pid=>$category['id'],'brandid'=>$brandid,order=>4,'sort'=>$see,'start_price'=>$start_price,'end_price'=>$end_price))}
+	   " class="{$value}">销量<i></i></a></li></ul> 
+	  
+	  <ul class="goodlist">
+      
+         <volist name="list" id="list"  empty="暂时没有数据" >
+          <li class="face" onmouseover="this.className='facehover'" onmouseout="this.className='face'">
+                    <a href="{:U('Article/detail?id='.$list['id'])}" class="list-img"> <img src="{$list.cover_id|get_cover='path'}"/></a>
+             <p> <a href="{:U('Article/detail?id='.$list['id'])}" class="t2"> {$list.title}</a></p>     
+                       <p><span class="red" title="预览：{$list.id|get_good_price}">价格：￥{$list.price}</span></p> 
+
+              </li>      
+            </volist>
+			</ul>
+		  	<!-- 分页 -->
+        <div class="page">
+{$page}
+        </div>	
+			
+			</div>
+	  </div>
+	  
+	 </div>
+
+         
+        </section>
+ 	
+</block>

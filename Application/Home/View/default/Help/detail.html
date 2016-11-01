@@ -1,0 +1,38 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<dl><dt><a rel="nofollow">文章分类</a></dt>
+<dd><a rel="nofollow"  href="{:U('help/lists?pid=56')}">公告</a></dd>
+<dd><a rel="nofollow"  href="{:U('help/lists?pid=70')}">活动</a></dd>
+</dl>
+<volist name="footer" id="vo">
+<dl><dt><a  href="{:U('help/lists?pid='.$vo['id'])}>{$vo.title}</a></dt>
+ <volist name="vo['id']" id="son"> 
+<dd><a rel="nofollow"  href="{:U('help/lists?pid='.$son['id'])}">{$son.title}</a></dd>
+</volist>
+</dl>
+</volist>
+
+</div><!-- 个人中心 初始状态 start -->
+<div class="center_right" style="display: block;">
+
+	<span style="display: block;text-align:center;margin:20px 0 20px 37px;font-weight:bold;padding:10px;font-size:17px;">{$info.title}</span>
+ 
+<p class="create_time">
+				 发表于 {$info.create_time|date='Y-m-d H:i',###}</p>
+
+<empty name='info'>
+aoh，暂无数据！（请到后台文章发布区添加，参数ismenu=2）<else/>
+</empty>
+  <div class="art_content" >{$info.content}
+			
+</div>
+</div>
+
+<!-- 个人中心 初始状态 end --></div>
+
+     
+      
+   
+</block>

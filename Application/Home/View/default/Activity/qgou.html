@@ -1,0 +1,96 @@
+<extend name="Base/s1"/>
+
+
+
+<block name="body">
+     
+   <section>
+	  <div class="tuanlist"><P></p>
+  
+       
+        <ul class="ml_content_top"><li <eq name="order" value="1">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>1,'sort'=>$see))}" class="{$value}">热度<i></i></a></li><li <eq name="order" value="2">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>2,'sort'=>$see))}"  class="{$value}">最新<i></i></a></li><li <eq name="order" value="3">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>3,'sort'=>$see))}"  class="{$value}">价格<i></i></a></li><li <eq name="order" value="4">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>4,'sort'=>$see))}"  class="{$value}">销量<i></i></a></li></ul> 
+                <empty name="list">
+ <div class="media">暂无数据</div>
+</empty>
+    	<style type="text/css">
+
+.times{height:30px; width:320px; background:url(images/clock.jpg) no-repeat; padding-left:0px}
+.times p{height:20px; line-height:20px;}
+.endtime{font-size:14px; font-family:"Microsoft Yahei"; color:#000}
+
+</style>
+
+                <div class="yershop_tuan">
+
+
+                <ul> <volist name="list" id="vo">
+				
+				<li class="li" onmouseover="this.className='lihover'" onmouseout="this.className='li'"><span class="icon_qg"></span>
+               <a href="{:U('Article/detail?id='.$vo['id'])}"><img src="{$vo.cover_id|get_cover='path'}"> </a> 
+               <p class="title">{$vo.title}</p>
+			    <p><span class="tuan"><strong>￥{$vo.price}</strong>/<strong class="yuan">￥{$vo.marketprice}</strong></span><span class="qiang"><a>去抢购</a></span></p>
+		
+
+ <div class="times">
+       
+        剩余时间：<span class="endtime" value="{$vo.deadline}"></span>
+     </div>
+
+				</li> </volist>
+     </ul>  
+                  
+                </div>
+              
+  <script type="text/javascript">
+var serverTime =<php>echo time();</php>  * 1000;
+$(function(){
+    var dateTime = new Date();
+    var difference = dateTime.getTime() - serverTime;
+	
+    setInterval(function(){
+      $(".endtime").each(function(){
+        var obj = $(this);
+        var endTime = new Date(parseInt(obj.attr('value')) * 1000);
+        var nowTime = new Date();
+        var nMS=endTime.getTime() - nowTime.getTime() + difference;
+        var myD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+        var myH=Math.floor(nMS/(1000*60*60)) % 24;
+        var myM=Math.floor(nMS/(1000*60)) % 60;
+        var myS=Math.floor(nMS/1000) % 60;
+        var myMS=Math.floor(nMS/100) % 10;
+        if(myD>= 0){
+			var str = myD+"天"+myH+"小时"+myM+"分"+myS+"."+myMS+"秒";
+        }else{
+			var str = "已结束！";	
+		}
+		obj.html(str);
+      });
+    }, 100);
+	
+	
+	$(".prolist li img").each(function(){
+		var img = $(this);
+		img.hover(function(){
+			img.next().show();
+		},function(){
+			img.next().hide();
+		});
+	});
+});
+</script>           
+       <!-- 分页 -->
+        <div class="page">
+{$page}
+        </div>   
+			</div>
+
+
+     <script>
+
+                                
+    $(".menu-list li").eq(1).css('background','#d25400');  
+     </script>   
+  
+    </section>
+    
+</block>

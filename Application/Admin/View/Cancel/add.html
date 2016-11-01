@@ -1,0 +1,73 @@
+<extend name="Public/base"/>
+#tab1 table{border-right:1px solid #F00;border-bottom:1px solid #F00}
+#tab1 table td{border-left:1px solid #F00;border-top:1px solid #F00}
+<block name="body">
+	<div class="main-title">
+		<h2>
+			{$info['id']?'编辑':'新增'}订单
+		
+		</h2>
+	</div>
+	<ul class="tab-nav nav">
+	<li data-tab="tab1" class="current"><a href="javascript:void(0);">取消订单说明</a></li>
+	<li data-tab="tab2" ><a href="javascript:void(0);">订单详情</a>
+	
+	</li></ul>
+<div class="tab-content">						
+
+	<div id="tab1" class="tab-pane in tab1">
+	<form action="{:U()}" method="post" class="form-horizontal">
+	
+		<div class="form-item">
+			<label class="item-label">订单号<span class="check-tips">（订单编码）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large"  name="orderid">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">标题<span class="check-tips">（说明）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="title" value="{$info.title}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">原因<span class="check-tips">（取消原因）</span> </label>
+			<div class="controls">
+			<label class="textarea input-large">
+				<textarea name="reson">{$info.reason}</textarea>
+			</label>				
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">状态<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text"  class="text input-large" name="status" value="{:I('status')}">
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="id" value="{$info.id|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form></div>
+	
+	<div id="tab2" class="tab-pane  tab2">
+	
+		  </div>
+	</div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+	if($('ul.tab-nav').length){
+		//当有tab时，返回按钮不显示
+		$('.btn-return').hide();
+	}
+	$(function(){
+		//支持tab
+		showTab();
+	})
+
+</script>
+</block>

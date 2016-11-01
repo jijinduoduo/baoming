@@ -1,0 +1,88 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 --></div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+
+	<span class="red" style="display: block;padding:15px;font-size:17px;">我的优惠券</span>
+
+	<empty name='couponlist'>
+	<div class="personal_info_none_goods">
+				<p>没有优惠券，<a href='{:U("center/coupon")}' class="red">快去领取吧</a></p>
+			
+				<div class="cb"></div>
+			</div>
+	<else />
+     <ul class="userhas" id="cuser">
+	 <volist name="couponlist" id="vo">
+                <li><a href="javascript:vod(0);"><img src="{$vo.couponid|get_icon|get_cover='path'}"  width="170" height="170"/></a></p>
+				<p><a href="javascript:vod(0);"><span class="red">{$vo.couponid|get_coupon_name}</span></a>[ <php>$pay=$vo['status'];
+			  if($pay==1){ echo "未使用";}
+              else{ echo"已使用";};  </php> ]</p> 
+				<p>优惠券代码：{$vo.couponid|get_coupon_code}</a></p> 
+                 <p>价值：<span class="red">{$vo.couponid|get_coupon_price}元</span>
+                 </p> </li>
+            </volist>
+	</ul>
+	</empty>
+	<span class="red" style="display: block;padding:15px;font-size:17px;">优惠券</span>
+	  <ul class="userhas" id="cuser">
+	  <volist name="fcouponlist" id="vo">
+                <li><p><img src="{$vo.icon|get_cover='path'}"  width="170px" height="170px"/>
+				</p> 
+                   <p><a href="javascript:vod(0)">{$vo.title}</a></p>
+
+                <p> <a   rel="{$vo.id}" onclick="getcoupon(event)" href="javascript:vod(0)" class="btn text">领取</a></p></li>
+                   
+            </volist>
+	</ul>
+	<div style="display: block;" class="tab_view">
+		
+
+
+</div>
+<script type="text/javascript"> 
+
+ 	function getcoupon(event) { 
+event = event ? event : window.event; 
+var obj = event.srcElement ? event.srcElement : event.target; 
+//这时obj就是触发事件的对象，可以使用它的各个属性 
+//还可以将obj转换成jquery对象，方便选用其他元素 
+str = obj.innerHTML.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+
+	var $obj = $(obj);
+	var id=obj.rel;
+var b='{:U("UserCoupon/get")}';
+  $.ajax({
+             type: "post",
+             url: "{:U("User/getcoupon")}",
+             data: {couponid:id},
+             dataType: "json",
+             success: function(data){
+                        alert(data.msg);
+						if(data.status=="1"){
+					window.location.reload();}
+						
+                      }
+         });
+
+	
+	}
+
+
+	require(['memberCenter'], function() {
+		var el = document.getElementById('MemberCenterCtrl');
+		avalon.scan(el);
+		avalon.nextTick(function() {
+			el.style.display = 'block';
+		});
+	});
+</script>
+<!-- 个人中心 初始状态 end --></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+      
+   
+</block>

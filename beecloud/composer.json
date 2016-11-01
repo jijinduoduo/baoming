@@ -1,0 +1,22 @@
+{
+    "name": "beecloud.cn/rest",
+    "description": "BeeCloud RESTful API FOR PHP",
+    "keywords" : ["BeeCloud","RESTFul API"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "beecloud",
+            "email": "support@beecloud.cn"
+        }
+    ],
+    "version" : "v2.3.7",
+    "minimum-stability": "dev",
+    "homepage": "https://beecloud.cn/",
+    "require": {
+      "php" : ">=5.3.2"
+    },
+    "autoload": {
+      "psr-4": { "beecloud\\" : "sdk/src/"}
+    }
+}

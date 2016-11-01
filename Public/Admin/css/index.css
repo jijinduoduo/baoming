@@ -1,0 +1,79 @@
+*{padding: 0;margin: 0;font-family: "微软雅黑";transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s;-moz-transition: all 0.3s; }
+html{font-size: 62.5%;}
+body{font-size: 1.4rem;overflow-x: hidden;}
+textarea{border-radius: 6px;border: 1px solid #d4d4d4;}
+.header{width: 100%;background: #3bb4f2;height: 4.8rem;line-height: 4.8rem;padding-top: 0;}
+.header-h2{font-size: 1.8rem;margin: 0 ;color: #FFFFFF;overflow: hidden;float: left;height: 4.8rem;line-height: 4.8rem;}
+.header-right{float: right;color: #FFFFFF;}
+.header-right li{list-style: none;float: left;}
+.header-right-1{width: 210px;background: url(../img/denglu.png)  no-repeat; background-position: left center; padding-left: 1.2em; overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+.header-right-2{width: 100px;text-align: left;background: url(../img/tuichu.png)  no-repeat; background-position: center left ; padding-left: 1.4em;margin: 0 1em; }
+.content-left{width: 23%;background: #f3f3f3;float: left;height:100%; overflow:hidden; padding-bottom:9999px; margin-bottom:-9999px}
+.content-right{width: 77%;background: #fff;padding:  2rem 2%;float: left;}
+.left-list{padding-top: 2em;}
+.left-list li{font-size: 1.6rem;width: 80%;height: 3.5rem;line-height: 3.5rem;text-align: center;margin: 1.5rem auto;list-style: none;border: 1px solid #ededed;background: #FFFFFF;cursor: pointer;}
+.left-list-1{background: ;}
+.right-top{width:100%;border-bottom: 1px solid #aaa;height: 2.2rem;margin-bottom: 1em;}
+.text-left span{display:block;height: 1.6rem;line-height: 1.6rem;width: 0.3rem;background:#3bb4f2;float: left;margin-right:0.5rem ;}
+.text-left strong{font-size:1.6rem;line-height: 1.6rem;display:block;height: 1.6rem;float: left;}
+.glyphicon-tags{margin-right: 1.3em;}
+.p1{float: right;margin-left: 1em;border: 1px solid; border-radius: 5px;background: #3bb4f2;color: #FFFFFF;font-size: 1.4rem;padding: 1px 5px;}
+.p1 img{width: 1.5rem;margin: 0 2px;}
+.panel-title{height: 3em;line-height: 3em;background: #3bb4f2;color: #FFF;border-bottom-left-radius:0;border-bottom-right-radius:0;}
+.body-content{border: 1px solid #3bb4f2;border-top: 0;border-top-right-radius:0;border-top-left-radius:0;}
+.a30{width: 30%;float: left;border-top-left-radius: 0;border-bottom-left-radius: 0;}
+.a70{width: 70%;float: left;border-top-right-radius: 0;border-bottom-right-radius: 0;}
+.yn{position: relative;border-top:0 ;}
+.neirong,.yangshi{position: absolute;left: 0;top:0;}
+
+
+div#myTabContent{border: 1px solid #d4d4d4;width: 106.2% !important;margin: 0 14px;padding: 3%;margin-left: -3%;border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{border: 0;}
+.nav-tabs > li > a{border: 0;font-size: 1.6rem;}
+.yn .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus{border-bottom: 2px solid #3bb4f2;background: url(../img/sanjiao.png) no-repeat;background-position: bottom center;-webkit-transition: none;opacity: 0.9;}
+.yn .nav-tabs li:not(.active ){background: #eee;}
+.yn .nav-tabs > li{padding: 0;}
+.yn .nav-tabs{border-bottom:0;}
+.quz{padding:5px 0 ;}
+.btn-primary{background: #3bb4f2;border: 1px solid #3bb4f2;}
+#myTabContent > div:not(.active){display: none;}
+#myTab a{ }
+#home ul.aa li{float: left;list-style: none;width: 20%;padding-left: 1.3em;margin-bottom: 1rem;cursor: pointer; }
+#home ul {margin-bottom: 0;}
+#home ul li.ul-1-1{background: url(../img/qsr.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-2{background: url(../img/dx.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-3{background: url(../img/duoxuan.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-4{background: url(../img/shuzi.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-5{background: url(../img/riqi.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-6{background: url(../img/sj.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-7{background: url(../img/youxiang.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-8{background: url(../img/shuoming.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-9{background: url(../img/shoufei.png) no-repeat;background-position: left center;}
+#home ul li.ul-1-10{background: url(../img/xiangmu.png) no-repeat;background-position: left center;}
+.gongnengkaiguan li:nth-child(1){background: #3bb4f2;text-align: center;color: #fff;border-radius: 3px;margin-left: 1em;float: left;padding:2px 3px;list-style: none;}
+.gongnengkaiguan li:nth-child(2){background: #999999;text-align: center;color: #fff;border-radius: 3px;margin-left: 1em;float: left;padding:2px 3px;list-style: none;}
+.fenge-ul{list-style: none;}
+.fenge-ul li{float: left;width: 1.5rem;height: 1.5rem;background: #3bb4f2;margin-left: 1em;border-radius: 4px;cursor: pointer;}
+.fenge-ul .ul-3-1{width: 3.5em;padding: 0 2px;background: #999;color: #fff;text-align:center ;}
+.success-body-left .panel-title{line-height: 2.5em;height: 2.5em;}
+.tixing1 ul li input{width: 3rem;height: 1rem;text-align: left;}
+.bd{border: 1px solid #d4d4d4 ;border-top: 0;padding: 1.5rem;}
+.success-body{margin-top: 1rem;}
+.jichu-page-center{width: 80%;}
+small{color: #666;}
+.text-right p{cursor: pointer;}
+.active-1{background: #3bb4f2 !important; color: #fff;}
+.huifu{background: #fff !important; color: #000;}
+.xianshi{display:block;}
+.yinchang-1{display: none;}
+@media screen and (max-width:700px ) {
+	.header-h2{width: 100%;}
+	.jichu-page-center{width: 100%;}
+	.content-left{position: absolute;left: -80%;width: 80%;}
+	.content-right{width: 100%;}
+	.header-right{display: none !important;}
+	.yinchang-1{display: block !important;width: 4rem;height: 4rem;background: url(../img/all.png) no-repeat;
+	
+	position: fixed;bottom: 1rem;right: 1rem;border-radius: 50%;background-size: 50% 50%;background-position: center;border: 1px solid #D4D4D4;box-shadow: 0px 0px 2px #D4D4D4;}
+	.yinchang-1 p{width: 100%;height: 100%;border-radius:50% ;background: #555555;opacity: 0.2;}
+}

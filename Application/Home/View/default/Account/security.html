@@ -1,0 +1,72 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+</div><!-- 个人中心 初始状态 start -->
+<div class="center_right account" id="MemberCenterCtrl" style="display: block;">
+<div class="account_right"  style="display: block;">
+	<!-- 安全中心 初始状态 start -->
+	<h4 class="">安全中心</h4>
+
+	<div class="security_content_index security_bar">
+                    <ul>
+           <li>
+	<eq name="num" value="0"><span class="icon"></span><span class="col2"><span class="inner"><span style="width:33%;"></span><i></i></span></span><span class="col1"><span>低</span></span></eq>
+	<eq name="num" value="1"><span class="icon2"></span><span class="col23"><span class="inner"><span style="width:33%;"></span><i></i></span></span><span class="col1"><span>中</span></span></eq>
+		<eq name="num" value="2"><span class="icon2"></span><span class="col24"><span class="inner"><span style="width:33%;"></span><i></i></span></span><span class="col1"><span>高</span></span></eq>
+				<eq name="num" value="3"><span class="icon3"><span class="col25"><span class="inner"><span style="width:33%;"></span></span><i></i></span></span><span class="col1"><span>较高</span></span></eq>
+	<span class="col3">建议您启动全部安全设置，以保证账户安全</span><span class="history">
+												<a class="deepblue" href="{:U("account/history")}" >查看登录历史</a><span>上次登录时间：{$time.last_login_time|date='Y-m-d H:i',###}</span></span></li>
+                                                                                            </ul>
+                </div>
+
+<div class="security_content_index">
+    <p><i class="success"></i><span class="title">登录密码</span><span class="tip">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全</span>
+					<a class="deepblue" href="{:U("user/profile")}">修改&gt;&gt;</a></p>
+              
+			   <p><empty name="emailid">
+            <i class="failure"></i>
+						<else/>
+						<i class="success"></i>
+						</empty><span class="title">邮箱验证</span><span class="tip">验证后，可用于邮箱找回登录密码，接收订单提醒服务</span>
+						<empty name="emailid">
+           <a class="deepblue"href="{:U("account/checkemail")}">验证&gt;&gt;</a>
+						<else/>
+					已验证</a>
+						</empty>
+						</p>
+                        <p><empty name="mobile">
+            <i class="failure"></i>
+						<else/>
+						<i class="success"></i>
+						</empty><span class="title">手机验证</span><span class="tip">验证后，可用于手机号快速登录，修改登录密码，接收账户余额变动提醒</span>
+						<empty name="mobile">
+             <a class="deepblue" href="{:U("account/checkmobile")}">验证&gt;&gt;</a>
+						<else/>
+						已验证
+						</empty></p>
+                        <p><empty name="code">
+            <i class="failure"></i>
+						<else/>
+						<i class="success"></i>
+						</empty><span class="title">支付密码</span><span class="tip">设置支付密码后，在使用账户中余额或礼品卡等资金时，需输入支付密码</span>
+						
+						<a class="deepblue" href="{:U("account/paykey")}"><empty name="code">
+           设置
+						<else/>
+					修改
+						</empty>&gt;&gt;</a></p>
+                   
+                </div>
+				 </div>
+	<!-- 安全中心结束状态 end -->
+
+<!-- 个人中心 初始状态 end --></div></div></div>
+    <script type="text/javascript">_init_area();</script>
+       
+   
+   
+</block>

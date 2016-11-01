@@ -1,0 +1,125 @@
+<extend name="Public/base"/>
+#tab1 table{border-right:1px solid #F00;border-bottom:1px solid #F00}
+#tab1 table td{border-left:1px solid #F00;border-top:1px solid #F00}
+<block name="body">
+	<div class="main-title">
+		<h2>
+			{$info['id']?'编辑':'新增'}订单
+		
+		</h2>
+	</div>
+	<ul class="tab-nav nav">
+	
+	<li data-tab="tab1"  class="current"><a href="javascript:void(0);">发货信息</a>
+	
+	</li>
+	<li data-tab="tab2" ><a href="javascript:void(0);">附加信息</a>
+	
+	</li>
+	</ul>
+<div class="tab-content">						
+<form action="{:U()}" method="post" class="form-horizontal">
+	
+
+		 
+	
+	<div id="tab1" class="tab-pane in tab1">
+	
+		
+	
+<div class="form-item">
+			<label class="item-label">发货快递名称<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large"  name="changetool"  value="{$info.changetool}">
+				
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">发货快递单号<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="changetoolid" value="{$info.changetoolid}">
+			</div>
+		</div>
+	<div class="form-item">
+			<label class="item-label">收件人地址<span class="check-tips">（换货说明）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="acceptaddres" value="{$arr.address}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">收件人<span class="check-tips"></span> </label>
+			<div class="controls">
+			<input type="text" class="text input-large" name="acceptname" value="{$arr.realname}">				
+			</div>
+		</div>
+<div class="form-item">
+			<label class="item-label">收件人联系电话<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="acceptphone" value="{$arr.cellphone}">
+			</div>
+		</div>
+	
+
+<div class="form-item">
+			<label class="item-label">状态<span class="check-tips">（{$info.status}）</span></label>
+			<div class="controls">
+				<input type="text"  class="text input-large" name="status" value="4">
+			</div>
+		</div>
+
+
+     
+		
+	</div>
+	
+	<div id="tab2" class="tab-pane  tab2">
+	 
+	 <div class="form-item">
+			<label class="item-label">发件人<span class="check-tips"></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="tool" value="{$info.backname}" >
+			</div>
+		</div>
+	<div class="form-item">
+			<label class="item-label">发件人地址<span class="check-tips"></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="tool" value="{$info.address}" >
+			</div>
+		</div>
+	
+<div class="form-item">
+			<label class="item-label">发货人联系方式<span class="check-tips"></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="tool" value="{$info.contact}" >
+			</div>
+	</div>
+
+
+
+</div>
+		
+		<div class="form-item cf"><input type="hidden" name="id" value="{$info.id|default=''}">
+			<input type="hidden" name="shopid" value="{$info.shopid|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+		</div>  
+		  
+		  </form>
+	</div></div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+	if($('ul.tab-nav').length){
+		//当有tab时，返回按钮不显示
+		$('.btn-return').hide();
+	}
+	$(function(){
+		//支持tab
+		showTab();
+	})
+
+</script>
+</block>

@@ -1,0 +1,107 @@
+<extend name="Public/base"/>
+#tab1 table{border-right:1px solid #F00;border-bottom:1px solid #F00}
+#tab1 table td{border-left:1px solid #F00;border-top:1px solid #F00}
+<block name="body">
+	<div class="main-title">
+		<h2>
+			{$info['id']?'编辑':'新增'}订单
+		
+		</h2>
+	</div>
+	<ul class="tab-nav nav">
+	<li data-tab="tab1" class="current"><a href="javascript:void(0);">取消订单说明</a></li>
+	<li data-tab="tab2" ><a href="javascript:void(0);">订单详情</a>
+	
+	</li></ul>
+<div class="tab-content">						
+
+	<div id="tab1" class="tab-pane in tab1">
+	<form action="{:U()}" method="post" class="form-horizontal">
+	
+		<div class="form-item">
+			<label class="item-label">拒绝订单<span class="check-tips">（用于显示的文字）</span></label>
+			<div class="controls">
+				<input type="hidden" class="text input-large"  name="id"  value="{$info.id}">
+				{$info.orderid}
+			</div>
+		</div>
+		
+		<div class="form-item">
+			<label class="item-label">原因<span class="check-tips">（网站搜索引擎关键字）</span> </label>
+			<div class="controls">
+			<label class="textarea input-large">
+				<textarea name="refuse_info"></textarea>
+			</label>				
+			</div>
+		</div>
+ <div class="form-item">
+			<label class="item-label">状态<span class="check-tips">（系统生成，不可更改）</span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="status" value="2" >
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="id" value="{$info.id|default=''}">
+			 <input type="hidden" name="orderid" value="{$info.orderid|default=''}">
+			 <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form></div>
+	
+	<div id="tab2" class="tab-pane  tab2">
+	<table style="display: block;padding:5px;" id="table" class="detailtable" width="100%">  <volist name="list" id="po"> 
+         <tbody width="600px;">
+		   <tr width="100%">
+                <th width="35%">订单号：{$po.orderid}</th>
+                <th width="28%">时间：{$po.create_time|date='Y-m-d H:i',###}</th> 
+				<th>物流：{$po.tool|default="暂无"}</th>
+				<th >运单号：{$po.toolid|default="暂无"}</th>
+				<th>昵称：{$po.uid|get_nickname}</th>
+            </tr>
+        
+      
+         <volist name="po['id']" id="vo"> 
+          <tr>
+                <td><span class="img_1 img1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/><span class="img_1_h">{$vo.goodid|get_good_name}</span></span> </A></td>
+               
+                <td align="center">单价：{$vo.goodid|get_good_price}  元</td>
+                <td >数量： {$vo.num} 件</td>
+                
+             
+            </tr> </volist>
+		 
+		 <tr><td colspan="5" align="right">金额：<span class="red">{$po.pricetotal|default="0"}</span>元（运费:<span class="red">{$po.shipprice|default="0"}</span>元）</td></tr>
+		 <tr><td colspan="5" align="right">发货人：{$po.send_name} </tr> 
+		  
+		    <tr><td colspan="5" align="right">发货地址：{$ao.send_address} </tr> 
+		    <tr><td colspan="5" align="right">发货电话：{$ao.send_contact}</tr> 	
+          <volist name="po['addressid']" id="ao"> 
+		   <tr><td colspan="5" align="right">收货人：{$ao.realname} </tr> 
+		  
+		    <tr><td colspan="5" align="right">收货地址：{$ao.address} </tr> 
+		    <tr><td colspan="5" align="right">联系电话：{$ao.cellphone}</tr> 
+       </volist>  
+	    
+	    </volist> 
+		 
+
+		    </tbody>
+    </table> 	
+		  </div>
+	</div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+	if($('ul.tab-nav').length){
+		//当有tab时，返回按钮不显示
+		$('.btn-return').hide();
+	}
+	$(function(){
+		//支持tab
+		showTab();
+	})
+
+</script>
+</block>

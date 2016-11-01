@@ -1,0 +1,181 @@
+﻿/** 
+ * 描述：重置页面元素并基础样式
+ * 作用范围： 全局
+ */
+
+html,body {
+	font: 14px/1.5 "microsoft yahei", Helvetica, Tahoma, Arial, sans-serif;
+color: #404040;
+}
+body,p,pre,blockquote,
+h1,h2,h3,h4,h5,h6,			
+dl,dt,dd,ul,ol,li,			
+form,select,input,textarea,button,		
+table,caption,tr,th,td {
+	margin:0;
+	padding:0;
+}
+ol,ul {
+	list-style:none;
+}
+.sys-info th,.sys-info td{font-size:14px;}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+img {
+	max-width: 100%;
+	border:0 none;
+}
+a {
+	color: #2d7200;
+	text-decoration:none;
+}
+a:hover{
+	color: #4bbd00;
+	border-bottom: 1px solid;
+}
+input,button,textarea,select,option {
+	font-family:inherit;
+	font-size:100%;	
+	outline: 0;
+}
+textarea {
+	overflow: auto;
+	resize: none;
+}
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/* 布局样式 */
+.cf,.nav,.container-span {
+	*zoom: 1;
+}
+.cf:before, .cf:after,
+.nav:before, .nav:after,
+.container-span:before,
+.container-span:after {
+	display: table;
+	content: "";
+}
+.cf:after,.nav:after,
+.container-span:after {
+	clear: both;
+}
+.fl{
+	float: left!important;
+}
+.fr{
+	float: right!important;
+}
+.wrapper {
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
+}
+.hidden {
+	display: none;
+}
+.uploadrow {
+    position: relative;
+    z-index: 100;
+    width: 120px;
+    min-height: 120px;
+}
+.block {
+	display: block!important;
+}
+.fixed{
+    position: fixed!important;
+}
+.container-span [class^="span"] {
+	margin: 0 1% 20px;
+}
+.container-span .span1,
+.container-span .span2,
+.container-span .span3,
+.container-span .span4 {
+    float: left;
+}
+.container-span .span1 {
+    width: 23%;
+}
+.container-span .span2 {
+    width: 48%;
+}
+.container-span .span4 {
+    width: 98%;
+}
+
+/* 排版样式 */
+.text-center{
+	text-align: center!important;
+}
+
+.text-right{
+	text-align: right!important;
+}
+
+.text-left{
+	text-align: left!important;
+}
+
+/* 导航列表 */
+.nav li {
+	float: left;
+}
+.nav li a,
+.nav li a:hover,
+.nav-list li a,
+.nav-list li a:hover {
+	display: block;
+	text-decoration: none;
+	outline: none;
+	border-bottom: 0 none;
+}
+.btn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block; 
+*display:inline;padding:4px 10px 4px;font-size:14px;line-height:18px; 
+*line-height:20px;color:#fff; 
+text-align:center;vertical-align:middle;cursor:pointer;background:#5bb75b; 
+border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf; 
+border-bottom-color:#b3b3b3;-webkit-border-radius:4px; 
+-moz-border-radius:4px;border-radius:4px;} 
+.btn input{position: absolute;top: 0; right: 0;margin: 0;border:solid transparent; 
+opacity: 0;filter:alpha(opacity=0); cursor: pointer;} 
+.progress{position:relative; margin-left:100px; margin-top:-24px;  
+width:200px;padding: 1px; border-radius:3px; display:none} 
+.bar {background-color: green; display:block; width:0%; height:20px;  
+border-radius:3px; } 
+.percent{position:absolute; height:20px; display:inline-block;  
+top:3px; left:2%; color:#fff } 
+.files{height:22px; line-height:22px; margin:10px 0} 
+.delimg{margin-left:20px; color:#090; cursor:pointer}
+.weixin-box img {
+    width: 290px;
+    height: 145px;
+    margin: 10px 0px 5px;
+    background: #DDD none repeat scroll 0% 0%;
+}
+.weixin-preview .weixin-box {
+    border-radius: 10px;
+    border: 1px solid #CCC;
+    background: #FFF none repeat scroll 0% 0%;
+    padding: 10px 15px;
+    box-shadow: 0px 0px 3px #999;
+}
+.weixin-box .weixin-title {
+    font-size: 16px;
+    color: #222;
+    line-height: 20px;
+    max-height: 40px;
+    overflow: hidden;
+}
+.weixin-preview .preview-tips {
+    line-height: 50px;
+    font-size: 14px;
+    text-align: center;
+}
+.logo{display:none;}

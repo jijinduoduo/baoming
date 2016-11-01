@@ -1,0 +1,60 @@
+<extend name="Base/s1"/>
+
+
+
+<block name="body">
+     
+   <section>
+	  <div class="tuanlist"><P></p>
+  
+       
+        <ul class="ml_content_top"><li <eq name="order" value="1">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>1,'sort'=>$see))}" class="{$value}">热度<i></i></a></li><li <eq name="order" value="2">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>2,'sort'=>$see))}"  class="{$value}">最新<i></i></a></li><li <eq name="order" value="3">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>3,'sort'=>$see))}"  class="{$value}">价格<i></i></a></li><li <eq name="order" value="4">class="active"<else/></eq>><a  href="{:U('Article/index',array(pid=>$category['id'],order=>4,'sort'=>$see))}"  class="{$value}">销量<i></i></a></li></ul> 
+                <empty name="list">
+ <div class="media">暂无数据</div>
+</empty>
+    	<style type="text/css">
+
+.times{height:30px; width:320px; background:url(images/clock.jpg) no-repeat; padding-left:0px}
+.times p{height:20px; line-height:20px;}
+.endtime{font-size:14px; font-family:"Microsoft Yahei"; color:#000}
+
+</style>
+
+                <div class="yershop_tuan">
+
+
+                <ul> <volist name="list" id="vo">
+				
+				<li class="li" onmouseover="this.className='lihover'" onmouseout="this.className='li'">
+               <a href="{:U('Article/detail?id='.$vo['id'])}"><img src="{$vo.cover_id|get_cover='path'}"> </a> 
+               <p class="title">{$vo.title}</p>
+			    <p><span class="tuan"><strong>￥{$vo.price}</strong></span><span class="qiang"><a>去预约</a></span></p>
+		
+
+ <div class="times">
+       
+        结束时间：<span class="endtime" ">{$vo.deadline|date='Y-m-d H:i',###}</span>
+     </div>
+
+				</li> </volist>
+     </ul>  
+                  
+                </div>
+              
+ 
+       <!-- 分页 -->
+        <div class="page">
+{$page}
+        </div>   
+			</div>
+
+
+     <script>
+
+                                
+    $(".menu-list li").eq(1).css('background','#d25400');  
+     </script>   
+  
+    </section>
+    
+</block>

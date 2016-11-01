@@ -1,0 +1,169 @@
+<extend name="Base/s1"/>
+<block name="body">
+
+<div class="main"><div class="main_center"><div class="center_left">
+<!-- 左侧菜单 -->
+	<include file="Public/leftmenu"/>
+<!-- 左侧菜单 -->
+
+</div><div class="center_right" style="display: none;"><div class="center_right_loading"></div></div><div id="memberCenter" style="display: block;"><!-- 个人中心 初始状态 start -->
+<div class="center_right" id="MemberCenterCtrl" style="display: block;">
+
+   <div class="info-wrap">
+   
+   <div class="count">
+    <dl><dt><empty name='faceid'><a href='{:U("center/information")}'><img src="__IMG__/v1.png"  /></a><else />
+	<img src="{$faceid|get_cover='path'}"  /></empty>
+	</dt>
+	<dd>	<a href="" class="red" title="{$uid|get_nickname}">{$uid|get_nickname}</a> 您好！欢迎您光临{:C('SITENAME')}！</dd>
+	<dd>您的上一次时间是：2014-12-15 20:30:14<span class="grade_text">您的等级是{$uid|get_lever}</span></dd>
+	<dd>账户安全<span class="red">邮箱未验证</span></dd>
+	
+	</dl>
+   <p>订单提醒：待支付订单(<span class="red">{$onum|default="0"}</span>)&nbsp;&nbsp;待确认订单(<span class="red">{$cnum|default="0"}</span>)&nbsp;&nbsp;购物车中的商品(<span class="red">{$shopnum|default="0"}</span>)</p>
+
+   <p>消息管理：咨询新回复(<span class="red">10</span>)&nbsp;&nbsp;优惠券(<span class="red">{$num|default="0"}张</span>)&nbsp;&nbsp;积分(<span class="red" id="score">{$uid|get_score}</span>)</p>
+   </div>
+ <div class="qiandao"><a href="javascript:void(0)" class="pf_qiandao" onclick="qiandao()">每日签到</a> </div>
+	</div>
+
+	<h3 class="cr_h3 cr_h3_gray">最近订单</h3>
+	
+	<empty name='lateorder'>
+	<div class="personal_info_none_goods">
+				<p>你的订单还是空的哦<br>赶快行动吧！</p>
+				<a rel="nofollow" href="{:U("index/index")}" class="ping_btn">马上购物</a>
+				<div class="cb"></div>
+			</div>
+	<else />
+       
+
+	  <div class="good-canshu"><span class="good-name">商品名称</span><span class="good-price">售价</span><span class="good-num">数量</span> <span class="good-action">商品操作</span><span class="good-total">总金额(元)</span>
+	  <span class="good-status">交易状态</span> <span class="deal-action">交易操作</span></div>
+
+
+          <volist name="lateorder" id="po"> <div class="single" onmouseover="this.className='singlehover'" onmouseout="this.className='single'">
+		  <div class="order-detail">订单号：<span class="red">{$po.orderid}</span>&nbsp;下单时间：<span>{$po.create_time|date='Y-m-d H:i:s',###}&nbsp;</div>
+         <!-- 列表详情区域开始 -->  
+		  <div class="goodlist-wrap">   
+		<!-- 左边商品区域开始 -->  
+		  <div class="three-area">
+		  <volist name="po['id']" id="vo"> 
+		  <div class="cos">
+		  <span class="c1"><A href="{:U('Article/detail?id='.$vo['goodid'])}" > <img src="{$vo.goodid|get_cover_id|get_cover='path'}"  width="70" height="70"/></A>
+		  <A href="{:U('Article/detail?id='.$vo['goodid'])}" > {$vo.goodid|get_good_name}</A></span>
+		  <span class="c2">￥{$vo.goodid|get_good_price}</span>
+		  <span class="c2">{$vo.num}</span> 
+		    <span class="c2">  <php>
+			if($vo['status']==1||$vo['status']==2){echo "无"
+			  ;};
+			   if($vo['status']==3){echo "<a  href='index.php?s=/Home/order/back/id/".$vo['id']."'>退货</a>&nbsp;/"."<a  href='index.php?s=/Home/order/change/id/".$vo['id']."'>换货</a>"
+			  ;};
+
+	 if($vo['status']==4){echo "<a  class='red' href='index.php?s=/Home/order/backdetail/id/".$vo['id']."'>退货审核中</a>&nbsp;";};
+	if($vo['status']==5){echo "<a  class='red' href='index.php?s=/Home/order/backdetail/id/".$vo['id']."'>同意退货</a>&nbsp;";}; 
+if($vo['status']==6){echo "<a  class='red' href='index.php?s=/Home/order/backdetail/id/".$vo['id']."'>退货中</a>&nbsp;";}; 
+  if($vo['status']==7){echo "<a  class='red' href='index.php?s=/Home/order/backdetail/id/".$vo['id']."'>退货被拒绝</a>&nbsp;";}; 
+ if($vo['status']==8){echo "<a  class='red' href='index.php?s=/Home/order/backdetail/id/".$vo['id']."'>退货完成</a>&nbsp;";}; 
+
+ if($vo['status']==-4){echo "<a  class='red' href='index.php?s=/Home/order/changedetail/id/".$vo['id']."'>换货审核中</a>&nbsp;";};
+if($vo['status']==-5){echo "<a  class='red' href='index.php?s=/Home/order/changedetail/id/".$vo['id']."'>同意换货</a>&nbsp;";}; 
+if($vo['status']==-6){echo "<a  class='red' href='index.php?s=/Home/order/changedetail/id/".$vo['id']."'>换货中</a>&nbsp;";}; 
+  if($vo['status']==-7){echo "<a class='red'  href='index.php?s=/Home/order/changedetail/id/".$vo['id']."'>换货被拒绝</a>&nbsp;";}; 
+ if($vo['status']==-8){echo "<a  class='red' href='index.php?s=/Home/order/changedetail/id/".$vo['id']."'>换货完成</a>&nbsp;";};
+if($vo['iscomment']==1){echo 
+			   "<br/><a  href='index.php?s=/Home/comment/index/id/".$vo['id']."'>评价商品</a>";};
+if($vo['iscomment']==2){echo 
+			   "<br/><a  href='index.php?s=/Home/comment/index/id/".$vo['id']."'>已评价</a>";};
+			  </php></span>
+		  </div>
+		  </volist> 
+		  </div>
+		  <!-- 左边商品结束 -->  
+		  
+		  
+ <div class="total-area"><p>￥{$po.pricetotal}</p><p>(运费￥{$po.shipprice})</p> 
+		    </div>
+		     <div class="deal-area">
+			<p class="red"> 
+			 <php>
+
+			  $status=$po['status'];if($status==13){ echo "待支付";};
+			  if($status==1){ echo "待发货";}; 
+			   if($status==2){ echo "已发货";};
+			   if($status==3){ echo "交易成功";};
+			    if($status==4){ echo "申请取消订单";};
+				if($status==5){ echo "取消订单被拒绝";};
+			   if($status==6){ echo "订单已取消";};
+			  </php> </p>
+			<p><a href="{:U('order/detail?id='.$po['orderid'])}" >订单详情</a></p>
+			  </div>
+			   <div class="act-area"> 
+			   <php>
+
+			  $status=$po['status']; 
+			   if($status==2){ echo " <p><a class=' confirm' href='index.php?s=/Home/order/complete/id/".$po['orderid']."'>确认收货</a> </p>";};
+			  $pay=$po['ispay'];
+			  if($pay==1&&$po['status']==1){ echo " <p><A href='index.php?s=/Home/order/cancel/id/".$po['orderid']."'>取消订单</a>&nbsp; &nbsp;&nbsp; &nbsp; </p>"." <p><A class='confirm' href='index.php?s=/Home/Pay/index/orderid/".$po['orderid']."'>前去支付</a> </p>";}; 
+			  if($pay==0&&$po['status']==1 ){ echo " <p><A  href='index.php?s=/Home/order/cancel/id/".$po['orderid']."'>取消订单</a> </p>";}
+			  ; if($po['status']==2){ echo " <p><A class='red' href='index.php?s=/Home/order/detail/id/".$po['orderid']."'>查看物流</a> </p>";}
+			  </php>
+			  
+		    </div> 
+		  </div>
+       <!-- 列表详情区域结束 -->
+	   </div>
+		</volist>	
+  
+       
+	</empty>
+
+<script type="text/javascript">
+
+
+//全选的实现
+	$(".check-all").click(function(){
+		$(".ids").prop("checked", this.checked);
+	});
+	$(".ids").click(function(){
+		var option = $(".ids");
+		option.each(function(i){
+			if(!this.checked){
+				$(".check-all").prop("checked", false);
+				return false;
+			}else{
+				$(".check-all").prop("checked", true);
+			}
+		});
+	})
+		
+  function qiandao(){
+var b='{:U("center/enter")}';
+  $.ajax({
+             type: "GET",
+             url: "{:U("center/enter")}",
+             data: {username:b},
+             dataType: "json",
+             success: function(data){
+                        alert(data.msg);
+						$("span#score").html(data.score);
+                      }
+         });
+}
+function delorder(){
+		document.delform.submit();
+		 }
+	require(['memberCenter'], function() {
+		var el = document.getElementById('MemberCenterCtrl');
+		avalon.scan(el);
+		avalon.nextTick(function() {
+			el.style.display = 'block';
+		});
+	});
+</script>
+<!-- 个人中心 初始状态 end --></div></div>
+    <script type="text/javascript">_init_area();</script>
+     
+        {:hook('documentDetailAfter',$info)}
+   
+</block>
