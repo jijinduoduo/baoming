@@ -7,16 +7,16 @@
  ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao5.png)<br>
 3 报名活动二维码生成--二维码生成<br>
   方便分享,通过口碑宣传，报名信息可让更多的朋友看到，起到宣传的效果。<br>
- ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao6.png)
+ ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao6.png)<br>
 4 完全自定义报名项目--丰富diy的体验<br>
   丰富多样的自定义表单功能，通过自定义字段等方式设计各类复杂样式结构以及diy随意色彩的报名表单，制作专属于自己的独一无二报名系统。<br>
  ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao4.png)<br>
 5 消息通知即时送达--短信接口<br>
   用户报名成功后，系统会通过短信方式主动告知报名者，而不是过去必须人为通知，大大提升体验。<br>
- ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao3.png)
+ ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao3.png)<br>
 6 信息管理一目了然--文件导出,图片压缩<br>
   后台管理系统支持报名信息导出excel表格,图片压缩导出，报名人数、报名起止时间等参数的自由设置。<br>
- ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao2.png)
+ ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao2.png)<br>
 7 权限管理,批量操作--强大的后台支持<br>
   大权限可以管理所有报名活动,小权限管理自己的活动,分级,更智能。报名开始暂停删除,数据批量操作。<br>
  ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/shouji1.png)
