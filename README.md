@@ -1,5 +1,5 @@
 <h2>报名系统</h2>
-
+ ![image](https://github.com/jijinduoduo/baoming/tree/master/diannao1.png)<br>
 1 响应式布局--html5布局<br>
   微信、平板、电脑、手机等多终端覆盖。无需编程可快速嵌入到其它网站，可完美载入微信端，灵活对接企业微信公众号。<br>
  ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao1.png)<br>
