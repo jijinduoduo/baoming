@@ -22,5 +22,5 @@
   大权限可以管理所有报名活动,小权限管理自己的活动,分级,更智能。报名开始暂停删除,数据批量操作。<br>
   
   <a href="https://github.com/jijinduoduo/baoming/tree/master/introduce">网页截图在introduce文件夹</a>
-  <img src="https://github.com/jijinduoduo/baoming/tree/master/diannao1.png">
+ 
 
