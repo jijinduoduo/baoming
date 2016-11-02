@@ -2,7 +2,7 @@
 
 1 响应式布局--html5布局<br>
   微信、平板、电脑、手机等多终端覆盖。无需编程可快速嵌入到其它网站，可完美载入微信端，灵活对接企业微信公众号。<br>
-![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao1.png)<br>
+#![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao1.png)<br>
 2 报名支付即时到账--支付接口<br>
   支付宝、微信扫描、微信公众号等多种在线收款方式；方便快捷。<br>
 ![image](https://github.com/jijinduoduo/baoming/tree/master/introduce/diannao5.png)<br>
